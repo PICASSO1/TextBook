@@ -1,0 +1,1 @@
+cmd_/root/Linux_Programming/Ch18/hello/hello.ko := ld -r -m elf_i386 -T /usr/src/kernels/2.6.34.9-69.fc13.i686/scripts/module-common.lds --build-id -o /root/Linux_Programming/Ch18/hello/hello.ko /root/Linux_Programming/Ch18/hello/hello.o /root/Linux_Programming/Ch18/hello/hello.mod.o

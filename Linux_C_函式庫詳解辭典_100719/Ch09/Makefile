@@ -1,0 +1,7 @@
+
+MAKE := make
+CFLAGS := -C
+
+.PHONY: cleanall
+cleanall:
+	@-$(MAKE) cleanall $(CFLAGS) qsort

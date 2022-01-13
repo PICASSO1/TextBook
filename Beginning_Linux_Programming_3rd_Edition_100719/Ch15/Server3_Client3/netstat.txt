@@ -1,0 +1,752 @@
+getnameinfo failed
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State      
+tcp        0      0 *:57381                     *:*                         LISTEN      
+tcp        0      0 *:9734                      *:*                         LISTEN      
+tcp        0      0 *:sunrpc                    *:*                         LISTEN      
+tcp        0      0 192.168.122.1:domain        *:*                         LISTEN      
+tcp        0      0 *:ssh                       *:*                         LISTEN      
+tcp        0      0 localhost:ipp               *:*                         LISTEN      
+tcp        0      0 localhost:smtp              *:*                         LISTEN      
+tcp        0      0 localhost:9734              localhost:53740             TIME_WAIT   
+tcp        0      0 *:sunrpc                    *:*                         LISTEN      
+tcp        0      0 *:33589                     *:*                         LISTEN      
+tcp        0      0 *:ssh                       *:*                         LISTEN      
+tcp        0      0 localhost:ipp               *:*                         LISTEN      
+udp        0      0 *:41364                     *:*                                     
+udp        0      0 *:983                       *:*                                     
+udp        0      0 192.168.122.1:domain        *:*                                     
+udp        0      0 *:bootps                    *:*                                     
+udp        0      0 *:bootpc                    *:*                                     
+udp        0      0 *:asf-rmcp                  *:*                                     
+udp        0      0 *:sunrpc                    *:*                                     
+udp        0      0 *:ipp                       *:*                                     
+udp        0      0 10.1.1.104:ntp              *:*                                     
+udp        0      0 192.168.122.1:ntp           *:*                                     
+udp        0      0 localhost:ntp               *:*                                     
+udp        0      0 *:ntp                       *:*                                     
+udp        0      0 *:49282                     *:*                                     
+udp        0      0 *:mdns                      *:*                                     
+udp        0      0 *:983                       *:*                                     
+udp        0      0 *:50224                     *:*                                     
+udp        0      0 *:sunrpc                    *:*                                     
+udp        0      0 [UNKNOWN]:ntp               *:*                                     
+udp        0      0 localhost:ntp               *:*                                     
+udp        0      0 *:ntp                       *:*                                     
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node Path
+unix  2      [ ACC ]     STREAM     LISTENING     19640  @/tmp/dbus-eKwLP1kKwt
+unix  2      [ ACC ]     STREAM     LISTENING     18859  /tmp/.esd-0/socket
+unix  2      [ ACC ]     STREAM     LISTENING     15394  @/tmp/.ICE-unix/1581
+unix  2      [ ACC ]     STREAM     LISTENING     18862  /root/.pulse/97543be435376e427a42a60000000022-runtime/native
+unix  2      [ ACC ]     STREAM     LISTENING     12970  /var/run/libvirt/libvirt-sock
+unix  2      [ ACC ]     STREAM     LISTENING     15395  /tmp/.ICE-unix/1581
+unix  2      [ ACC ]     STREAM     LISTENING     12972  /var/run/libvirt/libvirt-sock-ro
+unix  2      [ ACC ]     STREAM     LISTENING     13333  /tmp/.X11-unix/X0
+unix  2      [ ACC ]     STREAM     LISTENING     15419  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  2      [ ACC ]     STREAM     LISTENING     15713  /tmp/orbit-root/linc-62d-0-273ce0f028ea2
+unix  2      [ ACC ]     STREAM     LISTENING     11573  @/var/run/hald/dbus-2z5HmGdcB4
+unix  2      [ ACC ]     STREAM     LISTENING     15886  /tmp/keyring-AcZyrs/pkcs11
+unix  2      [ ACC ]     STREAM     LISTENING     8373   @/com/ubuntu/upstart
+unix  2      [ ACC ]     STREAM     LISTENING     15888  /tmp/keyring-AcZyrs/ssh
+unix  2      [ ACC ]     STREAM     LISTENING     15909  /tmp/orbit-root/linc-6b3-0-36a29d54502a3
+unix  2      [ ACC ]     STREAM     LISTENING     11452  /var/run/cups/cups.sock
+unix  2      [ ACC ]     STREAM     LISTENING     16044  /tmp/orbit-root/linc-6c1-0-111e340c2d6a1
+unix  2      [ ACC ]     STREAM     LISTENING     13603  @/tmp/gdm-session-qRjaTWxG
+unix  2      [ ACC ]     STREAM     LISTENING     16129  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  2      [ ACC ]     STREAM     LISTENING     10819  /var/run/dbus/system_bus_socket
+unix  2      [ ACC ]     STREAM     LISTENING     13332  @/tmp/.X11-unix/X0
+unix  2      [ ACC ]     STREAM     LISTENING     15241  @/tmp/dbus-9bOR6AgBVn
+unix  2      [ ]         DGRAM                    8567   @/org/kernel/udev/udevd
+unix  2      [ ACC ]     STREAM     LISTENING     14232  /tmp/orbit-gdm/linc-5b9-0-6c195c2684a22
+unix  2      [ ACC ]     STREAM     LISTENING     16237  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  12     [ ]         DGRAM                    107635 /dev/log
+unix  2      [ ACC ]     STREAM     LISTENING     14270  /tmp/orbit-gdm/linc-5bb-0-68fa7142bca33
+unix  2      [ ACC ]     STREAM     LISTENING     15033  /tmp/keyring-AcZyrs/control
+unix  2      [ ACC ]     STREAM     LISTENING     16841  /tmp/orbit-root/linc-6d7-0-982993a4f5be
+unix  2      [ ACC ]     STREAM     LISTENING     18043  /tmp/orbit-root/linc-703-0-6938c56d8fdb0
+unix  2      [ ACC ]     STREAM     LISTENING     16856  /tmp/orbit-root/linc-6d8-0-7a2ed3f79052
+unix  2      [ ACC ]     STREAM     LISTENING     18823  /tmp/orbit-root/linc-6ff-0-2b3da5c277f0f
+unix  2      [ ACC ]     STREAM     LISTENING     16977  /tmp/orbit-root/linc-6e8-0-4769083fbb7a3
+unix  2      [ ACC ]     STREAM     LISTENING     17010  /tmp/orbit-root/linc-6ea-0-33ddce07f0bbb
+unix  2      [ ACC ]     STREAM     LISTENING     17016  /tmp/orbit-root/linc-6eb-0-4fa09799f159b
+unix  2      [ ACC ]     STREAM     LISTENING     17022  /tmp/orbit-root/linc-6ef-0-b1ced2df2175
+unix  2      [ ACC ]     STREAM     LISTENING     17027  /tmp/orbit-root/linc-6ee-0-4cdeb7e9f28d9
+unix  2      [ ACC ]     STREAM     LISTENING     17032  /tmp/orbit-root/linc-6ec-0-43124d06f314a
+unix  2      [ ACC ]     STREAM     LISTENING     17035  /tmp/orbit-root/linc-6ed-0-7124249ff3a4c
+unix  2      [ ACC ]     STREAM     LISTENING     17058  /tmp/orbit-root/linc-6f0-0-2978f93384b0
+unix  2      [ ACC ]     STREAM     LISTENING     18793  /tmp/orbit-root/linc-6ce-0-8a3e1b439584
+unix  2      [ ACC ]     STREAM     LISTENING     19010  /tmp/orbit-root/linc-71c-0-1700a6d918920
+unix  2      [ ACC ]     STREAM     LISTENING     18930  /tmp/orbit-root/linc-74c-0-f7d83ae24ee6
+unix  2      [ ACC ]     STREAM     LISTENING     19214  /tmp/orbit-root/linc-706-0-19a2ed7156a31
+unix  2      [ ACC ]     STREAM     LISTENING     19251  /tmp/orbit-root/linc-71b-0-31b5d36dc9237
+unix  2      [ ACC ]     STREAM     LISTENING     19376  /tmp/orbit-root/linc-704-0-484fa352184c
+unix  2      [ ACC ]     STREAM     LISTENING     19838  /tmp/orbit-root/linc-871-0-4d4b7aa1b09c0
+unix  2      [ ACC ]     STREAM     LISTENING     19423  /tmp/orbit-root/linc-700-0-28bbb8ba57f61
+unix  2      [ ACC ]     STREAM     LISTENING     19712  /tmp/orbit-root/linc-85a-0-f595cca2da64
+unix  2      [ ACC ]     STREAM     LISTENING     24038  /tmp/orbit-root/linc-902-0-2439b2195eabf
+unix  2      [ ]         DGRAM                    11598  @/org/freedesktop/hal/udev_event
+unix  2      [ ACC ]     STREAM     LISTENING     107631 /tmp/orbit-root/linc-b87-0-4ce3bbd3d6f69
+unix  2      [ ACC ]     STREAM     LISTENING     10982  /var/run/avahi-daemon/socket
+unix  2      [ ACC ]     STREAM     LISTENING     11536  /var/run/acpid.socket
+unix  2      [ ACC ]     STREAM     LISTENING     11892  /var/run/pcscd.comm
+unix  2      [ ACC ]     STREAM     LISTENING     13476  @/tmp/gdm-greeter-PagMECYC
+unix  2      [ ACC ]     STREAM     LISTENING     11566  @/var/run/hald/dbus-R1GpZYnr7W
+unix  2      [ ACC ]     STREAM     LISTENING     10726  /var/run/rpcbind.sock
+unix  2      [ ACC ]     STREAM     LISTENING     12517  /dev/gpmctl
+unix  2      [ ACC ]     STREAM     LISTENING     12454  /var/run/abrt/abrt.socket
+unix  2      [ ]         DGRAM                    1258494 
+unix  2      [ ]         DGRAM                    1258493 
+unix  2      [ ]         DGRAM                    1257940 
+unix  2      [ ]         DGRAM                    1042606 
+unix  2      [ ]         DGRAM                    556384 
+unix  2      [ ]         DGRAM                    555955 
+unix  3      [ ]         STREAM     CONNECTED     406126 @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     406125 
+unix  3      [ ]         STREAM     CONNECTED     342808 @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     342807 
+unix  2      [ ]         DGRAM                    325281 
+unix  2      [ ]         DGRAM                    325278 
+unix  2      [ ]         DGRAM                    139514 
+unix  3      [ ]         STREAM     CONNECTED     107638 @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     107637 
+unix  3      [ ]         STREAM     CONNECTED     107634 /tmp/orbit-root/linc-b87-0-4ce3bbd3d6f69
+unix  3      [ ]         STREAM     CONNECTED     107633 
+unix  3      [ ]         STREAM     CONNECTED     107630 /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     107629 
+unix  3      [ ]         STREAM     CONNECTED     107624 @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     107622 
+unix  3      [ ]         STREAM     CONNECTED     107620 @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     107619 
+unix  3      [ ]         STREAM     CONNECTED     107612 @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     107611 
+unix  3      [ ]         STREAM     CONNECTED     65824  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     65823  
+unix  3      [ ]         STREAM     CONNECTED     65822  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     65821  
+unix  3      [ ]         STREAM     CONNECTED     65818  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     65817  
+unix  2      [ ]         DGRAM                    65429  
+unix  3      [ ]         STREAM     CONNECTED     24218  /root/.pulse/97543be435376e427a42a60000000022-runtime/native
+unix  3      [ ]         STREAM     CONNECTED     24217  
+unix  3      [ ]         STREAM     CONNECTED     24056  
+unix  3      [ ]         STREAM     CONNECTED     24055  
+unix  3      [ ]         STREAM     CONNECTED     24053  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     24052  
+unix  3      [ ]         STREAM     CONNECTED     24043  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     24042  
+unix  3      [ ]         STREAM     CONNECTED     24041  /tmp/orbit-root/linc-902-0-2439b2195eabf
+unix  3      [ ]         STREAM     CONNECTED     24040  
+unix  3      [ ]         STREAM     CONNECTED     24037  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     24036  
+unix  3      [ ]         STREAM     CONNECTED     24032  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     24031  
+unix  3      [ ]         STREAM     CONNECTED     24030  @/tmp/.ICE-unix/1581
+unix  3      [ ]         STREAM     CONNECTED     24029  
+unix  3      [ ]         STREAM     CONNECTED     24027  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     24026  
+unix  3      [ ]         STREAM     CONNECTED     24016  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     24015  
+unix  3      [ ]         STREAM     CONNECTED     20023  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     20022  
+unix  3      [ ]         STREAM     CONNECTED     19982  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19981  
+unix  3      [ ]         STREAM     CONNECTED     19973  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     19972  
+unix  3      [ ]         STREAM     CONNECTED     19894  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19893  
+unix  3      [ ]         STREAM     CONNECTED     19889  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19888  
+unix  3      [ ]         STREAM     CONNECTED     19865  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19863  
+unix  3      [ ]         STREAM     CONNECTED     19864  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19862  
+unix  3      [ ]         STREAM     CONNECTED     19850  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19849  
+unix  3      [ ]         STREAM     CONNECTED     19847  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19846  
+unix  3      [ ]         STREAM     CONNECTED     19843  /tmp/orbit-root/linc-871-0-4d4b7aa1b09c0
+unix  3      [ ]         STREAM     CONNECTED     19840  
+unix  3      [ ]         STREAM     CONNECTED     19837  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19836  
+unix  3      [ ]         STREAM     CONNECTED     19824  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19823  
+unix  3      [ ]         STREAM     CONNECTED     19806  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     19805  
+unix  3      [ ]         STREAM     CONNECTED     19773  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19772  
+unix  3      [ ]         STREAM     CONNECTED     19766  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     19765  
+unix  3      [ ]         STREAM     CONNECTED     19715  /tmp/orbit-root/linc-85a-0-f595cca2da64
+unix  3      [ ]         STREAM     CONNECTED     19714  
+unix  3      [ ]         STREAM     CONNECTED     19710  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19708  
+unix  3      [ ]         STREAM     CONNECTED     19704  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19703  
+unix  3      [ ]         STREAM     CONNECTED     19701  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19700  
+unix  3      [ ]         STREAM     CONNECTED     19688  @/tmp/dbus-eKwLP1kKwt
+unix  3      [ ]         STREAM     CONNECTED     19687  
+unix  3      [ ]         STREAM     CONNECTED     19549  @/dbus-vfs-daemon/socket-XAz0Q0nN
+unix  3      [ ]         STREAM     CONNECTED     19548  
+unix  3      [ ]         STREAM     CONNECTED     19550  @/dbus-vfs-daemon/socket-PYbe923F
+unix  3      [ ]         STREAM     CONNECTED     19547  
+unix  3      [ ]         STREAM     CONNECTED     19539  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19538  
+unix  3      [ ]         STREAM     CONNECTED     19452  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19451  
+unix  3      [ ]         STREAM     CONNECTED     19441  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19440  
+unix  3      [ ]         STREAM     CONNECTED     19431  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19430  
+unix  3      [ ]         STREAM     CONNECTED     19426  /tmp/orbit-root/linc-700-0-28bbb8ba57f61
+unix  3      [ ]         STREAM     CONNECTED     19425  
+unix  3      [ ]         STREAM     CONNECTED     19422  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19421  
+unix  3      [ ]         STREAM     CONNECTED     19412  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19411  
+unix  3      [ ]         STREAM     CONNECTED     19379  /tmp/orbit-root/linc-704-0-484fa352184c
+unix  3      [ ]         STREAM     CONNECTED     19378  
+unix  3      [ ]         STREAM     CONNECTED     19375  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19374  
+unix  3      [ ]         STREAM     CONNECTED     19370  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19369  
+unix  3      [ ]         STREAM     CONNECTED     19360  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19359  
+unix  3      [ ]         STREAM     CONNECTED     19354  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19353  
+unix  3      [ ]         STREAM     CONNECTED     19342  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19341  
+unix  3      [ ]         STREAM     CONNECTED     19268  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19267  
+unix  3      [ ]         STREAM     CONNECTED     19264  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19263  
+unix  3      [ ]         STREAM     CONNECTED     19256  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19255  
+unix  3      [ ]         STREAM     CONNECTED     19254  /tmp/orbit-root/linc-71b-0-31b5d36dc9237
+unix  3      [ ]         STREAM     CONNECTED     19253  
+unix  3      [ ]         STREAM     CONNECTED     19250  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19249  
+unix  3      [ ]         STREAM     CONNECTED     19244  /root/.pulse/97543be435376e427a42a60000000022-runtime/native
+unix  3      [ ]         STREAM     CONNECTED     19243  
+unix  3      [ ]         STREAM     CONNECTED     19232  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19231  
+unix  3      [ ]         STREAM     CONNECTED     19221  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19220  
+unix  3      [ ]         STREAM     CONNECTED     19217  /tmp/orbit-root/linc-706-0-19a2ed7156a31
+unix  3      [ ]         STREAM     CONNECTED     19216  
+unix  3      [ ]         STREAM     CONNECTED     19212  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19211  
+unix  3      [ ]         STREAM     CONNECTED     19210  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19209  
+unix  3      [ ]         STREAM     CONNECTED     19206  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19205  
+unix  3      [ ]         STREAM     CONNECTED     19204  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19203  
+unix  3      [ ]         STREAM     CONNECTED     19201  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19200  
+unix  3      [ ]         STREAM     CONNECTED     19085  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19084  
+unix  3      [ ]         STREAM     CONNECTED     19083  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19082  
+unix  3      [ ]         STREAM     CONNECTED     19077  @/tmp/.ICE-unix/1581
+unix  3      [ ]         STREAM     CONNECTED     19076  
+unix  3      [ ]         STREAM     CONNECTED     19062  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     19061  
+unix  3      [ ]         STREAM     CONNECTED     19037  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     19036  
+unix  3      [ ]         STREAM     CONNECTED     19023  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19022  
+unix  3      [ ]         STREAM     CONNECTED     19020  @/dbus-vfs-daemon/socket-eVV8K1mc
+unix  3      [ ]         STREAM     CONNECTED     19019  
+unix  3      [ ]         STREAM     CONNECTED     19021  @/dbus-vfs-daemon/socket-21y4bLIS
+unix  3      [ ]         STREAM     CONNECTED     19018  
+unix  3      [ ]         STREAM     CONNECTED     19015  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     19014  
+unix  3      [ ]         STREAM     CONNECTED     19013  /tmp/orbit-root/linc-71c-0-1700a6d918920
+unix  3      [ ]         STREAM     CONNECTED     19012  
+unix  3      [ ]         STREAM     CONNECTED     19009  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     19008  
+unix  3      [ ]         STREAM     CONNECTED     18999  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18998  
+unix  3      [ ]         STREAM     CONNECTED     18997  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     18996  
+unix  3      [ ]         STREAM     CONNECTED     18988  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18987  
+unix  3      [ ]         STREAM     CONNECTED     18986  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     18985  
+unix  3      [ ]         STREAM     CONNECTED     18978  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18977  
+unix  3      [ ]         STREAM     CONNECTED     18947  @/dbus-vfs-daemon/socket-Qe58WTOs
+unix  3      [ ]         STREAM     CONNECTED     18946  
+unix  3      [ ]         STREAM     CONNECTED     18945  @/dbus-vfs-daemon/socket-NZQvX3RQ
+unix  3      [ ]         STREAM     CONNECTED     18944  
+unix  3      [ ]         STREAM     CONNECTED     18941  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18940  
+unix  3      [ ]         STREAM     CONNECTED     18937  /root/.pulse/97543be435376e427a42a60000000022-runtime/native
+unix  3      [ ]         STREAM     CONNECTED     18936  
+unix  3      [ ]         STREAM     CONNECTED     18938  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18935  
+unix  3      [ ]         STREAM     CONNECTED     18933  /tmp/orbit-root/linc-74c-0-f7d83ae24ee6
+unix  3      [ ]         STREAM     CONNECTED     18932  
+unix  3      [ ]         STREAM     CONNECTED     18929  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     18928  
+unix  3      [ ]         STREAM     CONNECTED     18917  /var/run/pcscd.comm
+unix  3      [ ]         STREAM     CONNECTED     18916  
+unix  3      [ ]         STREAM     CONNECTED     18912  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18911  
+unix  3      [ ]         STREAM     CONNECTED     18857  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     18856  
+unix  3      [ ]         STREAM     CONNECTED     18830  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18829  
+unix  3      [ ]         STREAM     CONNECTED     18826  /tmp/orbit-root/linc-6ff-0-2b3da5c277f0f
+unix  3      [ ]         STREAM     CONNECTED     18825  
+unix  3      [ ]         STREAM     CONNECTED     18822  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     18821  
+unix  3      [ ]         STREAM     CONNECTED     18818  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18817  
+unix  2      [ ]         DGRAM                    18812  
+unix  3      [ ]         STREAM     CONNECTED     18810  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18809  
+unix  3      [ ]         STREAM     CONNECTED     18796  /tmp/orbit-root/linc-6ce-0-8a3e1b439584
+unix  3      [ ]         STREAM     CONNECTED     18795  
+unix  3      [ ]         STREAM     CONNECTED     18791  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     18790  
+unix  3      [ ]         STREAM     CONNECTED     18784  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18783  
+unix  3      [ ]         STREAM     CONNECTED     18710  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18708  
+unix  3      [ ]         STREAM     CONNECTED     18681  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18680  
+unix  3      [ ]         STREAM     CONNECTED     18674  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18668  
+unix  3      [ ]         STREAM     CONNECTED     18673  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18667  
+unix  3      [ ]         STREAM     CONNECTED     18463  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18462  
+unix  3      [ ]         STREAM     CONNECTED     18374  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18368  
+unix  3      [ ]         STREAM     CONNECTED     18289  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18288  
+unix  3      [ ]         STREAM     CONNECTED     18250  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18249  
+unix  3      [ ]         STREAM     CONNECTED     18247  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18213  
+unix  3      [ ]         STREAM     CONNECTED     18202  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18171  
+unix  3      [ ]         STREAM     CONNECTED     18170  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18169  
+unix  3      [ ]         STREAM     CONNECTED     18127  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18126  
+unix  3      [ ]         STREAM     CONNECTED     18091  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18090  
+unix  3      [ ]         STREAM     CONNECTED     18088  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     18087  
+unix  3      [ ]         STREAM     CONNECTED     18049  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     18048  
+unix  3      [ ]         STREAM     CONNECTED     18046  /tmp/orbit-root/linc-703-0-6938c56d8fdb0
+unix  3      [ ]         STREAM     CONNECTED     18045  
+unix  3      [ ]         STREAM     CONNECTED     18041  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     18040  
+unix  3      [ ]         STREAM     CONNECTED     18039  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     18030  
+unix  3      [ ]         STREAM     CONNECTED     17987  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17986  
+unix  3      [ ]         STREAM     CONNECTED     17207  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17206  
+unix  3      [ ]         STREAM     CONNECTED     17196  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     17195  
+unix  3      [ ]         STREAM     CONNECTED     17188  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17187  
+unix  3      [ ]         STREAM     CONNECTED     17183  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17182  
+unix  3      [ ]         STREAM     CONNECTED     17175  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17174  
+unix  3      [ ]         STREAM     CONNECTED     17173  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17172  
+unix  3      [ ]         STREAM     CONNECTED     17160  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17159  
+unix  3      [ ]         STREAM     CONNECTED     17136  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17135  
+unix  3      [ ]         STREAM     CONNECTED     17124  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17123  
+unix  3      [ ]         STREAM     CONNECTED     17122  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     17121  
+unix  3      [ ]         STREAM     CONNECTED     17118  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     17117  
+unix  3      [ ]         STREAM     CONNECTED     17116  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17115  
+unix  3      [ ]         STREAM     CONNECTED     17114  /tmp/orbit-root/linc-6f0-0-2978f93384b0
+unix  3      [ ]         STREAM     CONNECTED     17113  
+unix  3      [ ]         STREAM     CONNECTED     17112  /tmp/orbit-root/linc-6f0-0-2978f93384b0
+unix  3      [ ]         STREAM     CONNECTED     17111  
+unix  3      [ ]         STREAM     CONNECTED     17110  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17109  
+unix  3      [ ]         STREAM     CONNECTED     17108  /tmp/orbit-root/linc-6ec-0-43124d06f314a
+unix  3      [ ]         STREAM     CONNECTED     17107  
+unix  3      [ ]         STREAM     CONNECTED     17106  /tmp/orbit-root/linc-6ec-0-43124d06f314a
+unix  3      [ ]         STREAM     CONNECTED     17105  
+unix  3      [ ]         STREAM     CONNECTED     17104  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17102  
+unix  3      [ ]         STREAM     CONNECTED     17103  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17101  
+unix  3      [ ]         STREAM     CONNECTED     17100  /tmp/orbit-root/linc-6ee-0-4cdeb7e9f28d9
+unix  3      [ ]         STREAM     CONNECTED     17099  
+unix  3      [ ]         STREAM     CONNECTED     17098  /tmp/orbit-root/linc-6ee-0-4cdeb7e9f28d9
+unix  3      [ ]         STREAM     CONNECTED     17097  
+unix  3      [ ]         STREAM     CONNECTED     17096  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17095  
+unix  3      [ ]         STREAM     CONNECTED     17094  /tmp/orbit-root/linc-6ed-0-7124249ff3a4c
+unix  3      [ ]         STREAM     CONNECTED     17093  
+unix  3      [ ]         STREAM     CONNECTED     17092  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     17091  
+unix  3      [ ]         STREAM     CONNECTED     17088  /tmp/orbit-root/linc-6ef-0-b1ced2df2175
+unix  3      [ ]         STREAM     CONNECTED     17087  
+unix  3      [ ]         STREAM     CONNECTED     17086  /tmp/orbit-root/linc-6ef-0-b1ced2df2175
+unix  3      [ ]         STREAM     CONNECTED     17085  
+unix  3      [ ]         STREAM     CONNECTED     17084  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17083  
+unix  3      [ ]         STREAM     CONNECTED     17079  /tmp/orbit-root/linc-6ed-0-7124249ff3a4c
+unix  3      [ ]         STREAM     CONNECTED     17078  
+unix  3      [ ]         STREAM     CONNECTED     17077  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17076  
+unix  3      [ ]         STREAM     CONNECTED     17082  /tmp/orbit-root/linc-6eb-0-4fa09799f159b
+unix  3      [ ]         STREAM     CONNECTED     17074  
+unix  3      [ ]         STREAM     CONNECTED     17080  /tmp/orbit-root/linc-6ea-0-33ddce07f0bbb
+unix  3      [ ]         STREAM     CONNECTED     17073  
+unix  3      [ ]         STREAM     CONNECTED     17070  /tmp/orbit-root/linc-6eb-0-4fa09799f159b
+unix  3      [ ]         STREAM     CONNECTED     17069  
+unix  3      [ ]         STREAM     CONNECTED     17068  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17067  
+unix  3      [ ]         STREAM     CONNECTED     17071  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17066  
+unix  3      [ ]         STREAM     CONNECTED     17065  /tmp/orbit-root/linc-6ea-0-33ddce07f0bbb
+unix  3      [ ]         STREAM     CONNECTED     17064  
+unix  3      [ ]         STREAM     CONNECTED     17063  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     17062  
+unix  3      [ ]         STREAM     CONNECTED     17061  /tmp/orbit-root/linc-6f0-0-2978f93384b0
+unix  3      [ ]         STREAM     CONNECTED     17060  
+unix  3      [ ]         STREAM     CONNECTED     17057  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17056  
+unix  3      [ ]         STREAM     CONNECTED     17054  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17053  
+unix  3      [ ]         STREAM     CONNECTED     17052  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17051  
+unix  3      [ ]         STREAM     CONNECTED     17050  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17049  
+unix  3      [ ]         STREAM     CONNECTED     17047  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17046  
+unix  3      [ ]         STREAM     CONNECTED     17044  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     17043  
+unix  3      [ ]         STREAM     CONNECTED     17041  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17040  
+unix  3      [ ]         STREAM     CONNECTED     17039  /tmp/orbit-root/linc-6ed-0-7124249ff3a4c
+unix  3      [ ]         STREAM     CONNECTED     17037  
+unix  3      [ ]         STREAM     CONNECTED     17045  /tmp/orbit-root/linc-6ec-0-43124d06f314a
+unix  3      [ ]         STREAM     CONNECTED     17034  
+unix  3      [ ]         STREAM     CONNECTED     17031  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17030  
+unix  3      [ ]         STREAM     CONNECTED     17042  /tmp/orbit-root/linc-6ee-0-4cdeb7e9f28d9
+unix  3      [ ]         STREAM     CONNECTED     17029  
+unix  3      [ ]         STREAM     CONNECTED     17026  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17025  
+unix  3      [ ]         STREAM     CONNECTED     17038  /tmp/orbit-root/linc-6ef-0-b1ced2df2175
+unix  3      [ ]         STREAM     CONNECTED     17024  
+unix  3      [ ]         STREAM     CONNECTED     17021  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17020  
+unix  3      [ ]         STREAM     CONNECTED     17019  /tmp/orbit-root/linc-6eb-0-4fa09799f159b
+unix  3      [ ]         STREAM     CONNECTED     17018  
+unix  3      [ ]         STREAM     CONNECTED     17015  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17014  
+unix  3      [ ]         STREAM     CONNECTED     17013  /tmp/orbit-root/linc-6ea-0-33ddce07f0bbb
+unix  3      [ ]         STREAM     CONNECTED     17012  
+unix  3      [ ]         STREAM     CONNECTED     17009  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17008  
+unix  3      [ ]         STREAM     CONNECTED     17007  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     17006  
+unix  3      [ ]         STREAM     CONNECTED     16991  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     16990  
+unix  3      [ ]         STREAM     CONNECTED     16989  /tmp/orbit-root/linc-6e8-0-4769083fbb7a3
+unix  3      [ ]         STREAM     CONNECTED     16988  
+unix  3      [ ]         STREAM     CONNECTED     16987  /tmp/orbit-root/linc-6e8-0-4769083fbb7a3
+unix  3      [ ]         STREAM     CONNECTED     16986  
+unix  3      [ ]         STREAM     CONNECTED     16985  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     16984  
+unix  3      [ ]         STREAM     CONNECTED     16982  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16981  
+unix  3      [ ]         STREAM     CONNECTED     16980  /tmp/orbit-root/linc-6e8-0-4769083fbb7a3
+unix  3      [ ]         STREAM     CONNECTED     16979  
+unix  3      [ ]         STREAM     CONNECTED     16976  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     16975  
+unix  3      [ ]         STREAM     CONNECTED     16957  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     16956  
+unix  3      [ ]         STREAM     CONNECTED     16955  /tmp/orbit-root/linc-6d8-0-7a2ed3f79052
+unix  3      [ ]         STREAM     CONNECTED     16954  
+unix  3      [ ]         STREAM     CONNECTED     16953  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16952  
+unix  3      [ ]         STREAM     CONNECTED     16951  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16950  
+unix  3      [ ]         STREAM     CONNECTED     16948  @/dbus-vfs-daemon/socket-HDUzEmrR
+unix  3      [ ]         STREAM     CONNECTED     16947  
+unix  3      [ ]         STREAM     CONNECTED     16949  @/dbus-vfs-daemon/socket-PpT8HFB9
+unix  3      [ ]         STREAM     CONNECTED     16946  
+unix  3      [ ]         STREAM     CONNECTED     16938  @/dbus-vfs-daemon/socket-rM0gS0dR
+unix  3      [ ]         STREAM     CONNECTED     16937  
+unix  3      [ ]         STREAM     CONNECTED     16939  @/dbus-vfs-daemon/socket-ITOB6PGb
+unix  3      [ ]         STREAM     CONNECTED     16936  
+unix  3      [ ]         STREAM     CONNECTED     16930  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16929  
+unix  3      [ ]         STREAM     CONNECTED     16927  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16926  
+unix  3      [ ]         STREAM     CONNECTED     16925  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16924  
+unix  3      [ ]         STREAM     CONNECTED     16922  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16918  
+unix  3      [ ]         STREAM     CONNECTED     16915  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16914  
+unix  3      [ ]         STREAM     CONNECTED     16911  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16910  
+unix  3      [ ]         STREAM     CONNECTED     16909  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16907  
+unix  3      [ ]         STREAM     CONNECTED     16908  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16906  
+unix  3      [ ]         STREAM     CONNECTED     16899  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16898  
+unix  3      [ ]         STREAM     CONNECTED     16896  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     16895  
+unix  3      [ ]         STREAM     CONNECTED     16877  /tmp/orbit-root/linc-6d7-0-982993a4f5be
+unix  3      [ ]         STREAM     CONNECTED     16876  
+unix  3      [ ]         STREAM     CONNECTED     16873  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16872  
+unix  3      [ ]         STREAM     CONNECTED     16870  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16869  
+unix  3      [ ]         STREAM     CONNECTED     16868  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16867  
+unix  3      [ ]         STREAM     CONNECTED     16866  /tmp/orbit-root/linc-6d8-0-7a2ed3f79052
+unix  3      [ ]         STREAM     CONNECTED     16865  
+unix  3      [ ]         STREAM     CONNECTED     16864  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     16863  
+unix  3      [ ]         STREAM     CONNECTED     16861  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16860  
+unix  3      [ ]         STREAM     CONNECTED     16859  /tmp/orbit-root/linc-6d8-0-7a2ed3f79052
+unix  3      [ ]         STREAM     CONNECTED     16858  
+unix  3      [ ]         STREAM     CONNECTED     16855  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     16854  
+unix  3      [ ]         STREAM     CONNECTED     16853  /tmp/orbit-root/linc-6d7-0-982993a4f5be
+unix  3      [ ]         STREAM     CONNECTED     16852  
+unix  3      [ ]         STREAM     CONNECTED     16849  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     16848  
+unix  3      [ ]         STREAM     CONNECTED     16846  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16845  
+unix  3      [ ]         STREAM     CONNECTED     16844  /tmp/orbit-root/linc-6d7-0-982993a4f5be
+unix  3      [ ]         STREAM     CONNECTED     16843  
+unix  3      [ ]         STREAM     CONNECTED     16840  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     16839  
+unix  3      [ ]         STREAM     CONNECTED     16835  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16834  
+unix  3      [ ]         STREAM     CONNECTED     16320  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16319  
+unix  3      [ ]         STREAM     CONNECTED     16316  @/tmp/.ICE-unix/1581
+unix  3      [ ]         STREAM     CONNECTED     16315  
+unix  3      [ ]         STREAM     CONNECTED     16314  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16313  
+unix  3      [ ]         STREAM     CONNECTED     16246  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     16245  
+unix  3      [ ]         STREAM     CONNECTED     16243  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16242  
+unix  3      [ ]         STREAM     CONNECTED     16241  /tmp/orbit-root/linc-6d0-0-3c0de908b1db4
+unix  3      [ ]         STREAM     CONNECTED     16240  
+unix  3      [ ]         STREAM     CONNECTED     16235  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16234  
+unix  3      [ ]         STREAM     CONNECTED     16162  @/tmp/.ICE-unix/1581
+unix  3      [ ]         STREAM     CONNECTED     16161  
+unix  3      [ ]         STREAM     CONNECTED     16156  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16155  
+unix  3      [ ]         STREAM     CONNECTED     16152  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16151  
+unix  3      [ ]         STREAM     CONNECTED     16144  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16143  
+unix  3      [ ]         STREAM     CONNECTED     16137  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16136  
+unix  3      [ ]         STREAM     CONNECTED     16132  /tmp/orbit-root/linc-6c3-0-41446018d84ec
+unix  3      [ ]         STREAM     CONNECTED     16131  
+unix  3      [ ]         STREAM     CONNECTED     16128  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     16127  
+unix  3      [ ]         STREAM     CONNECTED     16125  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16124  
+unix  3      [ ]         STREAM     CONNECTED     16119  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     16118  
+unix  3      [ ]         STREAM     CONNECTED     16111  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     16110  
+unix  3      [ ]         STREAM     CONNECTED     16107  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16106  
+unix  3      [ ]         STREAM     CONNECTED     16095  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     16094  
+unix  3      [ ]         STREAM     CONNECTED     16089  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16088  
+unix  3      [ ]         STREAM     CONNECTED     16081  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16080  
+unix  3      [ ]         STREAM     CONNECTED     16049  @/tmp/.ICE-unix/1581
+unix  3      [ ]         STREAM     CONNECTED     16048  
+unix  3      [ ]         STREAM     CONNECTED     16047  /tmp/orbit-root/linc-6c1-0-111e340c2d6a1
+unix  3      [ ]         STREAM     CONNECTED     16046  
+unix  3      [ ]         STREAM     CONNECTED     16043  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     16042  
+unix  3      [ ]         STREAM     CONNECTED     16038  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16037  
+unix  3      [ ]         STREAM     CONNECTED     16036  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     16035  
+unix  3      [ ]         STREAM     CONNECTED     16025  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     16024  
+unix  3      [ ]         STREAM     CONNECTED     16023  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     16022  
+unix  3      [ ]         STREAM     CONNECTED     15976  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15975  
+unix  3      [ ]         STREAM     CONNECTED     15968  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15967  
+unix  3      [ ]         STREAM     CONNECTED     15922  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15921  
+unix  3      [ ]         STREAM     CONNECTED     15916  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15915  
+unix  3      [ ]         STREAM     CONNECTED     15912  /tmp/orbit-root/linc-6b3-0-36a29d54502a3
+unix  3      [ ]         STREAM     CONNECTED     15911  
+unix  3      [ ]         STREAM     CONNECTED     15908  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     15907  
+unix  3      [ ]         STREAM     CONNECTED     15901  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15900  
+unix  3      [ ]         STREAM     CONNECTED     15898  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15897  
+unix  3      [ ]         STREAM     CONNECTED     15880  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15879  
+unix  2      [ ]         DGRAM                    15720  
+unix  3      [ ]         STREAM     CONNECTED     15716  /tmp/orbit-root/linc-62d-0-273ce0f028ea2
+unix  3      [ ]         STREAM     CONNECTED     15715  
+unix  3      [ ]         STREAM     CONNECTED     15712  /tmp/orbit-root/linc-6ab-0-222220cf1329e
+unix  3      [ ]         STREAM     CONNECTED     15711  
+unix  3      [ ]         STREAM     CONNECTED     15708  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     15707  
+unix  3      [ ]         STREAM     CONNECTED     15422  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15421  
+unix  3      [ ]         STREAM     CONNECTED     15406  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     15405  
+unix  3      [ ]         STREAM     CONNECTED     15373  @/tmp/dbus-9bOR6AgBVn
+unix  3      [ ]         STREAM     CONNECTED     15372  
+unix  3      [ ]         STREAM     CONNECTED     15370  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15369  
+unix  3      [ ]         STREAM     CONNECTED     15337  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15336  
+unix  3      [ ]         STREAM     CONNECTED     15319  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15318  
+unix  3      [ ]         STREAM     CONNECTED     15317  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15316  
+unix  3      [ ]         STREAM     CONNECTED     15313  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15312  
+unix  3      [ ]         STREAM     CONNECTED     15311  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15310  
+unix  3      [ ]         STREAM     CONNECTED     15283  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15282  
+unix  3      [ ]         STREAM     CONNECTED     15255  
+unix  3      [ ]         STREAM     CONNECTED     15254  
+unix  3      [ ]         STREAM     CONNECTED     15245  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15244  
+unix  3      [ ]         STREAM     CONNECTED     15226  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     15225  
+unix  3      [ ]         STREAM     CONNECTED     15209  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     15208  
+unix  3      [ ]         STREAM     CONNECTED     15120  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     15119  
+unix  2      [ ]         DGRAM                    15035  
+unix  3      [ ]         STREAM     CONNECTED     14985  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     14983  
+unix  3      [ ]         STREAM     CONNECTED     14490  @/tmp/gdm-session-qRjaTWxG
+unix  3      [ ]         STREAM     CONNECTED     14489  
+unix  3      [ ]         STREAM     CONNECTED     14484  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     14483  
+unix  3      [ ]         STREAM     CONNECTED     14393  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     14392  
+unix  2      [ ]         DGRAM                    14391  
+unix  2      [ ]         DGRAM                    14324  
+unix  3      [ ]         STREAM     CONNECTED     14302  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     14301  
+unix  3      [ ]         STREAM     CONNECTED     14261  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     14259  
+unix  3      [ ]         STREAM     CONNECTED     14238  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     14237  
+unix  3      [ ]         STREAM     CONNECTED     14227  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     14226  
+unix  3      [ ]         STREAM     CONNECTED     14220  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     14216  
+unix  3      [ ]         STREAM     CONNECTED     14208  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     14207  
+unix  3      [ ]         STREAM     CONNECTED     13655  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13654  
+unix  3      [ ]         STREAM     CONNECTED     13648  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13647  
+unix  3      [ ]         STREAM     CONNECTED     13581  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     13580  
+unix  3      [ ]         STREAM     CONNECTED     13554  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     13553  
+unix  3      [ ]         STREAM     CONNECTED     13478  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13477  
+unix  3      [ ]         STREAM     CONNECTED     13425  @/tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     13424  
+unix  3      [ ]         STREAM     CONNECTED     13288  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13287  
+unix  3      [ ]         STREAM     CONNECTED     13258  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13257  
+unix  2      [ ]         DGRAM                    13248  
+unix  3      [ ]         STREAM     CONNECTED     12976  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12975  
+unix  2      [ ]         DGRAM                    12974  
+unix  2      [ ]         DGRAM                    12565  
+unix  2      [ ]         DGRAM                    12508  
+unix  3      [ ]         STREAM     CONNECTED     12457  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12456  
+unix  3      [ ]         STREAM     CONNECTED     12155  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12154  
+unix  3      [ ]         STREAM     CONNECTED     12114  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12113  
+unix  3      [ ]         STREAM     CONNECTED     12067  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12066  
+unix  3      [ ]         STREAM     CONNECTED     12004  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12003  
+unix  3      [ ]         STREAM     CONNECTED     11830  @/var/run/hald/dbus-R1GpZYnr7W
+unix  3      [ ]         STREAM     CONNECTED     11829  
+unix  3      [ ]         STREAM     CONNECTED     11821  @/var/run/hald/dbus-R1GpZYnr7W
+unix  3      [ ]         STREAM     CONNECTED     11811  
+unix  3      [ ]         STREAM     CONNECTED     11799  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     11798  
+unix  3      [ ]         STREAM     CONNECTED     11764  @/var/run/hald/dbus-R1GpZYnr7W
+unix  3      [ ]         STREAM     CONNECTED     11704  
+unix  3      [ ]         STREAM     CONNECTED     11593  @/var/run/hald/dbus-2z5HmGdcB4
+unix  3      [ ]         STREAM     CONNECTED     11592  
+unix  3      [ ]         STREAM     CONNECTED     11568  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     11567  
+unix  2      [ ]         DGRAM                    11538  
+unix  3      [ ]         STREAM     CONNECTED     11408  
+unix  3      [ ]         STREAM     CONNECTED     11407  
+unix  2      [ ]         DGRAM                    11097  
+unix  3      [ ]         STREAM     CONNECTED     10985  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10984  
+unix  3      [ ]         STREAM     CONNECTED     10979  
+unix  3      [ ]         STREAM     CONNECTED     10978  
+unix  2      [ ]         DGRAM                    10976  
+unix  3      [ ]         STREAM     CONNECTED     10968  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10957  
+unix  3      [ ]         STREAM     CONNECTED     10915  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10914  
+unix  2      [ ]         DGRAM                    10911  
+unix  3      [ ]         STREAM     CONNECTED     10884  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10883  
+unix  3      [ ]         STREAM     CONNECTED     10872  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10871  
+unix  3      [ ]         STREAM     CONNECTED     10840  /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     10839  
+unix  3      [ ]         STREAM     CONNECTED     10835  
+unix  3      [ ]         STREAM     CONNECTED     10834  
+unix  3      [ ]         STREAM     CONNECTED     10564  
+unix  3      [ ]         STREAM     CONNECTED     10563  
+unix  3      [ ]         STREAM     CONNECTED     10554  
+unix  3      [ ]         STREAM     CONNECTED     10553  
+unix  3      [ ]         DGRAM                    8600   
+unix  3      [ ]         DGRAM                    8599   

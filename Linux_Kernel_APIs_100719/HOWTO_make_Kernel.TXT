@@ -1,0 +1,60 @@
+
+Operation System: Linux Fedora Core 13
+Update Kernel: linux-2.6.39.4.tar.gz
+
+1. Linux Kernel的官方網站：http://www.kernel.org/，去下載核心。
+
+2. 下載完的核心解壓縮放在：/usr/src/kernel/。解壓縮時間很快，約1分鐘以內即可完成。
+
+[root@localhost]# cd /usr/src/kernel/; 
+[root@localhost]# time tar -zxvf ./linux-2.6.39.4.tar.gz
+
+3. "make mrproper"指令的目的，是「清除就的設定檔和就的編譯目標檔案」(1秒內可以完成)。
+
+[root@localhost]# time make mrproper
+
+[root@localhost]# make menuconfig; 
+
+4. 執行"make menuconfig"指令，決定kernel的設定值。
+
+5. 接著，就開始進行make kernel。下面的指令"-j (X)"，X指的是你CPU的核心數量。make核心的時間很長，以自己的電腦上是要花約50分鐘。
+
+[root@localhost]# time make -j (X) 
+
+6. make完Kernel之後，會在"/arch/x86/boot/"資料夾下產生幾個重要的檔案：
+    a). bzImage ---- 是vmlinux.bin透過"gzip"和"objcopy"製作出來的壓縮檔；載入記憶體時的位置可以超過1MB。
+    b). vmlinux.bin ---- 這是一個包含Linux Kernel的"靜態"連結執行檔
+    c). setup.bin ---- 這個檔案目前還不清楚 ....  
+    d). setup.elf ---- 這個檔案目前還不清楚 .... 
+
+7. ./System.map ---- 這一個Linux Kernel版本的「符號表 (系統映射檔)」。
+
+8. 執行"make modules"；建立Linux Kernel的"動態"連結執行檔 (*.ko)
+
+9. 執行"make modules_install"; 這個指令會把Linux Kernel的"動態"連結執行檔 (*.ko)拷貝到"/lib/modules/2.6.39.4/"。
+    這個動作非常重要，因為Linux Kernel開機的時候，先執行*.img裡面包含了靜態連結；最後才是動態連結 (insmod *.ko)。
+
+10. 接著執行"make install"指令；這個指令最後會呼叫到"/arch/x86/boot/install.sh" (PS)。
+       Shell Script裡有一個很重要的工具："/sbin/installkernel"或是"/bin/installkernel"，	它會在"/boot/"資料夾下產生：
+       a). initramfs-2.6.39.4.img
+       b). 把剛剛產生的"/usr/src/kernels/linux-2.6.39.4/System.map"拷貝到"/boot/System.map-2.6.39.4"且建立Symbol Link
+       c). 把"/usr/src/kernels/linux-2.6.39.4/arch/x86/boot/bzImage"拷貝到"/boot/vmlinuz-2.6.39.4"且建立Symbol Link
+
+       PS: sh /usr/src/kernels/linux-2.6.39.4/arch/x86/boot/install.sh 2.6.39.4 arch/x86/boot/bzImage System.map "/boot"
+
+       最後手動把"/usr/src/kernels/linux-2.6.39.4/.config"拷貝到"/boot/config-2.6.39.4.fc13.i686"；但我執行的時候出現以下問題，
+       看來是跟虛擬機器 (VirtualBox)有關.... 
+
+[root@localhost linux-2.6.39.4]# time make install; 
+sh /usr/src/kernels/linux-2.6.39.4/arch/x86/boot/install.sh 2.6.39.4 arch/x86/boot/bzImage System.map "/boot"
+ERROR: modinfo: could not find module vboxsf
+ERROR: modinfo: could not find module vboxguest
+ERROR: modinfo: could not find module vboxvideo
+ERROR: modinfo: could not find module i2c_core
+
+11. 在有的Linux版本還要再執行"mkinitramfs -o /boot/initramfs-2.6.39.4.img /lib/modules/2.6.39.4/"，這乙行指令的目的是要把「Linux Kernel的動
+      態連結檔 (*.ko)增加到initramfs裡面」；可是，自己在Fedora Core 13上在執行"make install"指令的時候就已經產生"/boot/initramfs-2.6.39.4.img"
+      了！
+
+12. 仔細再看/boot/grub/grub.conf (menu.lst)，其實開機的順序應為kernel (vmlinuz) -> initrd (*.img)；initrd到底是什麼東西要在花時間了解一下.... 
+      務必要花時間瞭解 / 知道Linux的Hardware / Software bring up的流程，甚至是更前面的BootLoader (uboot).... 

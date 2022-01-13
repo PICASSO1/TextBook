@@ -1,0 +1,105 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.note.gnu.build-id
+                0x0000000000000000       0x24
+ .note.gnu.build-id
+                0x0000000000000000       0x24 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.text           0x0000000000000000       0xe4
+ .text          0x0000000000000000       0xe4 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+                0x0000000000000000                cleanup_module
+                0x000000000000002e                init_module
+ .text          0x00000000000000e4        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.rodata         0x0000000000000000       0x11
+ .rodata        0x0000000000000000       0x11 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.rodata.str1.1  0x0000000000000000       0xef
+ .rodata.str1.1
+                0x0000000000000000       0xef /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.modinfo        0x0000000000000000       0xd7
+ .modinfo       0x0000000000000000       0x71 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ *fill*         0x0000000000000071        0x3 00
+ .modinfo       0x0000000000000074       0x63 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+__mcount_loc    0x0000000000000000        0xc
+ __mcount_loc   0x0000000000000000        0xc /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.data           0x0000000000000000        0x0
+ .data          0x0000000000000000        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .data          0x0000000000000000        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.gnu.linkonce.this_module
+                0x0000000000000000      0x16c
+ .gnu.linkonce.this_module
+                0x0000000000000000      0x16c /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+                0x0000000000000000                __this_module
+
+.bss            0x0000000000000000        0x4
+ .bss           0x0000000000000000        0x4 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .bss           0x0000000000000004        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+/DISCARD/
+ *(.discard)
+LOAD /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+LOAD /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+OUTPUT(/root/Linux_Kernel_API/Ch04/wake_up_process/example.ko elf32-i386)
+
+.note.GNU-stack
+                0x0000000000000000        0x0
+ .note.GNU-stack
+                0x0000000000000000        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.comment        0x0000000000000000       0x5a
+ .comment       0x0000000000000000       0x2d /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .comment       0x000000000000002d       0x2d /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_aranges  0x0000000000000000       0x20
+ .debug_aranges
+                0x0000000000000000       0x20 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.debug_pubnames
+                0x0000000000000000       0x6a
+ .debug_pubnames
+                0x0000000000000000       0x2c /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_pubnames
+                0x000000000000002c       0x3e /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_info     0x0000000000000000     0xb49f
+ .debug_info    0x0000000000000000     0x6bf0 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_info    0x0000000000006bf0     0x48af /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_abbrev   0x0000000000000000      0x5c1
+ .debug_abbrev  0x0000000000000000      0x346 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_abbrev  0x0000000000000346      0x27b /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_line     0x0000000000000000      0x983
+ .debug_line    0x0000000000000000      0x56f /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_line    0x000000000000056f      0x414 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_frame    0x0000000000000000       0xd8
+ .debug_frame   0x0000000000000000       0xd8 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.debug_str      0x0000000000000000     0x6c7e
+ .debug_str     0x0000000000000000     0x4107 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_str     0x0000000000004107     0x2b77 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
+
+.debug_loc      0x0000000000000000       0x71
+ .debug_loc     0x0000000000000000       0x71 /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+
+.debug_pubtypes
+                0x0000000000000000     0x174d
+ .debug_pubtypes
+                0x0000000000000000      0xdea /root/Linux_Kernel_API/Ch04/wake_up_process/example.o
+ .debug_pubtypes
+                0x0000000000000dea      0x963 /root/Linux_Kernel_API/Ch04/wake_up_process/example.mod.o
