@@ -121,10 +121,8 @@ struct data *loop_node;
 	struct data *ptr = loop_node;
 	struct data *prev = (struct data *)NULL;
 
-/*	以此一案例而言：5, 4, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, .... 
-	3是開始重複的節點，這個while loop跑2次時，就會跳出：
-	ptr->next為3 (此時ptr應為1)；而far也是3。
-	這個while loop的目的是為了找出那一個節點開始一直重複！
+/*	以此一案例而言：5, 4, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, .... 3是開始重複的節點，這個while loop跑2次時，就會跳出：
+	ptr->next為3 (此時ptr應為1)；而far也是3。這個while loop的目的是為了找出那一個節點開始一直重複！
 */	while (ptr->next != loop_node) {
 		ptr = ptr->next;
 		far = far->next;
@@ -132,9 +130,8 @@ struct data *loop_node;
 	//	printf("%d: ptr->next->val = %d; loop_node->val = %d; far->val = %d \n", nCnt++, ptr->next->val, loop_node->val, far->val);
 	}
 
-/*	把找到的那一個重複的點節 (far)，先暫時設為前一個節點 (prev)；即5, 4, 3, 2, 1, 3, 2, 1, .... 
-	變成2, 1, 3, 2, 1, ....  (prev = 3)
-*/	prev = far;
+//	把找到的那一個重複的點節 (far)，先暫時設為前一個節點 (prev)；即5, 4, 3, 2, 1, 3, 2, 1, .... 變成2, 1, 3, 2, 1, ....  (prev = 3)
+	prev = far;
 	far = far->next;
 
 //	nCnt = 0;
@@ -161,13 +158,11 @@ struct data *head;
 	struct data *slow = head;
 	struct data *fast = head;
 
-	// Slow和Fast的用意為：假設資料為5, 4, 3, 2, 1，	Slow跑得是：5, 4, 3, 2, 1；而Fast跑得是：5, 3, 1。	正常地情況下Slow跑1次，Fast跑2次，Slow是永遠追不上Fast的；
-	// 但若有產生Loop的情況之下，是一定會追到！while loop的起始條件是：當Link List的前3個成員均不為空指標時，就進入while loop
-	while (slow != (struct data *)NULL && fast->next != (struct data *)NULL && fast->next->next != (struct data *)NULL) {
-	/*	以此一案例而言：5, 4, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, .... 
-		當while loop跑到第2次時，slow為3，fast->next也為3 (此時fast為1)；
-		亦或者跑到第4次時，slow為1，fast->next->next也為1 (此時fast為3)。
-		即5, 4, 3, 2, 1, 3, 2, 1, .... 3是開始被重複的節點。要把它移除！
+/*	Slow和Fast的用意為：假設資料為5, 4, 3, 2, 1，Slow跑得是：5, 4, 3, 2, 1；而Fast跑得是：5, 3, 1。正常地情況下Slow跑1次，Fast跑2次，Slow是永遠追不上Fast的；
+	但若有產生Loop的情況之下，是一定會追到！while loop的起始條件是：當Link List的前3個成員均不為空指標時，就進入while loop
+*/	while (slow != (struct data *)NULL && fast->next != (struct data *)NULL && fast->next->next != (struct data *)NULL) {
+	/*	以此一案例而言：5, 4, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, .... 當while loop跑到第2次時，slow為3，fast->next也為3 (此時fast為1)；
+		亦或者跑到第4次時，slow為1，fast->next->next也為1 (此時fast為3)。即5, 4, 3, 2, 1, 3, 2, 1, .... 3是開始被重複的節點。要把它移除！
 	*/	if ((slow == fast->next) || (slow == fast->next->next)) {
 		/*	printf("nCnt = %d; slow->val = %d; fast->next->val = %d; fast->next->next->val = %d \n", \
 				nCnt, slow->val, fast->next->val, fast->next->next->val);
