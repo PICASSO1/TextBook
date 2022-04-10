@@ -10,7 +10,7 @@
  # Date: 2022 / 04 / 10
  #
  # Description: 
- # 1. 這是一個簡單地 Static library (靜態函式庫)的範例寫法：
+ # 1. 這是一個簡單地 Static library / Architecture (靜態函式庫 / 靜態架構)的範例寫法：
  #    - gcc -c main.c -o main.o
  #    - gcc -c funcX.c -o funcX.o
  #    - ar -crs libfunc.a func3.o func4.o func5.o
