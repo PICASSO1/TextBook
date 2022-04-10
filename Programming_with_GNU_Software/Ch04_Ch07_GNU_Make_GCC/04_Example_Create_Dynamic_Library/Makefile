@@ -29,8 +29,8 @@
  #
  # 2. 例外處理：
  #    - 假如：libXXXX.so.y.y.y 已經搬移到 /usr/lib/ 但在最後的 Linking 階段 (-l func)告訴你「找不到此一函式庫 (/usr/bin/ld: cannot find -lxxx)」或者是
- #    「error while loading shared libraries: libfunc.so.1: cannot open shared object file: No such file or directory」那是因為我們新增一個自訂的函式庫 (linfunc.so.1.0.0) 在系統 (/usr/lib/) ，但是系統統沒有
- #      更新函式庫索引。解決方案：
+ #    「error while loading shared libraries: libfunc.so.1: cannot open shared object file: No such file or directory」那是因為我們新增一個自訂的函式庫 (linfunc.so.1.0.0) 在系
+ #     統 (/usr/lib/) ，但是系統統沒有更新函式庫索引。解決方案：
  #    - sudo pacman -Syu libxtst
  #    - sudo /sbin/ldconfig
  #
