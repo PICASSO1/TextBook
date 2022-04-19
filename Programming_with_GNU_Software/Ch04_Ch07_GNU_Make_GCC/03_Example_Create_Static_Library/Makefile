@@ -36,16 +36,16 @@ GCC := /usr/bin/gcc
 CFLAGS := -o
 OBJS1 := main.o func1.o func2.o
 OBJS2 := func3.o func4.o func5.o
-EXEC := main
-RM := rm -rf
+BIN := main
+RM := /usr/bin/rm -rf
 AR := /usr/bin/ar
 STATIC_LIB := libfunc.a
 
 .PHONY: all
-all: $(EXEC)
+all: $(BIN)
 
-$(EXEC): $(OBJS1) $(STATIC_LIB)
-	$(GCC) $(CFLAGS) $(EXEC) $(OBJS1) $(STATIC_LIB)
+$(BIN): $(OBJS1) $(STATIC_LIB)
+	$(GCC) $(CFLAGS) $(BIN) $(OBJS1) $(STATIC_LIB)
 #	gcc -o main main.o func1.o func2.o libfunc.a
 
 $(OBJS1): %.o: %.c
@@ -69,7 +69,7 @@ clean:
 	@-$(RM) *.o *.S *.a
 
 cleanall: clean
-	@-$(RM) $(EXEC) 
+	@-$(RM) $(BIN) 
 
 install:
 

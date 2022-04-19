@@ -1,6 +1,6 @@
-#include "func1.h"
+#include "funcA.h"
 
-void _FunC1(void)
+void _FunCA(void)
 {
 	fprintf(stdout, "%s (%d): %s %s\n", __FUNCTION__, __LINE__, __DATE__, __TIME__);
 	

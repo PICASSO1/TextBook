@@ -40,9 +40,9 @@
 
 GCC := /usr/bin/gcc
 CFLAGS := -o
-OBJS1 := main.o func1.o func2.o
-OBJS2 := func3.o func4.o func5.o
-EXEC := main
+OBJS1 := main.o func6.o func7.o
+OBJS2 := func8.o func9.o funcA.o
+BIN := main
 RM := /usr/bin/rm -rf
 
 MAJOR := 1
@@ -53,19 +53,19 @@ LIB_DIR := /usr/lib/
 UNLINK := /usr/bin/unlink
 
 .PHONY: all
-all: $(EXEC)
+all: $(BIN)
 
-$(EXEC): $(OBJS1) $(OBJS2) $(DYNAMIC_LIB)
-	$(GCC) $(CFLAGS) $(EXEC) $(OBJS1) -l $(DYNAMIC_LIB)
+$(BIN): $(OBJS1) $(OBJS2) $(DYNAMIC_LIB)
+	$(GCC) $(CFLAGS) $(BIN) $(OBJS1) -l $(DYNAMIC_LIB)
 #	gcc -o main main.o func1.o func2.o -l func
 
 $(OBJS1): %.o: %.c
 	$(GCC) -c $< $(CFLAGS) $@
 
 $(OBJS2): 
-	$(GCC) -c -fPIC -Wall func3.c func4.c func5.c
+	$(GCC) -c -fPIC -Wall func8.c func9.c funcA.c
 	$(GCC) -shared -Wl,-soname,lib$(DYNAMIC_LIB).so.$(MAJOR) $(CFLAGS) lib$(DYNAMIC_LIB).so.$(MAJOR).$(MINOR).$(RELEASE) $(OBJS2)
-#	gcc -shared -Wl,-soname,libfunc.so.1 -o libfunc.so.1.0.0 func3.o func4.o func5.o
+#	gcc -shared -Wl,-soname,libfunc.so.1 -o libfunc.so.1.0.0 func8.o func9.o funcA.o
 
 $(DYNAMIC_LIB): $(OBJS2)
 	mv -vf lib$(DYNAMIC_LIB).so.$(MAJOR).$(MINOR).$(RELEASE) $(LIB_DIR)
@@ -80,7 +80,7 @@ clean:
 	$(RM) *.o *.S *.so.*
 
 cleanall: clean
-	-$(RM) $(EXEC) 
+	-$(RM) $(BIN) 
 #	rm -vf main
 	-$(UNLINK) $(LIB_DIR)lib$(DYNAMIC_LIB).so
 #	unlink /usr/lib/libfunc.so

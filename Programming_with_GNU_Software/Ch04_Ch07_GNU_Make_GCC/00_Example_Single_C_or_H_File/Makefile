@@ -20,17 +20,22 @@
  #
 ######
 
-GCC := gcc
+GCC := /usr/bin/gcc
 CFLAGS := -o
 OBJS := main.o
-EXEC := main
-RM := rm -rf
+BIN := main
+RM := /usr/bin/rm -rf
+
+AR := /usr/bin/ar
+INCS := 
+LIB := 
+STATIC_LIB := 
 
 .PHONY: all
-all: $(EXEC)
+all: $(BIN)
 
-$(EXEC): $(OBJS)
-	@-$(GCC) $(CFLAGS) $(EXEC) $(OBJS)
+$(BIN): $(OBJS)
+	@-$(GCC) $(CFLAGS) $(BIN) $(OBJS)
 
 $(OBJS): %.o: %.c
 	@-$(GCC) -c $< $(CFLAGS) $@
@@ -40,7 +45,7 @@ clean:
 	@-$(RM) *.o *.S
 
 cleanall: clean
-	@-$(RM) $(EXEC) 
+	@-$(RM) $(BIN) 
 
 install:
 

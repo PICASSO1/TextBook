@@ -14,19 +14,19 @@
  *
 (*)?*/
 
-#include "func1.h"
-#include "func2.h"
-#include "func3.h"
-#include "func4.h"
-#include "func5.h"
+#include "func6.h"
+#include "func7.h"
+#include "func8.h"
+#include "func9.h"
+#include "funcA.h"
 
 int main(void)
 {
-	_FunC1();
-	_FunC2();
-	_FunC3();
-	_FunC4();
-	_FunC5();
+	_FunC6();
+	_FunC7();
+	_FunC8();
+	_FunC9();
+	_FunCA();
 
 	return 0;
 }

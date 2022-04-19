@@ -1,6 +1,6 @@
-#include "func3.h"
+#include "func6.h"
 
-void _FunC3(void)
+void _FunC6(void)
 {
 	fprintf(stdout, "%s (%d): %s %s\n", __FUNCTION__, __LINE__, __DATE__, __TIME__);
 	
