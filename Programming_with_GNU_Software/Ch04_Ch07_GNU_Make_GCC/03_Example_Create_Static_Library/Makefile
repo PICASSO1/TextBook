@@ -13,8 +13,8 @@
  # 1. 這是一個簡單地 Static library / Architecture (靜態函式庫 / 靜態架構)的範例寫法：
  #    - gcc -c main.c -o main.o
  #    - gcc -c funcX.c -o funcX.o
- #    - ar -crs libfunc.a func3.o func4.o func5.o
- #    - gcc -o main main.o func1.o func2.o libfunc.a
+ #    - ar -crsv libfunc.a func3.o func4.o func5.o
+ #    - gcc -o main main.o func1.o func2.o -static libfunc.a
  #
  # 2. 除此之外，ar 指令還有一些其他的用法︰
  #    a). 更新函式庫︰
@@ -61,7 +61,7 @@ $(OBJS2): %.o: %.c
 #	gcc -c func5.c -o func5.o
 
 $(STATIC_LIB): $(OBJS2)
-	$(AR) -crs $(STATIC_LIB) $(OBJS2)
+	$(AR) -crsv $(STATIC_LIB) $(OBJS2)
 #	ar -crs libfunc.a func3.o func4.o func5.o
 
 .PHONY: clean cleanall install print tar dist TAGS check test
