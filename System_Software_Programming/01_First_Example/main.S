@@ -30,36 +30,40 @@
  #
 ######
 
-	.file	"main.c"                                           # 檔案名稱："main.c"
-	.text                                                          # 內文段
-	.section	.rodata                                     # 區段
-.LC0:
-	.string	"signed int i = %d \n"                # 儲存在字串表的內容："signed int i = %d \n"
-	.text                                                          # 內文段
-	.globl	main                                             # 全域段
-	.type	main, @function                         # 
-main:                                                            # 主程式開始
-.LFB0:
-	.cfi_startproc                                          # 定義函式的開始；開始做一些初始化
-	pushq	%rbp
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movl	$-1, -4(%rbp)                            # 把數值 -1 儲存在 Base Pointer Register - 4 Byte 的位址上；即：singed int i = -1; 
-	movl	-4(%rbp), %eax
-	movl	%eax, %esi
-	leaq	.LC0(%rip), %rax
-	movq	%rax, %rdi
-	movl	$0, %eax
-	call	printf@PLT                                   # 呼叫函式：printf(); 
-	movl	$0, %eax                                   # 將數值 0 儲存到 eax 暫存器。函式的回傳值必須儲存在 eax 暫存器。
-	leave
-	.cfi_def_cfa 7, 8
-	ret                                                         # return 0
-	.cfi_endproc                                        # 定義函式的結束
-.LFE0:
-	.size	main, .-main
-	.ident	"GCC: (GNU) 11.2.0"
+	.file	"main.c"                                # 檔案名稱："main.c"；GDB可能會用到。
+	.text                                           # 內文段
+	.section	.rodata                         # 區段包含一個 .rodate (唯獨的資料段)；這一塊記憶體的資料只能唯讀。
+.LC0:                                                   # Local Constant，區域變數
+	.string	"signed int i = %d \n"                  # 儲存在字串表的內容："signed int i = %d \n"
+	.text                                           # 內文段
+	.globl	main                                    # 我們在全域段，定義了一個叫 "main" 的東西；
+	.type	main, @function                         # 而 main 的類型 (Type)是一個函式 (Function)
+main:                                                   # 函式開始 .... 
+.LFB0:                                                  # Local Function Beginning；從０開始，與 .LFE 成對出現。
+	.cfi_startproc                                  # 定義函式的開始，開始做一些初始化；與 cfi_endproc 成對出現。
+	pushq	%rbp                                    # 把 rbp (Base Pointer Register)的內容往前推８ Bytes (pushq??)
+	.cfi_def_cfa_offset 16                          # CFA 偏移了１６ Bytes
+	.cfi_offset 6, -16                              # 而 R6 (%rsp) 向堆疊 (Stack)的頂端，移動了１６ Bytes .... 
+	movq	%rsp, %rbp                              # 把 rsp (Stack Pointer Register)的內容，移動到 rbp
+	.cfi_def_cfa_register 6                         # 此時的 CFA Register 已被定義為 R6 (%rsp)
+	subq	$16, %rsp                               # 
+	movl	$-1, -4(%rbp)                           # 把數值 -1 儲存在 Base Pointer Register - 4 Byte 的位址上；即：singed int i = -1; 
+	movl	-4(%rbp), %eax                          #
+	movl	%eax, %esi                              # 把 eax (Adder Register)的內容，移動到 esi (Source Index Register)。
+	leaq	.LC0(%rip), %rax                        # 
+	movq	%rax, %rdi                              # 把 rax 的內容，移動至 rdi (Destination Index Register)。
+	movl	$0, %eax                                # 把數值 0 ，設定給 eax 
+	call	printf@PLT                              # 呼叫函式：printf(); 
+	movl	$0, %eax                                # 將數值 0 儲存到 eax 暫存器。函式的回傳值必須儲存在 eax 暫存器。
+	leave                                           # 離開函式.... 
+	.cfi_def_cfa 7, 8                               # 
+	ret                                             # return 0
+	.cfi_endproc                                    # 定義函式的結束
+.LFE0:                                                  # Local Function Ending
+	.size	main, .-main                            # main() 函式的大小；而 .-main 是 main()函式大小的值，這玩意兒最後會組譯成目的檔 (*.o)。
+	.ident	"GCC: (GNU) 11.2.0"                     # GNU gcc 編譯器喜歡留下一些訊息；但這條訊息會被當成一種註解，在最後的目標檔 (*.o)並不會有它。
 	.section	.note.GNU-stack,"",@progbits
+	# GNU GCC 在其中寫入程式碼可以容納不可執行堆疊 (Stack)的特殊部份。這是正常情況的操作。但某些特殊用途 (非標準C)需要對疊的部份可以被執行。
+	# 在現代處理器上，核心可以建立一個不可執行的堆疊 (如果有設計師嘗試將堆疊上的某些數據當為程式碼執行，則會觸發異常 (Exception)的堆疊）；
+	# 這被一些人視為"安全功能”，因為將程式碼放在堆疊上是利用緩衝區溢出的常用方法。
+	# 此段的語意為：「"可執行"的文件，將被標記為與"不可執行"的堆疊相容」，核心將很樂意提供這樣的堆疊 (Stack)。
