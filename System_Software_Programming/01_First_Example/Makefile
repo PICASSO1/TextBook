@@ -19,6 +19,7 @@ CFLAGS := -o
 OBJS := main.o
 BIN := main
 RM := /usr/bin/rm -rf
+DEBUG := -g
 
 AR := /usr/bin/ar
 INCS := 
@@ -34,7 +35,9 @@ $(BIN): $(OBJS)
 
 $(OBJS): %.o: %.c
 #	$(GCC) -c $< $(CFLAGS) $@
-#	$(GCC) -S main.c $(CFLAGS) main.S
+#	$(GCC) -E main.c $(CFLAGS) main.i
+#	$(GCC) -S main.i $(CFLAGS) main.S
+#	$(GCC) -S $(DEBUG) ./main.i $(CFLAGS) ./main.S.G
 	$(GCC) -c main.S -fverbose-asm $(CFLAGS) main.o
 
 .PHONY: clean cleanall install print tar dist TAGS check test
