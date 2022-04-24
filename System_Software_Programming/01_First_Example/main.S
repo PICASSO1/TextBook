@@ -28,6 +28,12 @@
  # 4. cfi: Call Frame Information (呼叫訊框資訊)；cfa: Canonical Frame Address (規範訊框位址)；
  #    這些是 DWARF (Debugging With Attributed Record Formats)，是一種調用訊息的格式。
  #
+ # 5. %rsp (Stack Pointer Register，堆疊暫存器，指向堆疊的頂端)、%rbp (Base Pointer Register，堆疊基底暫存器，指向堆疊得底部)、push、pop 等等，這些東西和 Stack Session 有關；
+ #    有可以稱做 Stack Frame (堆疊訊框)。
+ #
+ # 6. 堆疊的底部 ( %rbp 所指的地方)，是在記憶體位址"較高"的地方；而堆疊的頂端 ( %rsp 所指的地方)，是在記憶體位址"較低"的地方。所以，當有東西進來的時候 (push)，記憶體位址是向下減的
+ #    。就某種程度上而言，是一個 LIFO (Last In First Out)的設計概念。
+ # 
 ######
 
 	.file	"main.c"                                # 檔案名稱："main.c"；GDB可能會用到。
@@ -41,14 +47,14 @@
 main:                                                   # 函式開始 .... 
 .LFB0:                                                  # Local Function Beginning；從０開始，與 .LFE 成對出現。
 	.cfi_startproc                                  # 定義函式的開始，開始做一些初始化；與 cfi_endproc 成對出現。
-	pushq	%rbp                                    # 把 rbp (Base Pointer Register)的內容往前推８ Bytes (pushq??)
-	.cfi_def_cfa_offset 16                          # CFA 偏移了１６ Bytes
-	.cfi_offset 6, -16                              # 而 R6 (%rsp) 向堆疊 (Stack)的頂端，移動了１６ Bytes .... 
-	movq	%rsp, %rbp                              # 把 rsp (Stack Pointer Register)的內容，移動到 rbp
-	.cfi_def_cfa_register 6                         # 此時的 CFA Register 已被定義為 R6 (%rsp)
-	subq	$16, %rsp                               # 
+	pushq	%rbp                                    # 把舊的 %rbp 的內容，送到 Stack Frame；
+	.cfi_def_cfa_offset 16                          # 定義 CFA 偏移了 16 Bytes；
+	.cfi_offset 6, -16                              # R6 暫存器 (即 %rbp)，往 Stack 頂端偏移１６ Bytes；因為 Stack 的頂端，是在記憶體位址較低的地方，所以用減號。
+	movq	%rsp, %rbp                              # 把「舊的」%rsp 的內容設定給 %rbp ；
+	.cfi_def_cfa_register 6                         # 把 R6 (%rbp)定義為新的 CFA (這裡指的應為 CFA 的底部)
+	subq	$16, %rsp                               # 而「新的」%rsp 的內容，則是原本的內容減１６之後，再存回 %rsp。 
 	movl	$-1, -4(%rbp)                           # 把數值 -1 儲存在 Base Pointer Register - 4 Byte 的位址上；即：singed int i = -1; 
-	movl	-4(%rbp), %eax                          #
+	movl	-4(%rbp), %eax                          # 再把暫存器 %rbp 裡的"值" (記憶體位址)，減４，再把這個位址移到 %eax 暫存器。
 	movl	%eax, %esi                              # 把 eax (Adder Register)的內容，移動到 esi (Source Index Register)。
 	leaq	.LC0(%rip), %rax                        # 
 	movq	%rax, %rdi                              # 把 rax 的內容，移動至 rdi (Destination Index Register)。
