@@ -16,8 +16,8 @@
 
 GCC := /usr/bin/gcc
 CFLAGS := -o
-OBJS := main.o
-BIN := main
+OBJS := main.o main.o.g
+BIN := main main.g
 RM := /usr/bin/rm -rf
 DEBUG := -g
 
@@ -31,18 +31,21 @@ LDD := /usr/bin/ldd
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(GCC) $(CFLAGS) $(BIN) $(OBJS)
+#	$(GCC) $(CFLAGS) $(BIN) $(OBJS)
+	$(GCC) $(CFLAGS) main main.o
+	$(GCC) $(CFLAGS) main.g main.o.g
 
-$(OBJS): %.o: %.c
+$(OBJS): 
 #	$(GCC) -c $< $(CFLAGS) $@
 #	$(GCC) -E main.c $(CFLAGS) main.i
 #	$(GCC) -S main.i $(CFLAGS) main.S
 #	$(GCC) -S $(DEBUG) ./main.i $(CFLAGS) ./main.S.G
 	$(GCC) -c main.S -fverbose-asm $(CFLAGS) main.o
+	$(GCC) -c -g main.c $(CFLAGS) main.o.g
 
 .PHONY: clean cleanall install print tar dist TAGS check test
 clean:
-	@-$(RM) *.o
+	@-$(RM) *.o *.o.g
 
 cleanall: clean
 	@-$(RM) $(BIN) 
