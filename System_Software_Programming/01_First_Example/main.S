@@ -12,16 +12,26 @@
  # Description: 
  # 1. 由一個簡單地 *.c 檔編譯成組合語言，並觀察及瞭解其內容。
  #
- # 2. EX: OpCode (Operation Code) -- "movl"，屬於「後置 (Postfix / Suffix)表示法」；可以分別區分為：b, w, l, qs, d, t. 
- #    - b: Byte, 1個字節，指的是1 Byte (8 bit)；對應於 C 語言的資料型態：char
- #    - w: Word, 2個字節，指的是2 Byte (16 bit)；對應於 C 語言的資料型態：short
- #    - l: Long Word, 4個字節，指的是4 Byte (32 bit)；對應於 C 語言的資料型態：int
- #    - q: Quad Word, 8個字節，指的是8 Byte (64 bit)；對應於 C 語言的資料型態：long, char *
- #    - s: , Single-Precision, 4個字節，指的是4 Byte (32 bit)；；對應於 C 語言的資料型態：float
- #    - d: , Double-Precision, 8個字節，指的是8 Byte (64 bit)；；對應於 C 語言的資料型態：double
- #    - t: , ExTended-Precision, 16個字節，指的是16 Byte (128 bit)；；對應於 C 語言的資料型態：long double
+ # 2. EX: OpCode (Operation Code) -- "movl"，屬於「後置 (Postfix / Suffix)表示法」；可以分別區分為：b, w, l, q, s, d, t. 
+ #    - b: Byte, 1 個字節，指的是 1 Byte (8 bit)；對應於 C 語言的資料型態：char
+ #    - w: Word, 1 個字組 (即 2 個字節)，指的是 2 Byte (16 bit)；對應於 C 語言的資料型態：short
+ #    - l: Long Word, 有兩種含意
+ #         > 2 個字組 (即 4 個字節)，指的是 4 Byte (32 bit)；對應於 C 語言的資料型態：int
+ #         > 4 個字組 (即 8 個字節)，指的是 8 Byte (64 bit)；對應於 C 語言的資料型態：float
+ #    - q: Quad Word, 4 個字組 (即 8 個字節)，指的是 8 Byte (64 bit)；對應於 C 語言的資料型態：long, char *
+ #    - s: Short / Single-Precision: 有兩種含意
+ #        > 1 個字組 (即 2 個字節)，指的是 2 Byte (16 bit)；對應於 C 語言的資料型態：short
+ #        > 2 個字組 (即 4 個字節)，指的是 4 Byte (32 bit)；對應於 C 語言的資料型態：float
+ #    - d: Double-Precision, 8個字節，指的是8 Byte (64 bit)；；對應於 C 語言的資料型態：double
+ #    - t: (不確定)
+ #        > ExTended-Precision , 8 個字組 (即 16 個字節)，指的是 16 Byte (128 bit)；對應於 C 語言的資料型態：long double
+ #        > Ten bytes, 80 bit 的 floating .... 
  #
- #    至於為何「2個字節 (Byte)」又名「1個字組 (Word)」，有其歷史包袱。。。。。
+ #    字節 == 位元組 (Byte) == 8 bit 
+ #    字組 (WORD) == 2 個字節 == 2 位元組 == 16 bit 
+ #    雙字組 (DWORD) == 2 個字組 == 4 個字節 == 4 位元組 == 32 bit
+ #
+ #    至於為何會有上述的規範？有其歷史包袱及因素。。。。。
  #
  # 3. '.' 開頭的，是 Assembly 的假指令，觀念類似於 GNU Makefile 的 ".PHONY"；主要目的是為了給 Assembler (組譯器) & Linker (連結器)看。
  #
@@ -47,7 +57,7 @@
 main:                                                   # 函式開始 .... 
 .LFB0:                                                  # Local Function Beginning；從０開始，與 .LFE 成對出現。
 	.cfi_startproc                                  # 定義函式的開始，開始做一些初始化；與 cfi_endproc 成對出現。
-	pushq	%rbp                                    # 把舊的 %rbp 的內容，送到 Stack Frame；
+	pushq	%rbp                                    # 把舊的 %rbp 的內容，送到 Stack Frame；為何是 pushq ？猜測 %rbp 是 64-bit 的暫存器 .... 
 	.cfi_def_cfa_offset 16                          # 定義 CFA 偏移了 16 Bytes；
 	.cfi_offset 6, -16                              # R6 暫存器 (即 %rbp)，往 Stack 頂端偏移１６ Bytes；因為 Stack 的頂端，是在記憶體位址較低的地方，所以用減號。
 	movq	%rsp, %rbp                              # 把「舊的」%rsp 的內容設定給 %rbp ；
@@ -55,14 +65,14 @@ main:                                                   # 函式開始 ....
 	subq	$16, %rsp                               # 而「新的」%rsp 的內容，則是原本的內容減１６之後，再存回 %rsp。 
 	movl	$-1, -4(%rbp)                           # 把數值 -1 儲存在 Base Pointer Register - 4 Byte 的位址上；即：singed int i = -1; 
 	movl	-4(%rbp), %eax                          # 再把暫存器 %rbp 裡的"值" (記憶體位址)，減４，再把這個位址移到 %eax 暫存器。
-	movl	%eax, %esi                              # 把 eax (Adder Register)的內容，移動到 esi (Source Index Register)。
+	movl	%eax, %esi                              # 把 %eax (Adder Register)的內容，移動到 %esi (Source Index Register)。
 	leaq	.LC0(%rip), %rax                        # 
 	movq	%rax, %rdi                              # 把 rax 的內容，移動至 rdi (Destination Index Register)。
 	movl	$0, %eax                                # 把數值 0 ，設定給 eax 
 	call	printf@PLT                              # 呼叫函式：printf(); 
 	movl	$0, %eax                                # 將數值 0 儲存到 eax 暫存器。函式的回傳值必須儲存在 eax 暫存器。
 	leave                                           # 離開函式.... 
-	.cfi_def_cfa 7, 8                               # 
+	.cfi_def_cfa 7, 8                               # 把 R7 (%rdi) + 8 Bytes
 	ret                                             # return 0
 	.cfi_endproc                                    # 定義函式的結束
 .LFE0:                                                  # Local Function Ending
