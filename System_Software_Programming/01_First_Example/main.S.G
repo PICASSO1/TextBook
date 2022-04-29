@@ -1,3 +1,27 @@
+###
+ # File Name: main.S.G
+ #
+ # CopyLeft (C) 2022, Picasso's Fantasy Notepad. All rights reserved.
+ #
+ # Author: Pablo Picasso G. (PabloPicasso.G@gmail.com)
+ #
+ # Version: 1.0.0.build042922
+ #
+ # Date: 2022 / 04 / 29
+ #
+ # Description: 
+ # 1. 這是一個簡單地 *.c 檔案；與 main.S 不同的地方在於加了 "-g" or "-ggdb" 參數。
+ #
+ # 2. 此外，這一個範例還另外多了 "main.S.bak" 和 "main.S.G.bak" 兩個檔案；與原本的 "main.S" 和 "main.S.G" 的差別在於沒有 Assembly 的註解，方便將這兩個檔案做比對，差異在哪裡。
+ #
+ # 3. 加上 "-g" 參數的 main.S.G 多了許多 前置為 ".L" 的標籤，這一些標籤是給 GDB 使用的；至於還有哪些奇奇怪怪的標籤是給 GDB 看的，請自行上網 Google。
+ #
+ # 4. 相關的參考資料：
+ #    - https://sourceware.org/binutils/docs-2.18/as/Symbol-Names.html
+ #    - https://sourceware.org/binutils/docs-2.18/as/LNS-directives.html#LNS-directives
+ #    - https://stackoverflow.com/questions/24787769/what-are-lfb-lbb-lbe-lvl-loc-in-the-compiler-generated-assembly-code
+ #
+######
 	.file	"main.c"
 	.text
 .Ltext0:
