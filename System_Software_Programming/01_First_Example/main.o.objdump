@@ -1,0 +1,126 @@
+
+./main.o      檔案格式 elf64-x86-64
+./main.o
+系統架構：i386:x86-64，旗標 0x00000011：
+HAS_RELOC, HAS_SYMS
+開始位址 0x0000000000000000
+
+區段：
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text         0000002f  0000000000000000  0000000000000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000000  0000000000000000  0000000000000000  0000006f  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  0000000000000000  0000000000000000  0000006f  2**0
+                  ALLOC
+  3 .rodata       00000014  0000000000000000  0000000000000000  0000006f  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .comment      00000013  0000000000000000  0000000000000000  00000083  2**0
+                  CONTENTS, READONLY
+  5 .note.GNU-stack 00000000  0000000000000000  0000000000000000  00000096  2**0
+                  CONTENTS, READONLY
+  6 .note.gnu.property 00000030  0000000000000000  0000000000000000  00000098  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .eh_frame     00000038  0000000000000000  0000000000000000  000000c8  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000 main.c
+0000000000000000 l    d  .text	0000000000000000 .text
+0000000000000000 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 g     F .text	000000000000002f main
+0000000000000000         *UND*	0000000000000000 printf
+
+
+
+.text 區段的反組譯：
+
+0000000000000000 <main>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	48 83 ec 10          	sub    $0x10,%rsp
+   8:	c7 45 fc ff ff ff ff 	movl   $0xffffffff,-0x4(%rbp)
+   f:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  12:	89 c6                	mov    %eax,%esi
+  14:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 1b <main+0x1b>
+			17: R_X86_64_PC32	.rodata-0x4
+  1b:	48 89 c7             	mov    %rax,%rdi
+  1e:	b8 00 00 00 00       	mov    $0x0,%eax
+  23:	e8 00 00 00 00       	call   28 <main+0x28>
+			24: R_X86_64_PLT32	printf-0x4
+  28:	b8 00 00 00 00       	mov    $0x0,%eax
+  2d:	c9                   	leave  
+  2e:	c3                   	ret    
+
+.rodata 區段的反組譯：
+
+0000000000000000 <.rodata>:
+   0:	73 69                	jae    6b <main+0x6b>
+   2:	67 6e                	outsb  %ds:(%esi),(%dx)
+   4:	65 64 20 69 6e       	gs and %ch,%fs:0x6e(%rcx)
+   9:	74 20                	je     2b <main+0x2b>
+   b:	69 20 3d 20 25 64    	imul   $0x6425203d,(%rax),%esp
+  11:	20 0a                	and    %cl,(%rdx)
+	...
+
+.comment 區段的反組譯：
+
+0000000000000000 <.comment>:
+   0:	00 47 43             	add    %al,0x43(%rdi)
+   3:	43 3a 20             	rex.XB cmp (%r8),%spl
+   6:	28 47 4e             	sub    %al,0x4e(%rdi)
+   9:	55                   	push   %rbp
+   a:	29 20                	sub    %esp,(%rax)
+   c:	31 31                	xor    %esi,(%rcx)
+   e:	2e 32 2e             	cs xor (%rsi),%ch
+  11:	30 00                	xor    %al,(%rax)
+
+.note.gnu.property 區段的反組譯：
+
+0000000000000000 <.note.gnu.property>:
+   0:	04 00                	add    $0x0,%al
+   2:	00 00                	add    %al,(%rax)
+   4:	20 00                	and    %al,(%rax)
+   6:	00 00                	add    %al,(%rax)
+   8:	05 00 00 00 47       	add    $0x47000000,%eax
+   d:	4e 55                	rex.WRX push %rbp
+   f:	00 02                	add    %al,(%rdx)
+  11:	00 01                	add    %al,(%rcx)
+  13:	c0 04 00 00          	rolb   $0x0,(%rax,%rax,1)
+	...
+  1f:	00 01                	add    %al,(%rcx)
+  21:	00 01                	add    %al,(%rcx)
+  23:	c0 04 00 00          	rolb   $0x0,(%rax,%rax,1)
+  27:	00 01                	add    %al,(%rcx)
+  29:	00 00                	add    %al,(%rax)
+  2b:	00 00                	add    %al,(%rax)
+  2d:	00 00                	add    %al,(%rax)
+	...
+
+.eh_frame 區段的反組譯：
+
+0000000000000000 <.eh_frame>:
+   0:	14 00                	adc    $0x0,%al
+   2:	00 00                	add    %al,(%rax)
+   4:	00 00                	add    %al,(%rax)
+   6:	00 00                	add    %al,(%rax)
+   8:	01 7a 52             	add    %edi,0x52(%rdx)
+   b:	00 01                	add    %al,(%rcx)
+   d:	78 10                	js     1f <.eh_frame+0x1f>
+   f:	01 1b                	add    %ebx,(%rbx)
+  11:	0c 07                	or     $0x7,%al
+  13:	08 90 01 00 00 1c    	or     %dl,0x1c000001(%rax)
+  19:	00 00                	add    %al,(%rax)
+  1b:	00 1c 00             	add    %bl,(%rax,%rax,1)
+  1e:	00 00                	add    %al,(%rax)
+  20:	00 00                	add    %al,(%rax)
+			20: R_X86_64_PC32	.text
+  22:	00 00                	add    %al,(%rax)
+  24:	2f                   	(bad)  
+  25:	00 00                	add    %al,(%rax)
+  27:	00 00                	add    %al,(%rax)
+  29:	41 0e                	rex.B (bad) 
+  2b:	10 86 02 43 0d 06    	adc    %al,0x60d4302(%rsi)
+  31:	6a 0c                	push   $0xc
+  33:	07                   	(bad)  
+  34:	08 00                	or     %al,(%rax)
+	...

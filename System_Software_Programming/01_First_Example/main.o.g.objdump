@@ -1,0 +1,507 @@
+
+./main.o.g      檔案格式 elf64-x86-64
+./main.o.g
+系統架構：i386:x86-64，旗標 0x00000011：
+HAS_RELOC, HAS_SYMS
+開始位址 0x0000000000000000
+
+區段：
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text         0000002f  0000000000000000  0000000000000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000000  0000000000000000  0000000000000000  0000006f  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  0000000000000000  0000000000000000  0000006f  2**0
+                  ALLOC
+  3 .rodata       00000014  0000000000000000  0000000000000000  0000006f  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .debug_info   000000bd  0000000000000000  0000000000000000  00000088  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+  5 .debug_abbrev 00000089  0000000000000000  0000000000000000  00000108  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  6 .debug_aranges 00000030  0000000000000000  0000000000000000  00000190  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+  7 .debug_line   00000061  0000000000000000  0000000000000000  000001c0  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+  8 .debug_str    0000009f  0000000000000000  0000000000000000  00000220  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_line_str 000000c0  0000000000000000  0000000000000000  000002a8  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .comment      00000013  0000000000000000  0000000000000000  0000032e  2**0
+                  CONTENTS, READONLY
+ 11 .note.GNU-stack 00000000  0000000000000000  0000000000000000  00000341  2**0
+                  CONTENTS, READONLY
+ 12 .note.gnu.property 00000030  0000000000000000  0000000000000000  00000348  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 13 .eh_frame     00000038  0000000000000000  0000000000000000  00000378  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000 main.c
+0000000000000000 l    d  .text	0000000000000000 .text
+0000000000000000 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 l    d  .debug_info	0000000000000000 .debug_info
+0000000000000000 l    d  .debug_abbrev	0000000000000000 .debug_abbrev
+0000000000000000 l    d  .debug_line	0000000000000000 .debug_line
+0000000000000000 l    d  .debug_str	0000000000000000 .debug_str
+0000000000000000 l    d  .debug_line_str	0000000000000000 .debug_line_str
+0000000000000000 g     F .text	000000000000002f main
+0000000000000000         *UND*	0000000000000000 printf
+
+
+
+.text 區段的反組譯：
+
+0000000000000000 <main>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	48 83 ec 10          	sub    $0x10,%rsp
+   8:	c7 45 fc ff ff ff ff 	movl   $0xffffffff,-0x4(%rbp)
+   f:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  12:	89 c6                	mov    %eax,%esi
+  14:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 1b <main+0x1b>
+			17: R_X86_64_PC32	.rodata-0x4
+  1b:	48 89 c7             	mov    %rax,%rdi
+  1e:	b8 00 00 00 00       	mov    $0x0,%eax
+  23:	e8 00 00 00 00       	call   28 <main+0x28>
+			24: R_X86_64_PLT32	printf-0x4
+  28:	b8 00 00 00 00       	mov    $0x0,%eax
+  2d:	c9                   	leave  
+  2e:	c3                   	ret    
+
+.rodata 區段的反組譯：
+
+0000000000000000 <.rodata>:
+   0:	73 69                	jae    6b <main+0x6b>
+   2:	67 6e                	outsb  %ds:(%esi),(%dx)
+   4:	65 64 20 69 6e       	gs and %ch,%fs:0x6e(%rcx)
+   9:	74 20                	je     2b <main+0x2b>
+   b:	69 20 3d 20 25 64    	imul   $0x6425203d,(%rax),%esp
+  11:	20 0a                	and    %cl,(%rdx)
+	...
+
+.debug_info 區段的反組譯：
+
+0000000000000000 <.debug_info>:
+   0:	b9 00 00 00 05       	mov    $0x5000000,%ecx
+   5:	00 01                	add    %al,(%rcx)
+   7:	08 00                	or     %al,(%rax)
+			8: R_X86_64_32	.debug_abbrev
+   9:	00 00                	add    %al,(%rax)
+   b:	00 02                	add    %al,(%rdx)
+   d:	00 00                	add    %al,(%rax)
+			d: R_X86_64_32	.debug_str
+   f:	00 00                	add    %al,(%rax)
+  11:	1d 00 00 00 00       	sbb    $0x0,%eax
+			12: R_X86_64_32	.debug_line_str+0x4b
+	...
+			16: R_X86_64_32	.debug_line_str
+			1a: R_X86_64_64	.text
+  22:	2f                   	(bad)  
+	...
+			2a: R_X86_64_32	.debug_line
+  2b:	00 00                	add    %al,(%rax)
+  2d:	00 01                	add    %al,(%rcx)
+  2f:	08 07                	or     %al,(%rdi)
+  31:	00 00                	add    %al,(%rax)
+			31: R_X86_64_32	.debug_str+0x3c
+  33:	00 00                	add    %al,(%rax)
+  35:	01 04 07             	add    %eax,(%rdi,%rax,1)
+  38:	00 00                	add    %al,(%rax)
+			38: R_X86_64_32	.debug_str+0x2f
+  3a:	00 00                	add    %al,(%rax)
+  3c:	01 01                	add    %eax,(%rcx)
+  3e:	08 00                	or     %al,(%rax)
+			3f: R_X86_64_32	.debug_str+0x7c
+  40:	00 00                	add    %al,(%rax)
+  42:	00 01                	add    %al,(%rcx)
+  44:	02 07                	add    (%rdi),%al
+  46:	00 00                	add    %al,(%rax)
+			46: R_X86_64_32	.debug_str+0x5a
+  48:	00 00                	add    %al,(%rax)
+  4a:	01 01                	add    %eax,(%rcx)
+  4c:	06                   	(bad)  
+  4d:	00 00                	add    %al,(%rax)
+			4d: R_X86_64_32	.debug_str+0x4e
+  4f:	00 00                	add    %al,(%rax)
+  51:	01 02                	add    %eax,(%rdx)
+  53:	05 00 00 00 00       	add    $0x0,%eax
+			54: R_X86_64_32	.debug_str+0x6d
+  58:	03 04 05 69 6e 74 00 	add    0x746e69(,%rax,1),%eax
+  5f:	01 08                	add    %ecx,(%rax)
+  61:	05 00 00 00 00       	add    $0x0,%eax
+			62: R_X86_64_32	.debug_str+0x8a
+  66:	01 01                	add    %eax,(%rcx)
+  68:	06                   	(bad)  
+  69:	00 00                	add    %al,(%rax)
+			69: R_X86_64_32	.debug_str+0x77
+  6b:	00 00                	add    %al,(%rax)
+  6d:	04 66                	add    $0x66,%al
+  6f:	00 00                	add    %al,(%rax)
+  71:	00 05 00 00 00 00    	add    %al,0x0(%rip)        # 77 <.debug_info+0x77>
+			73: R_X86_64_32	.debug_str+0x98
+  77:	02 64 01 0c          	add    0xc(%rcx,%rax,1),%ah
+  7b:	58                   	pop    %rax
+  7c:	00 00                	add    %al,(%rax)
+  7e:	00 8a 00 00 00 06    	add    %cl,0x6000000(%rdx)
+  84:	8a 00                	mov    (%rax),%al
+  86:	00 00                	add    %al,(%rax)
+  88:	07                   	(bad)  
+  89:	00 08                	add    %cl,(%rax)
+  8b:	08 6d 00             	or     %ch,0x0(%rbp)
+  8e:	00 00                	add    %al,(%rax)
+  90:	09 00                	or     %eax,(%rax)
+			91: R_X86_64_32	.debug_str+0x93
+  92:	00 00                	add    %al,(%rax)
+  94:	00 01                	add    %al,(%rcx)
+  96:	13 05 58 00 00 00    	adc    0x58(%rip),%eax        # f4 <main+0xf4>
+	...
+			9c: R_X86_64_64	.text
+  a4:	2f                   	(bad)  
+  a5:	00 00                	add    %al,(%rax)
+  a7:	00 00                	add    %al,(%rax)
+  a9:	00 00                	add    %al,(%rax)
+  ab:	00 01                	add    %al,(%rcx)
+  ad:	9c                   	pushf  
+  ae:	0a 69 00             	or     0x0(%rcx),%ch
+  b1:	01 15 0d 58 00 00    	add    %edx,0x580d(%rip)        # 58c4 <main+0x58c4>
+  b7:	00 02                	add    %al,(%rdx)
+  b9:	91                   	xchg   %eax,%ecx
+  ba:	6c                   	insb   (%dx),%es:(%rdi)
+	...
+
+.debug_abbrev 區段的反組譯：
+
+0000000000000000 <.debug_abbrev>:
+   0:	01 24 00             	add    %esp,(%rax,%rax,1)
+   3:	0b 0b                	or     (%rbx),%ecx
+   5:	3e 0b 03             	ds or  (%rbx),%eax
+   8:	0e                   	(bad)  
+   9:	00 00                	add    %al,(%rax)
+   b:	02 11                	add    (%rcx),%dl
+   d:	01 25 0e 13 0b 03    	add    %esp,0x30b130e(%rip)        # 30b1321 <main+0x30b1321>
+  13:	1f                   	(bad)  
+  14:	1b 1f                	sbb    (%rdi),%ebx
+  16:	11 01                	adc    %eax,(%rcx)
+  18:	12 07                	adc    (%rdi),%al
+  1a:	10 17                	adc    %dl,(%rdi)
+  1c:	00 00                	add    %al,(%rax)
+  1e:	03 24 00             	add    (%rax,%rax,1),%esp
+  21:	0b 0b                	or     (%rbx),%ecx
+  23:	3e 0b 03             	ds or  (%rbx),%eax
+  26:	08 00                	or     %al,(%rax)
+  28:	00 04 26             	add    %al,(%rsi,%riz,1)
+  2b:	00 49 13             	add    %cl,0x13(%rcx)
+  2e:	00 00                	add    %al,(%rax)
+  30:	05 2e 01 3f 19       	add    $0x193f012e,%eax
+  35:	03 0e                	add    (%rsi),%ecx
+  37:	3a 0b                	cmp    (%rbx),%cl
+  39:	3b 05 39 0b 27 19    	cmp    0x19270b39(%rip),%eax        # 19270b78 <main+0x19270b78>
+  3f:	49 13 3c 19          	adc    (%r9,%rbx,1),%rdi
+  43:	01 13                	add    %edx,(%rbx)
+  45:	00 00                	add    %al,(%rax)
+  47:	06                   	(bad)  
+  48:	05 00 49 13 00       	add    $0x134900,%eax
+  4d:	00 07                	add    %al,(%rdi)
+  4f:	18 00                	sbb    %al,(%rax)
+  51:	00 00                	add    %al,(%rax)
+  53:	08 0f                	or     %cl,(%rdi)
+  55:	00 0b                	add    %cl,(%rbx)
+  57:	0b 49 13             	or     0x13(%rcx),%ecx
+  5a:	00 00                	add    %al,(%rax)
+  5c:	09 2e                	or     %ebp,(%rsi)
+  5e:	01 3f                	add    %edi,(%rdi)
+  60:	19 03                	sbb    %eax,(%rbx)
+  62:	0e                   	(bad)  
+  63:	3a 0b                	cmp    (%rbx),%cl
+  65:	3b 0b                	cmp    (%rbx),%ecx
+  67:	39 0b                	cmp    %ecx,(%rbx)
+  69:	27                   	(bad)  
+  6a:	19 49 13             	sbb    %ecx,0x13(%rcx)
+  6d:	11 01                	adc    %eax,(%rcx)
+  6f:	12 07                	adc    (%rdi),%al
+  71:	40 18 7c 19 00       	sbb    %dil,0x0(%rcx,%rbx,1)
+  76:	00 0a                	add    %cl,(%rdx)
+  78:	34 00                	xor    $0x0,%al
+  7a:	03 08                	add    (%rax),%ecx
+  7c:	3a 0b                	cmp    (%rbx),%cl
+  7e:	3b 0b                	cmp    (%rbx),%ecx
+  80:	39 0b                	cmp    %ecx,(%rbx)
+  82:	49 13 02             	adc    (%r10),%rax
+  85:	18 00                	sbb    %al,(%rax)
+	...
+
+.debug_aranges 區段的反組譯：
+
+0000000000000000 <.debug_aranges>:
+   0:	2c 00                	sub    $0x0,%al
+   2:	00 00                	add    %al,(%rax)
+   4:	02 00                	add    (%rax),%al
+   6:	00 00                	add    %al,(%rax)
+			6: R_X86_64_32	.debug_info
+   8:	00 00                	add    %al,(%rax)
+   a:	08 00                	or     %al,(%rax)
+	...
+			10: R_X86_64_64	.text
+  18:	2f                   	(bad)  
+	...
+
+.debug_line 區段的反組譯：
+
+0000000000000000 <.debug_line>:
+   0:	5d                   	pop    %rbp
+   1:	00 00                	add    %al,(%rax)
+   3:	00 05 00 08 00 33    	add    %al,0x33000800(%rip)        # 33000809 <main+0x33000809>
+   9:	00 00                	add    %al,(%rax)
+   b:	00 01                	add    %al,(%rcx)
+   d:	01 01                	add    %eax,(%rcx)
+   f:	fb                   	sti    
+  10:	0e                   	(bad)  
+  11:	0d 00 01 01 01       	or     $0x1010100,%eax
+  16:	01 00                	add    %eax,(%rax)
+  18:	00 00                	add    %al,(%rax)
+  1a:	01 00                	add    %eax,(%rax)
+  1c:	00 01                	add    %al,(%rcx)
+  1e:	01 01                	add    %eax,(%rcx)
+  20:	1f                   	(bad)  
+  21:	02 00                	add    (%rax),%al
+			22: R_X86_64_32	.debug_line_str+0x52
+  23:	00 00                	add    %al,(%rax)
+  25:	00 00                	add    %al,(%rax)
+			26: R_X86_64_32	.debug_line_str+0x9d
+  27:	00 00                	add    %al,(%rax)
+  29:	00 02                	add    %al,(%rdx)
+  2b:	01 1f                	add    %ebx,(%rdi)
+  2d:	02 0f                	add    (%rdi),%cl
+  2f:	03 00                	add    (%rax),%eax
+			30: R_X86_64_32	.debug_line_str+0xaa
+	...
+			35: R_X86_64_32	.debug_line_str+0xb1
+			3a: R_X86_64_32	.debug_line_str+0xb8
+  3d:	00 01                	add    %al,(%rcx)
+  3f:	05 01 00 09 02       	add    $0x2090001,%eax
+	...
+			44: R_X86_64_64	.text
+  4c:	03 13                	add    (%rbx),%edx
+  4e:	01 05 0d 83 05 02    	add    %eax,0x205830d(%rip)        # 2058361 <main+0x2058361>
+  54:	76 05                	jbe    5b <.debug_line+0x5b>
+  56:	09 08                	or     %ecx,(%rax)
+  58:	84 05 01 59 02 02    	test   %al,0x2025901(%rip)        # 202595f <main+0x202595f>
+  5e:	00 01                	add    %al,(%rcx)
+  60:	01                   	.byte 0x1
+
+.debug_str 區段的反組譯：
+
+0000000000000000 <.debug_str>:
+   0:	47                   	rex.RXB
+   1:	4e 55                	rex.WRX push %rbp
+   3:	20 43 31             	and    %al,0x31(%rbx)
+   6:	37                   	(bad)  
+   7:	20 31                	and    %dh,(%rcx)
+   9:	31 2e                	xor    %ebp,(%rsi)
+   b:	32 2e                	xor    (%rsi),%ch
+   d:	30 20                	xor    %ah,(%rax)
+   f:	2d 6d 74 75 6e       	sub    $0x6e75746d,%eax
+  14:	65 3d 67 65 6e 65    	gs cmp $0x656e6567,%eax
+  1a:	72 69                	jb     85 <.debug_str+0x85>
+  1c:	63 20                	movsxd (%rax),%esp
+  1e:	2d 6d 61 72 63       	sub    $0x6372616d,%eax
+  23:	68 3d 78 38 36       	push   $0x3638783d
+  28:	2d 36 34 20 2d       	sub    $0x2d203436,%eax
+  2d:	67 00 75 6e          	add    %dh,0x6e(%ebp)
+  31:	73 69                	jae    9c <.debug_str+0x9c>
+  33:	67 6e                	outsb  %ds:(%esi),(%dx)
+  35:	65 64 20 69 6e       	gs and %ch,%fs:0x6e(%rcx)
+  3a:	74 00                	je     3c <.debug_str+0x3c>
+  3c:	6c                   	insb   (%dx),%es:(%rdi)
+  3d:	6f                   	outsl  %ds:(%rsi),(%dx)
+  3e:	6e                   	outsb  %ds:(%rsi),(%dx)
+  3f:	67 20 75 6e          	and    %dh,0x6e(%ebp)
+  43:	73 69                	jae    ae <main+0xae>
+  45:	67 6e                	outsb  %ds:(%esi),(%dx)
+  47:	65 64 20 69 6e       	gs and %ch,%fs:0x6e(%rcx)
+  4c:	74 00                	je     4e <.debug_str+0x4e>
+  4e:	73 69                	jae    b9 <main+0xb9>
+  50:	67 6e                	outsb  %ds:(%esi),(%dx)
+  52:	65 64 20 63 68       	gs and %ah,%fs:0x68(%rbx)
+  57:	61                   	(bad)  
+  58:	72 00                	jb     5a <.debug_str+0x5a>
+  5a:	73 68                	jae    c4 <main+0xc4>
+  5c:	6f                   	outsl  %ds:(%rsi),(%dx)
+  5d:	72 74                	jb     d3 <main+0xd3>
+  5f:	20 75 6e             	and    %dh,0x6e(%rbp)
+  62:	73 69                	jae    cd <main+0xcd>
+  64:	67 6e                	outsb  %ds:(%esi),(%dx)
+  66:	65 64 20 69 6e       	gs and %ch,%fs:0x6e(%rcx)
+  6b:	74 00                	je     6d <.debug_str+0x6d>
+  6d:	73 68                	jae    d7 <main+0xd7>
+  6f:	6f                   	outsl  %ds:(%rsi),(%dx)
+  70:	72 74                	jb     e6 <main+0xe6>
+  72:	20 69 6e             	and    %ch,0x6e(%rcx)
+  75:	74 00                	je     77 <.debug_str+0x77>
+  77:	63 68 61             	movsxd 0x61(%rax),%ebp
+  7a:	72 00                	jb     7c <.debug_str+0x7c>
+  7c:	75 6e                	jne    ec <main+0xec>
+  7e:	73 69                	jae    e9 <main+0xe9>
+  80:	67 6e                	outsb  %ds:(%esi),(%dx)
+  82:	65 64 20 63 68       	gs and %ah,%fs:0x68(%rbx)
+  87:	61                   	(bad)  
+  88:	72 00                	jb     8a <.debug_str+0x8a>
+  8a:	6c                   	insb   (%dx),%es:(%rdi)
+  8b:	6f                   	outsl  %ds:(%rsi),(%dx)
+  8c:	6e                   	outsb  %ds:(%rsi),(%dx)
+  8d:	67 20 69 6e          	and    %ch,0x6e(%ecx)
+  91:	74 00                	je     93 <.debug_str+0x93>
+  93:	6d                   	insl   (%dx),%es:(%rdi)
+  94:	61                   	(bad)  
+  95:	69 6e 00 70 72 69 6e 	imul   $0x6e697270,0x0(%rsi),%ebp
+  9c:	74 66                	je     104 <main+0x104>
+	...
+
+.debug_line_str 區段的反組譯：
+
+0000000000000000 <.debug_line_str>:
+   0:	2f                   	(bad)  
+   1:	68 6f 6d 65 2f       	push   $0x2f656d6f
+   6:	70 69                	jo     71 <.debug_line_str+0x71>
+   8:	63 61 73             	movsxd 0x73(%rcx),%esp
+   b:	73 6f                	jae    7c <.debug_line_str+0x7c>
+   d:	2f                   	(bad)  
+   e:	47 69 74 48 75 62 2f 	imul   $0x65542f62,0x75(%r8,%r9,2),%r14d
+  15:	54 65 
+  17:	78 74                	js     8d <.debug_line_str+0x8d>
+  19:	42 6f                	rex.X outsl %ds:(%rsi),(%dx)
+  1b:	6f                   	outsl  %ds:(%rsi),(%dx)
+  1c:	6b 2f 53             	imul   $0x53,(%rdi),%ebp
+  1f:	79 73                	jns    94 <.debug_line_str+0x94>
+  21:	74 65                	je     88 <.debug_line_str+0x88>
+  23:	6d                   	insl   (%dx),%es:(%rdi)
+  24:	5f                   	pop    %rdi
+  25:	53                   	push   %rbx
+  26:	6f                   	outsl  %ds:(%rsi),(%dx)
+  27:	66 74 77             	data16 je a1 <.debug_line_str+0xa1>
+  2a:	61                   	(bad)  
+  2b:	72 65                	jb     92 <.debug_line_str+0x92>
+  2d:	5f                   	pop    %rdi
+  2e:	50                   	push   %rax
+  2f:	72 6f                	jb     a0 <.debug_line_str+0xa0>
+  31:	67 72 61             	addr32 jb 95 <.debug_line_str+0x95>
+  34:	6d                   	insl   (%dx),%es:(%rdi)
+  35:	6d                   	insl   (%dx),%es:(%rdi)
+  36:	69 6e 67 2f 30 31 5f 	imul   $0x5f31302f,0x67(%rsi),%ebp
+  3d:	46 69 72 73 74 5f 45 	rex.RX imul $0x78455f74,0x73(%rdx),%r14d
+  44:	78 
+  45:	61                   	(bad)  
+  46:	6d                   	insl   (%dx),%es:(%rdi)
+  47:	70 6c                	jo     b5 <.debug_line_str+0xb5>
+  49:	65 00 6d 61          	add    %ch,%gs:0x61(%rbp)
+  4d:	69 6e 2e 63 00 2f 68 	imul   $0x682f0063,0x2e(%rsi),%ebp
+  54:	6f                   	outsl  %ds:(%rsi),(%dx)
+  55:	6d                   	insl   (%dx),%es:(%rdi)
+  56:	65 2f                	gs (bad) 
+  58:	70 69                	jo     c3 <main+0xc3>
+  5a:	63 61 73             	movsxd 0x73(%rcx),%esp
+  5d:	73 6f                	jae    ce <main+0xce>
+  5f:	2f                   	(bad)  
+  60:	47 69 74 48 75 62 2f 	imul   $0x65542f62,0x75(%r8,%r9,2),%r14d
+  67:	54 65 
+  69:	78 74                	js     df <main+0xdf>
+  6b:	42 6f                	rex.X outsl %ds:(%rsi),(%dx)
+  6d:	6f                   	outsl  %ds:(%rsi),(%dx)
+  6e:	6b 2f 53             	imul   $0x53,(%rdi),%ebp
+  71:	79 73                	jns    e6 <main+0xe6>
+  73:	74 65                	je     da <main+0xda>
+  75:	6d                   	insl   (%dx),%es:(%rdi)
+  76:	5f                   	pop    %rdi
+  77:	53                   	push   %rbx
+  78:	6f                   	outsl  %ds:(%rsi),(%dx)
+  79:	66 74 77             	data16 je f3 <main+0xf3>
+  7c:	61                   	(bad)  
+  7d:	72 65                	jb     e4 <main+0xe4>
+  7f:	5f                   	pop    %rdi
+  80:	50                   	push   %rax
+  81:	72 6f                	jb     f2 <main+0xf2>
+  83:	67 72 61             	addr32 jb e7 <main+0xe7>
+  86:	6d                   	insl   (%dx),%es:(%rdi)
+  87:	6d                   	insl   (%dx),%es:(%rdi)
+  88:	69 6e 67 2f 30 31 5f 	imul   $0x5f31302f,0x67(%rsi),%ebp
+  8f:	46 69 72 73 74 5f 45 	rex.RX imul $0x78455f74,0x73(%rdx),%r14d
+  96:	78 
+  97:	61                   	(bad)  
+  98:	6d                   	insl   (%dx),%es:(%rdi)
+  99:	70 6c                	jo     107 <main+0x107>
+  9b:	65 00 2f             	add    %ch,%gs:(%rdi)
+  9e:	75 73                	jne    113 <main+0x113>
+  a0:	72 2f                	jb     d1 <main+0xd1>
+  a2:	69 6e 63 6c 75 64 65 	imul   $0x6564756c,0x63(%rsi),%ebp
+  a9:	00 6d 61             	add    %ch,0x61(%rbp)
+  ac:	69 6e 2e 63 00 6d 61 	imul   $0x616d0063,0x2e(%rsi),%ebp
+  b3:	69 6e 2e 63 00 73 74 	imul   $0x74730063,0x2e(%rsi),%ebp
+  ba:	64                   	fs
+  bb:	69                   	.byte 0x69
+  bc:	6f                   	outsl  %ds:(%rsi),(%dx)
+  bd:	2e                   	cs
+  be:	68                   	.byte 0x68
+	...
+
+.comment 區段的反組譯：
+
+0000000000000000 <.comment>:
+   0:	00 47 43             	add    %al,0x43(%rdi)
+   3:	43 3a 20             	rex.XB cmp (%r8),%spl
+   6:	28 47 4e             	sub    %al,0x4e(%rdi)
+   9:	55                   	push   %rbp
+   a:	29 20                	sub    %esp,(%rax)
+   c:	31 31                	xor    %esi,(%rcx)
+   e:	2e 32 2e             	cs xor (%rsi),%ch
+  11:	30 00                	xor    %al,(%rax)
+
+.note.gnu.property 區段的反組譯：
+
+0000000000000000 <.note.gnu.property>:
+   0:	04 00                	add    $0x0,%al
+   2:	00 00                	add    %al,(%rax)
+   4:	20 00                	and    %al,(%rax)
+   6:	00 00                	add    %al,(%rax)
+   8:	05 00 00 00 47       	add    $0x47000000,%eax
+   d:	4e 55                	rex.WRX push %rbp
+   f:	00 02                	add    %al,(%rdx)
+  11:	00 01                	add    %al,(%rcx)
+  13:	c0 04 00 00          	rolb   $0x0,(%rax,%rax,1)
+	...
+  1f:	00 01                	add    %al,(%rcx)
+  21:	00 01                	add    %al,(%rcx)
+  23:	c0 04 00 00          	rolb   $0x0,(%rax,%rax,1)
+  27:	00 01                	add    %al,(%rcx)
+  29:	00 00                	add    %al,(%rax)
+  2b:	00 00                	add    %al,(%rax)
+  2d:	00 00                	add    %al,(%rax)
+	...
+
+.eh_frame 區段的反組譯：
+
+0000000000000000 <.eh_frame>:
+   0:	14 00                	adc    $0x0,%al
+   2:	00 00                	add    %al,(%rax)
+   4:	00 00                	add    %al,(%rax)
+   6:	00 00                	add    %al,(%rax)
+   8:	01 7a 52             	add    %edi,0x52(%rdx)
+   b:	00 01                	add    %al,(%rcx)
+   d:	78 10                	js     1f <.eh_frame+0x1f>
+   f:	01 1b                	add    %ebx,(%rbx)
+  11:	0c 07                	or     $0x7,%al
+  13:	08 90 01 00 00 1c    	or     %dl,0x1c000001(%rax)
+  19:	00 00                	add    %al,(%rax)
+  1b:	00 1c 00             	add    %bl,(%rax,%rax,1)
+  1e:	00 00                	add    %al,(%rax)
+  20:	00 00                	add    %al,(%rax)
+			20: R_X86_64_PC32	.text
+  22:	00 00                	add    %al,(%rax)
+  24:	2f                   	(bad)  
+  25:	00 00                	add    %al,(%rax)
+  27:	00 00                	add    %al,(%rax)
+  29:	41 0e                	rex.B (bad) 
+  2b:	10 86 02 43 0d 06    	adc    %al,0x60d4302(%rsi)
+  31:	6a 0c                	push   $0xc
+  33:	07                   	(bad)  
+  34:	08 00                	or     %al,(%rax)
+	...
