@@ -45,24 +45,24 @@ $(BIN): $(OBJS)
 	/usr/bin/gcc -o define define.o
 	/usr/bin/gcc -o inline inline.o
 
-$(OBJS): %.o: %.S
-#	$(GCC) -c $< -fverbose-asm $(CFLAGS) $@
-	/usr/bin/gcc -c define.S -fverbose-asm -o define.o
-	/usr/bin/gcc -c inline.S -fverbose-asm -o inline.o
+$(OBJS): $(ASS)
+	$(GCC) -c $< -fverbose-asm $(CFLAGS) $@
+#	/usr/bin/gcc -c define.S -fverbose-asm -o define.o
+#	/usr/bin/gcc -c inline.S -fverbose-asm -o inline.o
 
-#$(ASS): %.S: %.i
-#	$(GCC) -S $< $(CFLAGS) $@
+$(ASS): $(INSTRUCTION)
+	$(GCC) -S $< $(CFLAGS) $@
 #	/usr/bin/gcc -S define.i -o define.S
 #	/usr/bin/gcc -S inline.i -o inline.S
 
-#$(INSTRUCTION): %.i: %.c
-#	$(GCC) -E $< $(CFLAGS) $@
+$(INSTRUCTION): %.i: %.c
+	$(GCC) -E $< $(CFLAGS) $@
 #	/usr/bin/gcc -E define.c -o define.i
 #	/usr/bin/gcc -E inline.c -o inline.i
 
 .PHONY: clean cleanall install print tar dist TAGS check test
 clean:
-	@-$(RM) *.o
+	@-$(RM) *.i *.S *.o
 
 cleanall: clean
 	@-$(RM) $(BIN) 
