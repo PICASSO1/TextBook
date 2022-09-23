@@ -22,6 +22,7 @@
 char *g_str = (char *)NULL;
 
 size_t isInteger(char *);
+char *byte_to_binary(int);
 char *g(char, int);
 
 void main(void)
@@ -40,7 +41,7 @@ void main(void)
 			break;
 	}
 	puts("");
-	printf("The \"%s\" Binary is     : \n", integer);
+	printf("The \"%s\" Binary is     : %s \n", integer, g('b', atoi(integer)));
 	printf("The \"%s\" Octal is      : %s \n", integer, g('o', atoi(integer)));
 	printf("The \"%s\" Hexadecimal is: %s \n", integer, g('x', atoi(integer)));
 
@@ -68,6 +69,20 @@ char *str;
 }
 
 char *
+byte_to_binary(x)
+int x;
+{
+	int z = -1;
+    static char b[64];
+
+    memset(b, '\0', sizeof(char) * 64);
+    for (z = 32768; z > 0; z >>= 1)
+        strcat(b, ((x & z) == z)? "1": "0");
+
+    return b;
+}
+
+char *
 g(key, value)
 char key; 
 int value;
@@ -81,6 +96,7 @@ int value;
 	memset(g_str, '\0', sizeof(char) * SIZE);
 	switch (key) {
 		case 'b':
+			strcpy(g_str, byte_to_binary(value));
 			break;
 		case 'o':
 			sprintf(g_str, "%o", value);
