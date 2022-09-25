@@ -9,7 +9,7 @@
  *
  * Date: 2022 / 09 / 25
  *
- * Description: 
+ * Description: 以 ima(); 寫一個計算２ｘ２矩陣相乘之函式 ama(); 如 ama(a, b, c); 會把ａ與ｂ矩陣相乘，結果存入ｃ矩陣。
  *
 (*)?*/
 
