@@ -9,7 +9,8 @@
  *
  * Date: 2022 / 09 / 25
  *
- * Description: 
+ * Description: 試寫一個叫 my_echo 的程式，鍵入 my_echo xxx.... 時能把 my_echo 後面字串回映至螢幕，而若鍵入 my_echo -n xxx.... ，
+ *              則印出所鍵入之字元個數 (不含 my_echo、-n及空白)。
  *
 (*)?*/
 
