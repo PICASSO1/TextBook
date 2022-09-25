@@ -9,7 +9,7 @@
  *
  * Date: 2022 / 09 / 25
  *
- * Description: 
+ * Description: 寫一程式讓 user 輸入月、日、年，並以月/日/年的格式印出。
  *
 (*)?*/
 
