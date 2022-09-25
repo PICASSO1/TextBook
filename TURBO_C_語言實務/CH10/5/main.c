@@ -1,0 +1,124 @@
+﻿/**
+ * File Name: main.c
+ *
+ * CopyLeft (C) 2022, Picasso's Fantasy Notepad. All rights reserved.
+ *
+ * Author: Pablo Picasso G. (PabloPicasso.G@gmail.com)
+ *
+ * Version: 1.0.0.build092522
+ *
+ * Date: 2022 / 09 / 25
+ *
+ * Description: 
+ *
+(*)?*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define	SIZE		8
+
+struct {
+	int year, month, day;
+} data; 
+
+const struct {
+	size_t no;
+	char *month;
+} MONTH[12] = {
+	{1, "Jan"}, {2, "Feb"}, {3, "Mar"}, {4, "Apr"}, {5, "May"}, {6, "Jun"}, 
+	{7, "Jul"}, {8, "Aug"}, {9, "Sep"}, {10, "Oct"}, {11, "Nov"}, {12, "Dec"}, 
+};
+
+size_t chkYear(char *);
+size_t chkMonth(char *);
+size_t chkDay(char *);
+
+int main(void)
+{
+	char temp[SIZE];
+	size_t ret = 0U;
+
+	memset(temp, '\0', sizeof(char) * SIZE);
+	fprintf(stdout, "Please input a year: ");
+	while (fscanf(stdin, "%s", temp) == 1) {
+		if (chkYear(temp) != 0) {
+			fprintf(stderr, "Input ERROR!! Please enter the correct years (0 ~ 9999)!! \n");
+			while (getchar() != '\n');
+			fprintf(stdout, "Please input a year: ");
+		}
+		else
+			break;
+	}
+	data.year = atoi(temp);
+
+	memset(temp, '\0', sizeof(char) * SIZE);
+	fprintf(stdout, "Please input a month: ");
+	while (fscanf(stdin, "%s", temp) == 1) {
+		ret = chkMonth(temp);
+		if (ret != 0) {
+			fprintf(stderr, "Input ERROR!! Please enter the correct month (like: Jun, Feb, Mar, ... etc..)!! \n");
+			while (getchar() != '\n');
+			fprintf(stdout, "Please input a month: ");
+		}
+		else
+			break;
+	}
+	data.year = ret;
+
+	memset(temp, '\0', sizeof(char) * SIZE);
+	fprintf(stdout, "Please input a day: ");
+	while (fscanf(stdin, "%s", temp) == 1) {
+		ret = chkDay(temp);
+		if (ret != 0) {
+			fprintf(stderr, "MDFK!! Please enter the correct day!! \n");
+			while (getchar() != '\n');
+			fprintf(stdout, "Please input a day: ");
+		}
+		else
+			break;
+	}
+
+    return 0;
+}
+
+size_t 
+chkYear(YEAR)
+char *YEAR;
+{
+	size_t len = strlen(YEAR), i = 0U, retval = 0U;
+
+	if (len > 4)
+		return 1;
+	
+	for (i = 0; i < len; i++) {
+		if (YEAR[i] < '0' || YEAR[i] > '9')
+			return 1;
+	}
+
+	return retval;
+}
+
+size_t 
+chkMonth(Month)
+char *Month;
+{
+	size_t j = 0U;
+	
+	for (j = 0; j < 12; j++) {
+		if (strncmp(Month, MONTH[j].month, 3) == 0)
+			return MONTH[j].no;
+	}
+
+	return 0;
+}
+
+size_t 
+chkDay(DAY)
+char *DAY;
+{
+	size_t retval = 0U;
+
+	return 0;
+}

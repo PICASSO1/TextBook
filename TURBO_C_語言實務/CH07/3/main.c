@@ -15,6 +15,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+size_t isInteger(char *);
+int MAX(int, int);
 
 int 
 main(argc, argv, envp)
@@ -25,6 +29,38 @@ char *argv[], **envp;
 		fprintf(stderr, "ERROR!! Please enter two intergers!! \n");
 		exit(EXIT_FAILURE);
 	}
+	
+	if (isInteger(argv[1]) != 0 || isInteger(argv[2]) != 0) {
+		fprintf(stderr, "ERROR!! Please enter two intergers!! \n");
+		exit(EXIT_FAILURE);
+	}
+
+	fprintf(stdout, "You input %d intergers, 1st is: %s; 2nd is: %s; and the Maximum one is: %d\n", \
+		argc - 1, argv[1], argv[2], MAX(atoi(argv[1]), atoi(argv[2])));
 
 	return 0;
+}
+
+size_t 
+isInteger(str)
+char *str;
+{
+	size_t len = strlen(str), idx = 0U, flag = 0U;
+
+	for (idx = 0; idx < len; idx++) {
+		if (*(str + idx) < '0' || *(str + idx) > '9') {
+			if (*(str + idx) != '-') {
+				flag = 1;
+				break;
+			}
+		}
+	}
+	return flag;
+}
+
+int 
+MAX(one, two)
+int one, two;
+{
+	return (one > two)? one: two;
 }
