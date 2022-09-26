@@ -57,7 +57,7 @@ int main(void)
 	fprintf(stdout, "Please input a month: ");
 	while (fscanf(stdin, "%s", temp) == 1) {
 		ret = chkMonth(temp);
-		if (ret != 0) {
+		if (ret == 0) {
 			fprintf(stderr, "Input ERROR!! Please enter the correct month (like: Jun, Feb, Mar, ... etc..)!! \n");
 			while (getchar() != '\n');
 			fprintf(stdout, "Please input a month: ");
@@ -65,13 +65,13 @@ int main(void)
 		else
 			break;
 	}
-	data.year = ret;
+	data.month = ret;
 
 	memset(temp, '\0', sizeof(char) * SIZE);
 	fprintf(stdout, "Please input a day: ");
 	while (fscanf(stdin, "%s", temp) == 1) {
 		ret = chkDay(temp);
-		if (ret != 0) {
+		if (ret == 0) {
 			fprintf(stderr, "MDFK!! Please enter the correct day!! \n");
 			while (getchar() != '\n');
 			fprintf(stdout, "Please input a day: ");
@@ -79,6 +79,9 @@ int main(void)
 		else
 			break;
 	}
+	data.day = ret;
+
+	fprintf(stdout, "Your input: %s %d, %d \n",MONTH[data.month - 1].month ,data.day, data.year);
 
     return 0;
 }
@@ -105,6 +108,9 @@ chkMonth(Month)
 char *Month;
 {
 	size_t j = 0U;
+
+	if (strlen(Month) > 3)
+		return 0;
 	
 	for (j = 0; j < 12; j++) {
 		if (strncmp(Month, MONTH[j].month, 3) == 0)
@@ -118,7 +124,30 @@ size_t
 chkDay(DAY)
 char *DAY;
 {
-	size_t retval = 0U;
+	size_t retval = 0U, date = atoi(DAY);
+	
+	switch (data.month) {
+		case 1:	// 31
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			retval = (date < 1 || date > 31)? 0: date;
+			break;
+		case 2:
+			retval = (date < 1 || date > 29)? 0: date;
+			break;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			retval = (date < 1 || date > 30)? 0: date;
+			break;
+		default:
+			break;
+	}
 
-	return 0;
+	return retval;
 }
