@@ -35,10 +35,10 @@ main(argc, argv, envp)
 int argc;
 char *argv[], **envp;
 {
-	char cmds[128], temp[64];
+	char cmds[128], temp[32], src[32], target[32];
 	FILE *fp = (FILE *)NULL;
 	size_t j = 0U, k = 0U, len = 0U;
-/*
+
 	if (argc != 4) {
 		fprintf(stderr, "Format ERROR!! \n\n");
 		usage();
@@ -49,28 +49,42 @@ char *argv[], **envp;
 		fprintf(stderr, "The file %s DOESN'T exitm or Permission Denied!! \n", argv[3]);
 		exit(EXIT_FAILURE);
 	}
-*/
-	/* Check the input string for ' ' character or not. */
-	memset(temp, '\0', sizeof(char) * 64);
+	/* Check the input source string for ' ' character or not. */
+	memset(temp, '\0', sizeof(char) * 32);
 	len = strlen(argv[1]);
 	for (j = 0; j < len; j++) {
 		if (argv[1][j] == ' ') {
-			temp[k] = '\\';
-			k++;
-			temp[k] = ' ';
-			k++;
+			temp[k++] = '\\';
+			temp[k++] = ' ';
 		}
-		else {
-			temp[k] = argv[1][j];
-			k++;
-		}
+		else
+			temp[k++] = argv[1][j];
 	}
-	printf("MDFK: argv[1]: %s; %s (%zu) \n", argv[1], temp, strlen(temp));
+	memset(src, '\0', sizeof(char) * 32);
+	strncpy(src, temp, strlen(temp));
+	/* Check the input target string for ' ' character or not. */
+	memset(temp, '\0', sizeof(char) * 32);
+	len = strlen(argv[2]);
+	k = 0;	/* Need to initialize again. */
+	for (j = 0; j < len; j++) {
+		if (argv[2][j] == ' ') {
+			temp[k++] = '\\';
+			temp[k++] = ' ';
+		}
+		else
+			temp[k++] = argv[2][j];
+	}
+	memset(target, '\0', sizeof(char) * 32);
+	strncpy(target, temp, strlen(temp));
 
 	memset(cmds, '\0', sizeof(char) * 128);
-	sprintf(cmds, "/usr/bin/sed -e %s 1> %s.bak", argv[3], argv[3]);
-//	fp = popen("/usr/bin/sed -e s/my\\ skin/GGGG\\ FFFF/g PUZZY 1> ./MDFK", "w");	// This command is fine!! 
-//	fclose(fp);
+	sprintf(cmds, "/usr/bin/sed -e s/%s/%s/g %s 1> %s.bak", src, target, argv[3], argv[3]);
+	fp = popen(cmds, "w");
+	if (fp == (FILE *)NULL) {
+		fprintf(stderr, "The command (%s) execute ERROR!! \n", cmds);
+		exit(EXIT_FAILURE);
+	}
+	fclose(fp);
 
     return 0;
 }

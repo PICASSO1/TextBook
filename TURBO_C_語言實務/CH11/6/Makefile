@@ -54,7 +54,7 @@ $(INSTRUCTION): %.i: %.c
 
 .PHONY: clean cleanall install print tar dist TAGS check test
 clean:
-	@-$(RM) *.i *.S *.o
+	@-$(RM) *.i *.S *.o *.bak
 
 cleanall: clean
 	@-$(RM) $(BIN)
