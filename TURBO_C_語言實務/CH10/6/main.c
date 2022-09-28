@@ -9,7 +9,11 @@
  *
  * Date: 2022 / 09 / 27
  *
- * Description: 
+ * Description: 寫一程式要求 user 鍵入月份 (英文名前３個字母簡寫)及日期 (數目)，然後印出該日是一年中的第幾天，請利用底下 struct：
+ *              struct {
+ *                  char name[10];
+ *                  int days;
+ *              } moth[12] = {{"Jan", 31}, {"Feb", 28}, .... {"Dec", 31}};
  *
 (*)?*/
 
