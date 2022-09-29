@@ -46,7 +46,7 @@ char *argv[], **envp;
 	}
 
 	if (access(argv[3], F_OK | R_OK) == -1) {
-		fprintf(stderr, "The file %s DOESN'T exitm or Permission Denied!! \n", argv[3]);
+		fprintf(stderr, "The file %s DOESN'T exit or Permission Denied!! \n", argv[3]);
 		exit(EXIT_FAILURE);
 	}
 	/* Check the input source string for ' ' character or not. */
@@ -84,7 +84,7 @@ char *argv[], **envp;
 		fprintf(stderr, "The command (%s) execute ERROR!! \n", cmds);
 		exit(EXIT_FAILURE);
 	}
-	fclose(fp);
+	pclose(fp);
 
     return 0;
 }
