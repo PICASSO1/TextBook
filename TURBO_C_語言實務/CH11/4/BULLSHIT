@@ -1,0 +1,23 @@
+At my company they’ve added 30 different fields and have 20 different “boards” for the same thing. 
+Some of the fields only have meaning in other projects and Shouldn’t Be Edited. 
+Managers won’t remove stuff from Jira because “we might need it”. There are over 2000 items in the backlog. 
+Someone has added horizontal swim lanes for some reason. Everyone at my company says “Jira is shit” and everyone nods and agrees.
+
+Jira can die. Anyone claiming they like it are liars. How do I know this for certain? Jira Workflows. 
+There is no way a single person on this planet could possibly think “oh that’s useful” for that god fucking awful tool.
+Jira Cloud dropped them because they are so shit,afaik. Jira Enterprise.. No such luck. The header of your column is now meaningless. 
+You must create and map a new “status” for every ticket type. Why are there different types? 
+Oh because you need a different workflow for each type. Why do you need a different workflow for each type? 
+Atlassian never got that memo. Clear and present demonstration that they never understood the simplest of concepts - left to right flow for.
+
+Its a fucking terrible product that is nothing more than a collection of hacks. It never had a clear vision nor direction.
+
+It is bad, really bad, like come on your page takes 5 seconds to load on every click with a 100Mb internet and loads of ram, seriously? 
+I don’t want to talk about the super unintuitive interface. It is basically cancer. And you can’t use something else if your organisation decides to use it.
+
+Jira is too complicated and companies like to add their own extensions to it making it even more complicated, 
+it’s not meant for devs but for project managers - and project managers like to make the devs do their job in that horrific tool. 
+Imo there should be a dev view that is dead simple, and a PM view with all the complicated bells and whistles.
+
+I’ve built really complex workflows with Jira, and used it for very simple kanban. Even stripped down, it’s still too complicated. 
+The wealth of features tend to lead to practices that can be bad for overall productivity even if they look useful on the surface (sub-tasks, for example).
