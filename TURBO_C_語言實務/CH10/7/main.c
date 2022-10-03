@@ -43,14 +43,14 @@ int main(void)
 
 	for (idx = 0; idx < 10; idx++) {
 		strncpy(a[idx].info, data[idx], strlen(data[idx]));
-		in(data[idx]);
+		in(a[idx].info);
 	}
 
 	// display the content of the Link List *b;
 	display();
 
 	for (idx = 0; idx < 10; idx++)
-		out(data[idx]);
+		out(a[idx].info);
 
     return 0;
 }
