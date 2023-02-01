@@ -1,0 +1,99 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:48:16
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+SUB_1.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: SUB_1.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 02 
+      11				 ; 
+      12				 ; Description: 這一個範例呈現�
+					�呼叫外部函式 (在別的檔案)�
+					�「傳遞參數」的寫法。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22					EXTRN  SUM: WORD    ; 使用關
+					鍵字 EXTRN 來告訴程式，我們�
+					�使用外部變數 SUM (MAIN.ASM 宣�
+					�)，其資料長度�
+      23					PUBLIC BCD          ; 關鍵字
+					 PUBLIC 告訴組譯器，BCD 這個函
+					式大家都可以使用 
+      24 0000				BCD proc              ; 這是宣告一
+					個函式的寫法；後面要加上關
+					鍵字 proc 
+      25 0000  B4 00				MOV    AH, 00H      ; 先將 AX
+					 High Byte 設定為 0x00 
+      26 0002  37				AAA                 ; 將整個
+					 AX Register 調整為１０進制；�
+					�本 AH: 0x00; AL: 0x0D (13) 
+      27				                      ; 調整後 AH: 0
+					x01 (1); AL: 0x03 (3) 
+      28 0003  05 3030				ADD    AX, 3030H    ; 將整個
+					 AX Register 的內容加上 0x3030，�
+					��成 AH: 0x31 ('1'); AL: 0x33 ('3') 
+      29 0006  86 E0				XCHG   AH, AL       ; AH & AL �
+					��的資料彼此交換，變成 AH: 0x
+					33 ('3'); AL: 0x31 ('1') 
+      30 0008  2E: A3 0000 E			MOV    SUM, AX      ; 將 Ax Re
+					gister 的內容移動到 SUM 變數 
+      31 000C  C3				RET                 ; return �
+					�開函式 
+      32 000D				BCD endp              ; 函式的結束
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:48:16
+                                                             Page     1-2
+
+
+					，後面要加上 endp 
+      33 000D				END 
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:48:16
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	000D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+BCD  . . . . . . . . . . . . . .  	N PROC	0000	_TEXT	Global	Length = 000D
+
+SUM  . . . . . . . . . . . . . .  	V WORD	0000	_TEXT	External
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  SUB_1		
+
+
+     33 Source  Lines
+     33 Total   Lines
+     16 Symbols
+
+  50662 + 465882 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

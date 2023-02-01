@@ -1,0 +1,144 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:52:02
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011923 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 19 
+      11				 ; 
+      12				 ; Description: 這乙章節很無聊�
+					�「INT 21H: DOS 中斷」的鍵盤中�
+					��服務； 
+      13				 ;              DOS 的第 0B 號中斷
+					服務：檢查鍵盤的狀態 
+      14				 ;              AL (AX Low Byte) == 0xF
+					F ，鍵盤的緩衝區內「有」字�
+					��在等待輸入； 
+      15				 ;              AL (AX Low Byte) == 0x0
+					0 ，鍵盤的緩衝區內「無」字�
+					��在等待輸入。 
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  6B 65 79 62 6F 61 72		MSG1 DB  'keyboard buffer has c
+					haracters $' 
+      24       64 20 62 75 66 66 65	
+      25       72 20 68 61 73 20 63	
+      26       68 61 72 61 63 74 65	
+      27       72 73 20 24		
+      28 0020  6B 65 79 62 6F 61 72		MSG2 DB  'keyboard buffer has N
+					OT characters $' 
+      29       64 20 62 75 66 66 65	
+      30       72 20 68 61 73 20 4E	
+      31       4F 54 20 63 68 61 72	
+      32       61 63 74 65 72 73 20	
+      33       24			
+      34				 
+      35 0000				.CODE 
+      36 0000				main: 
+      37 0000  B8 ---- R			MOV  AX, @DATA               ; 
+					把 .DATA Segment 的位址傳送到 AX
+					 暫存器；即 .DATA Segment 的起�
+					�位址放到 AX 
+      38 0003  8E D8				MOV  DS, AX                  ; 
+					把 AX Register 的記憶體位址設�
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:52:02
+                                                             Page     1-2
+
+
+					�給 Data Segment Register 
+      39 0005  B4 0B				MOV  AH, 0BH                 ; 
+					DOS 的第 0B 號中斷服務─檢查�
+					��盤的狀態 
+      40 0007  CD 21				INT  21H                     ; 
+					INT 21H: DOS 中斷 
+      41 0009  3C FF				CMP  AL, 0FFH                ; 
+					倘若 AL (AX Low Byte) 的內容等價
+					於 0xFF 
+      42 000B  74 03				JE   PRINTMSG1               ; 
+					是，就跳到 PRINTMSG1 標籤所在�
+					��地方 
+      43 000D  EB 07 90				JMP  PRINTMSG2               ; 
+					不是，就跳到 PRINTMSG2 標籤所�
+					��的地方 
+      44 0010				PRINTMSG1: 
+      45 0010  BA 0000 R			MOV  DX, OFFSET MSG1         ; 
+					將 MSG1 的記憶體位址，再加上
+					偏移量，移動到 DX Register 
+      46 0013  EB 04 90				JMP  PRINTX                  ; 
+					直接跳到 PRINTX 標籤所在的地�
+					�� 
+      47 0016				PRINTMSG2: 
+      48 0016  BA 0020 R			MOV  DX, OFFSET MSG2         ; 
+					將 MSG2 的記憶體位址，再加上
+					偏移量，移動到 DX Register 
+      49 0019				PRINTX: 
+      50 0019  B4 09				MOV  AH, 09H                 ; 
+					DOS 的第 09 號中斷服務 (顯示�
+					�串)；DX Register 為要顯示的位�
+					�� 
+      51 001B  CD 21				INT  21H                     ; 
+					INT 21H: DOS 中斷 
+      52 001D				ENDDOS: 
+      53 001D  B4 4C				MOV  AH, 4CH                 ; 
+					DOS 的第 4C 號中斷服務 (帶回�
+					�值結束)；AL (AX Low Byte)為回傳
+					值 
+      54 001F  CD 21				INT  21H                     ; 
+					INT 21H: DOS 中斷 
+      55 0021				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:52:02
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0044	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0021	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	001D	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	0020	_DATA
+
+PRINTMSG1  . . . . . . . . . . .  	L NEAR	0010	_TEXT
+PRINTMSG2  . . . . . . . . . . .  	L NEAR	0016	_TEXT
+PRINTX . . . . . . . . . . . . .  	L NEAR	0019	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     46 Source  Lines
+     46 Total   Lines
+     21 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

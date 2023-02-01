@@ -1,0 +1,110 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 14:44:16
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build103022 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 30 
+      11				 ; 
+      12				 ; Description: 這個範例呈現算�
+					�指令中的擴展指令 -- CWD。 
+      13				 ;              這個指令會將 AX �
+					��的最高位元值，存入 DX 的每
+					一個位元中。 
+      14				 ; 
+      15				 
+      16				.MODEL	SMALL 
+      17				 
+      18 0400				.STACK 
+      19				 
+      20 0000				.DATA 
+      21 0000  8001				NUM DW 32769     ; 宣告變數
+					名稱為 NUM，將 32,769 (0x8001, 100
+					0 0000 0000 0001) 
+      22				                   ; 以 Word 的資料
+					型態儲存到 NUM 
+      23 0000				.CODE 
+      24 0000				main: 
+      25 0000  B8 ---- R			MOV AX, @DATA    ; 把 .DATA Se
+					gment 的位址傳送到 AX 暫存器 
+      26 0003  8E D8				MOV DS, AX       ; 把 AX Regis
+					ter 的記憶體位址設定給 Data Se
+					gment Register； 
+      27				                   ; 換句話說，就
+					是把 .DATA Segment 此時的記憶體
+					位址，設定給 Data Segment Registe
+					r 
+      28 0005  A1 0000 R			MOV AX, NUM      ; 把 NUM (0x8
+					001, 1000 0000 0000 0001) 設定給 AX 
+					Register 
+      29 0008  99				CWD              ; 此時的 AX
+					 (0x8001, 1000 0000 0000 0001)的最高
+					位元為 1 ；會塞給 DX ， 
+      30					                 ; 所以整個
+					 DX Register 為：1111 1111 1111 1111 
+					(0xFF) 
+      31 0009  80 C2 44				ADD DL, 'D'      ; 把此時的
+					 DL (1111 1111)，這是２的補數結
+					果，其值為 -1 ； 
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 14:44:16
+                                                             Page     1-2
+
+
+      32					                 ; 再加上 'D
+					' (0x44) = 0x43 ('C') 
+      33 000C  B4 02				MOV AH, 02H      ; DOS 的第 0
+					2 號中斷服務 (顯示輸出)；DL (
+					DX Low Byte)為要輸出的資料 
+      34 000E  CD 21				INT 21H          ; INT 21H: DOS
+					 中斷 
+      35 0010  B4 4C				MOV AH, 4CH      ; DOS 的第 4
+					C 號中斷服務 (帶回傳值結束)�
+					��BL (BX Low Byte)為回傳值 
+      36 0012  CD 21				INT 21H          ; INT 21H: DOS
+					 中斷 
+      37 0014				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 14:44:16
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0002	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0014	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM  . . . . . . . . . . . . . .  	L WORD	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     37 Source  Lines
+     37 Total   Lines
+     16 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

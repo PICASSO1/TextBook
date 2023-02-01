@@ -1,0 +1,168 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/24/23 11:21:40
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012423 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 24 
+      11				 ; 
+      12				 ; Description: 多位數減法運算�
+					�EX: 888 - 555 = 333 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20 0000  38 38 38 24			NUM1 DB  '888$' 
+      21 0004  35 35 35 24			NUM2 DB  '555$' 
+      22 0008  30 30 30 24			NUM3 DB  '000$' 
+      23 000C  38 38 38 20 2D 20 35		MSG  DB  '888 - 555 = $' 
+      24       35 35 20 3D 20 24	
+      25				 
+      26 0000				.CODE 
+      27 0000				main: 
+      28 0000  B8 ---- R			MOV  AX, @DATA         ; 把 .D
+					ATA Segment 的位址傳送到 AX 暫�
+					�器；即 .DATA Segment 的起始位�
+					�放到 AX 
+      29 0003  8E D8				MOV  DS, AX            ; 把 AX
+					 Register 的記憶體位址設定給 D
+					ata Segment Register 
+      30 0005  8D 36 0002 R			LEA  SI, NUM1 + 2      ; 將 NU
+					M1 再加上２的記憶體位址，即
+					個位數的 '8' 存入 Source Index Re
+					gister 
+      31 0009  8D 3E 0006 R			LEA  DI, NUM2 + 2      ; 將 NU
+					M2 再加上２的記憶體位址，即
+					個位數的 '5' 存入 Destination Ind
+					ex Register 
+      32 000D  8D 1E 000A R			LEA  BX, NUM3 + 2      ; 將 NU
+					M3 再加上２的記憶體位址，即
+					個位數的 '0' 存入 BX Register 
+      33					; 先計算結果 
+      34 0011  B9 0003				MOV  CX, 3             ; 設定
+					 MAA 的 loop 次數 
+      35 0014				MAA: 
+      36 0014  B8 0000				MOV  AX, 00H           ; 將 AH
+Microsoft (R) Macro Assembler Version 5.00                  1/24/23 11:21:40
+                                                             Page     1-2
+
+
+					 (AX High Byte)初始化為 0x00 
+      37 0017  8A 04				MOV  AL, [SI]          ; 將 SI
+					 所儲存的記憶體位址的內容 (
+					即'8' == 0x38)，移動到 AL (AX Low 
+					Byte) 
+      38 0019  1A 05				SBB  AL, [DI]          ; 將被
+					減數 (AL == 0x08) - 減數 (即 DI �
+					�儲存的記憶體位址的內容 0x05
+					) - Carry Flag (0x00) 
+      39 001B  3F				AAS                    ; 將整
+					個 AX Register 調整為１０進制�
+					�原本：0x0003；調整後：0x0003 
+      40 001C  88 07				MOV  [BX], AL          ; 將 AL
+					 (AX Low Byte)的內容 (0x03)移動到
+					 BX Register 所指定的位址 
+      41 001E  4E				DEC  SI                ; 將 SI
+					 所儲存的記憶體位址 -１；此
+					時指到的是十位數的'8' 
+      42 001F  4F				DEC  DI                ; 將 DI
+					 所儲存的記憶體位址 -１；此
+					時指到的是十位數的'5' 
+      43 0020  4B				DEC  BX                ; 將 BX
+					 所儲存的記憶體位址 -１；此
+					時指到的是個位數的'0' 
+      44 0021  E2 F1				LOOP MAA               ; 重覆
+					 MAA 直到 CX == 0 為止 
+      45					; 顯示 "888 - 555 = " 
+      46 0023  BA 000C R			MOV  DX, OFFSET MSG    ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+      47 0026  B4 09				MOV  AH, 09H           ; DOS �
+					�第 09 號中斷服務 (顯示字串)�
+					��DX Register 為要顯示的位址 
+      48 0028  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      49					; 呈現結果 
+      50 002A  B9 0003				MOV  CX, 3             ; 設定
+					 MBB 的 loop 次數 
+      51 002D				MBB:                     ; 由百位數
+					依序開始列印出：'3', '3', '3' 
+      52 002D  8A 57 01				MOV  DL, [BX] + 1      ; 將 BX
+					 Register 記憶體位址所指到的�
+					�容，移動到 DL (DX Low Byte) 
+      53 0030  80 C2 30				ADD  DL, 30H           ; 將 DL
+					 (DX Low Byte)內的數值轉換成字�
+					�� 
+      54 0033  B4 02				MOV  AH, 02H           ; DOS �
+					�第 02 號中斷服務 (顯示輸出)�
+					��DL (DX Low Byte)為要輸出的字元
+					 
+      55 0035  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      56 0037  43				INC  BX                ; BX Reg
+					ister 記憶體位址 -１ 
+Microsoft (R) Macro Assembler Version 5.00                  1/24/23 11:21:40
+                                                             Page     1-3
+
+
+      57 0038  E2 F3				LOOP MBB               ; 重覆
+					 MBB 直到 CX == 0 為止 
+      58 003A  B4 4C				MOV  AH, 4CH           ; DOS �
+					�第 4C 號中斷服務 (帶回傳值�
+					�束)；AL (AX Low Byte)為回傳值 
+      59 003C  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      60 003E				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/24/23 11:21:40
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0019	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	003E	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAA  . . . . . . . . . . . . . .  	L NEAR	0014	_TEXT
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MBB  . . . . . . . . . . . . . .  	L NEAR	002D	_TEXT
+MSG  . . . . . . . . . . . . . .  	L BYTE	000C	_DATA
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0004	_DATA
+NUM3 . . . . . . . . . . . . . .  	L BYTE	0008	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     59 Source  Lines
+     59 Total   Lines
+     21 Symbols
+
+  50546 + 465998 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

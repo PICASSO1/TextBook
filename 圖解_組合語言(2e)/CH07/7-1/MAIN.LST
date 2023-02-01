@@ -1,0 +1,125 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/6/22 11:37:32
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build110622 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 06 
+      11				 ; 
+      12				 ; Description: 這個範例呈現字�
+					�搬移指令 -- MOVSB (Move String by 
+					Byte)。 
+      13				 ;              這個指令一次只�
+					�移動１Byte 的資料。 
+      14				 ;              這個範例，會把�
+					�本的'88888888'被'KKKKKKKK'覆蓋！
+					 
+      15				 ; 
+      16				 
+      17				.MODEL	SMALL 
+      18				 
+      19 0400				.STACK 
+      20				 
+      21 0000				.DATA 
+      22 0000  4B 4B 4B 4B 4B 4B 4B		SOUR DB  'KKKKKKKK$'    ; 宣�
+					�變數名稱為 SOUR，將８個'K'以
+					 Byte 的資料型態儲存到 SOUR 
+      23       4B 24			
+      24 0009  38 38 38 38 38 38 38		DEST DB  '88888888$'    ; 宣�
+					�變數名稱為 DEST，將８個'8'以
+					 Byte 的資料型態儲存到 DEST 
+      25       38 24			
+      26				 
+      27 0000				.CODE 
+      28 0000				main: 
+      29 0000  B8 ---- R			MOV  AX, @DATA          ; 把 .
+					DATA Segment 的位址傳送到 AX 暫�
+					��器 
+      30 0003  8E D8				MOV  DS, AX             ; 把 A
+					X Register 的記憶體位址設定給 
+					Data Segment Register； 
+      31 0005  8E C0				MOV  ES, AX             ; 把 A
+					X Register 的記憶體位址設定給 
+					Extra Segment Register； 
+      32 0007  FC				CLD                     ; 在�
+					�裡我們使用 CLD 狀態，由記憶
+					體位址「低」的地方往「高」
+					處移動。 
+      33 0008  BE 0000 R			MOV  SI, OFFSET SOUR    ; 把 S
+Microsoft (R) Macro Assembler Version 5.00                  11/6/22 11:37:32
+                                                             Page     1-2
+
+
+					OUR 的記憶體位址 (此時偏移量
+					為０)移動到 Source Index Register 
+      34 000B  BF 0009 R			MOV  DI, OFFSET DEST    ; 把 D
+					EST 的記憶體位址 (此時偏移量
+					為０)移動到 Destination Index Regi
+					ster 
+      35 000E  B9 0008				MOV  CX, 8              ; 把�
+					�值８移動到 CX Register 
+      36 0011  F3/ A4				REP  MOVSB              ; 把 S
+					I Register 的資料分別移動 CX(８
+					) 次到 DI Register 
+      37 0013  BA 0009 R			MOV  DX, OFFSET DEST    ; 再�
+					� DEST 的記憶體位址，移動到 D
+					X Register 
+      38 0016  B4 09				MOV  AH, 09H            ; DOS �
+					��第 02 號中斷服務 (顯示輸出)
+					；DL (DX Low Byte)為要輸出的資�
+					� 
+      39 0018  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      40 001A  B4 4C				MOV  AH, 4CH            ; DOS �
+					��第 4C 號中斷服務 (帶回傳值�
+					��束)；AL (AX Low Byte)為回傳值 
+      41 001C  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      42 001E				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/6/22 11:37:32
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0012	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001E	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+DEST . . . . . . . . . . . . . .  	L BYTE	0009	_DATA
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+SOUR . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     17 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

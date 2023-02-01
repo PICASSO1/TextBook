@@ -1,0 +1,121 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/29/22 11:16:57
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build102822 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 28 
+      11				 ; 
+      12				 ; Description: 這個範例呈現算�
+					�指令中的加法指令 -- ADC。 
+      13				 ;              將兩個運算元相�
+					�之後，再加上 Flag Register 的 �
+					��位旗標 (Carry Flag)， 
+      14				 ;              將結果儲存回目�
+					�運算元。 
+      15				 ;              受影響的 Flag Regis
+					ter 位元：OF, SF, ZF, AF, PF, CF 
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  03				NUM1 DB 3        ; 宣告變數
+					名稱為 NUM1，將 0x03 以 Byte 的�
+					��料型態儲存到 NUM1 
+      24 0001  02				NUM2 DB 2        ; 宣告變數
+					名稱為 NUM2，將 0x02 以 Byte 的�
+					��料型態儲存到 NUM2 
+      25				 
+      26 0000				.CODE 
+      27 0000				main: 
+      28 0000  B8 ---- R			MOV AX, @DATA    ; 把 .DATA Se
+					gment 的位址傳送到 AX 暫存器 
+      29 0003  8E D8				MOV DS, AX       ; 把 AX Regis
+					ter 的記憶體位址設定給 Data Se
+					gment Register； 
+      30				                   ; 換句話說，就
+					是把 .DATA Segment 此時的記憶體
+					位址，設定給 Data Segment Registe
+					r 
+      31 0005  8A 3E 0001 R			MOV BH, NUM2     ; 把 NUM2 (0x
+					03) 設定給 BX High Byte 
+      32 0009  8A 1E 0000 R			MOV BL, NUM1     ; 把 NUM1 (0x
+					02) 設定給 BX Low Byte 
+      33 000D  B4 01				MOV AH, 01       ; 將 0x01 設
+					定給 AX High Byte 
+Microsoft (R) Macro Assembler Version 5.00                  10/29/22 11:16:57
+                                                             Page     1-2
+
+
+      34 000F  9E				SAHF             ; AH 的 第 0
+					 bit (1)會設定給 Flag Register 的 
+					CF (Carry Flag) 
+      35 0010  12 DF				ADC BL, BH       ; BL (NUM1) + 
+					BH (NUM2) + Carry Flag (0x01)的結果�
+					��存回 BX Low Byte 
+      36 0012  80 C3 30				ADD BL, '0'      ; 把此時的
+					 BL (0x06) 再加上 '0' (0x30) = 0x36 
+					('6') 
+      37 0015  8A D3				MOV DL, BL       ; 把 BL 的�
+					�料移動到 DL 作為輸出 (此時 B
+					L 的值應為 0 且為回傳值)。 
+      38 0017  B4 02				MOV AH, 02H      ; DOS 的第 0
+					2 號中斷服務 (顯示輸出)；DL (
+					DX Low Byte)為要輸出的資料 
+      39 0019  CD 21				INT 21H          ; INT 21H: DOS
+					 中斷 
+      40 001B  B4 4C				MOV AH, 4CH      ; DOS 的第 4
+					C 號中斷服務 (帶回傳值結束)�
+					��BL (BX Low Byte)為回傳值 
+      41 001D  CD 21				INT 21H          ; INT 21H: DOS
+					 中斷 
+      42 001F				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/29/22 11:16:57
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0002	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001F	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     42 Source  Lines
+     42 Total   Lines
+     17 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

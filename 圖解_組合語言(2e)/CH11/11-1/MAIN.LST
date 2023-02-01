@@ -1,0 +1,174 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 10:45:48
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010323 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 03 
+      11				 ; 
+      12				 ; Description: 這一個範例呈現�
+					�組合語言中「巨集的寫法」�
+					�其「參數傳遞」。 
+      13				 ; 
+      14				 
+      15				@PrintString  MACRO  string         ; �
+					��義一個名為 PrintString 的巨集
+					，會傳遞一個 string 型態的參�
+					�� 
+      16					MOV          DX, OFFSET string 
+					   ; 將 string 加上偏移量的記�
+					�體位址，移動到 DX Register 
+      17					MOV          AH, 09H           
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位址 
+      18					INT          21H               
+					   ; INT 21H: DOS 中斷 
+      19				ENDM                                ; �
+					��集定義結束 
+      20				 
+      21				@PrintChar    MACRO  char           ; �
+					��義一個名為 PrintChar 的巨集�
+					�會傳遞一個 char 型態的參數 
+      22					MOV          DL, char          
+					   ; 將 char 加上偏移量的記憶�
+					��位址，移動到 DX Register 
+      23					MOV          AH, 02H           
+					   ; DOS 的第 02 號中斷服務 (顯
+					示輸出)；DL (DX Low Byte)為要輸�
+					��的字元 
+      24					INT          21H               
+					   ; INT 21H: DOS 中斷 
+      25				ENDM                                ; �
+					��集定義結束 
+      26				 
+      27				@EndDos      MACRO                  ; �
+					��義一個名為 EndDos 的巨集；�
+					�它並不傳遞參數 
+      28					MOV          AH, 4CH           
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 10:45:48
+                                                             Page     1-2
+
+
+					   ; DOS 的第 4C 號中斷服務 (帶
+					回傳值結束)；AL (AX Low Byte)為�
+					��傳值 
+      29					INT          21H               
+					   ; INT 21H: DOS 中斷 
+      30				ENDM                                ; �
+					��集定義結束 
+      31				 
+      32				.MODEL	SMALL 
+      33				 
+      34 0400				.STACK 
+      35				 
+      36 0000				.DATA 
+      37 0000  54 24				tChar        DB  'T$' 
+      38 0002  68 69 73 20 69 73 20		tString      DB  'his is a book
+					!$' 
+      39       61 20 62 6F 6F 6B 21	
+      40       24			
+      41				 
+      42 0000				.CODE 
+      43 0000				main: 
+      44 0000  B8 ---- R			MOV          AX, @DATA         
+					   ; 把 .DATA Segment 的位址傳送�
+					�� AX 暫存器 
+      45 0003  8E D8				MOV          DS, AX            
+					   ; 把 AX Register 的記憶體位址
+					設定給 Data Segment Register 
+      46 0005  A0 0000 R			MOV          AL, tChar         
+					   ; 將 tChar 的記憶體位址移動
+					到 AX Low Byte 
+      47					@PrintChar   AL                
+					   ; 呼叫 PrintChar 巨集並傳遞 A
+					X Low Byte 的內容 
+      48 0008  8A D0                 1		MOV          DL, AL            
+					 ; 將 char 加上偏移量的記憶體
+					位址，移動到 DX Register 
+      49 000A  B4 02                 1		MOV          AH, 02H           
+					   ; DOS 的第 02 號中斷服務 (顯
+					示輸出)；DL (DX Low Byte)為要輸�
+					��的字� 
+      50 000C  CD 21                 1		INT          21H               
+					   ; INT 21H: DOS 中� 
+      51					@PrintString tString           
+					   ; 呼叫 PrintString 巨集並傳遞
+					 tString 
+      52 000E  BA 0002 R             1		MOV          DX, OFFSET tString
+					    ; 將 string 加上偏移量的記�
+					��體位址，移動到 DX Register 
+      53 0011  B4 09                 1		MOV          AH, 09H           
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位� 
+      54 0013  CD 21                 1		INT          21H               
+					   ; INT 21H: DOS 中� 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 10:45:48
+                                                             Page     1-3
+
+
+      55					@EndDos                        
+					   ; 呼叫 EndDos 
+      56 0015  B4 4C                 1		MOV          AH, 4CH           
+					   ; DOS 的第 4C 號中斷服務 (帶
+					回傳值結束)；AL (AX Low Byte)為�
+					��傳值 
+      57 0017  CD 21                 1		INT          21H               
+					   ; INT 21H: DOS 中� 
+      58 0019				END main 
+
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 10:45:48
+                                                             Symbols-1
+
+
+Macros:
+
+		N a m e			Lines
+
+@ENDDOS  . . . . . . . . . . . .  	   2
+@PRINTCHAR . . . . . . . . . . .  	   3
+@PRINTSTRING . . . . . . . . . .  	   3
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0011	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0019	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+TCHAR  . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+TSTRING  . . . . . . . . . . . .  	L BYTE	0002	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     48 Source  Lines
+     56 Total   Lines
+     20 Symbols
+
+  50580 + 465964 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

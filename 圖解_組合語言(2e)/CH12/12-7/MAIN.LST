@@ -1,0 +1,119 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/9/23 22:17:15
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010923 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 09 
+      11				 ; 
+      12				 ; Description: 「基底索引定址�
+					�」：簡言之，「基底相對定�
+					�法」和「直接索引定址法」�
+					�併在一起�
+      13				 ;              複習： 
+      14				 ;              「基底相對定址�
+					�」：利用 Base Pointer 或 BX Regis
+					ter 再加上一個偏移量 (OFFSET)�
+					�得到一個�
+      15				 ;              「直接索引定址�
+					�」：利用 Source Index Register 或
+					 Destination Index Register 再加上�
+					�個偏移量 (
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  41 42 43 44 45 46 47		T    DB  'ABCDEFGHIJKLMNOPQRSTU
+					VWXYZ$' 
+      24       48 49 4A 4B 4C 4D 4E	
+      25       4F 50 51 52 53 54 55	
+      26       56 57 58 59 5A 24	
+      27				 
+      28 0000				.CODE 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV  AX, @DATA      ; 把 .DATA
+					 Segment 的位址傳送到 AX 暫存�
+					�；即 .DATA Segment 的起始位址�
+					�到 AX 
+      31 0003  8E D8				MOV  DS, AX         ; 把 AX Re
+					gister 的記憶體位址設定給 Data
+					 Segment Register 
+      32 0005  BB 0003				MOV  BX, 03H        ; 將數值
+					 0x03 移動到 BX Register 
+      33 0008  BE 0007				MOV  SI, 07H        ; 將數值
+					 0x07 移動到 Source Index Register 
+      34 000B  8A 10				MOV  DL, [BX+SI]    ; [BX+SI] =
+Microsoft (R) Macro Assembler Version 5.00                  1/9/23 22:17:15
+                                                             Page     1-2
+
+
+					= [0x03+0x07] == 0x0A == 10 == 'K' 
+      35				                      ; 在 8086 Emulat
+					or 上執行，結果是'K' ----> 合�
+					�預期！ 
+      36				                      ; 在 DosBox (MAS
+					M 5.00)上執行，結果是'E' ----> �
+					��知道怎麼來的？ 
+      37				                      ; 而教科書上
+					的執行結果，居然是'D' ----> �
+					�該是寫錯了！ 
+      38 000D  B4 02				MOV  AH, 02H        ; DOS 的�
+					� 02 號中斷服務 (顯示字元輸�
+					�)；DL (DX Low Byte)為要輸出的字
+					元 
+      39 000F  CD 21				INT  21H            ; INT 21H: 
+					DOS 中斷 
+      40 0011  B4 4C				MOV  AH, 4CH        ; DOS 的�
+					� 4C 號中斷服務 (帶回傳值結�
+					�)；AL (AX Low Byte)為回傳值 
+      41 0013  CD 21				INT  21H            ; INT 21H: 
+					DOS 中斷 
+      42 0015				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/9/23 22:17:15
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	001B	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0015	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+T  . . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     39 Source  Lines
+     39 Total   Lines
+     16 Symbols
+
+  50470 + 466074 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

@@ -1,0 +1,99 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:44:59
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010523 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 05 
+      11				 ; 
+      12				 ; Description: 「直接索引定址�
+					�」：利用 Source Index Register 或
+					 Destination Index Register 再加上�
+					�個偏移量 (
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20 0000  41 42 43 44 45 46 47		T    DB  'ABCDEFGHIJKLMNOPQRSTU
+					VWXYZ$' 
+      21       48 49 4A 4B 4C 4D 4E	
+      22       4F 50 51 52 53 54 55	
+      23       56 57 58 59 5A 24	
+      24				 
+      25 0000				.CODE 
+      26 0000				main: 
+      27 0000  B8 ---- R			MOV  AX, @DATA  ; 把 .DATA Seg
+					ment 的位址傳送到 AX 暫存器；
+					即 .DATA Segment 的起始位址放到
+					 AX 
+      28 0003  8E D8				MOV  DS, AX     ; 把 AX Regist
+					er 的記憶體位址設定給 Data Seg
+					ment Register 
+      29 0005  BE 0009				MOV  SI, 9      ; 將數值 0x0
+					9 移動到 Source Index Register 
+      30 0008  8A 94 0000 R			MOV  DL, T[SI]  ; 將字串變�
+					��Ｔ，再加上索引位址，即 T[9
+					] == 'J' 
+      31 000C  B4 02				MOV  AH, 02H    ; DOS 的第 02
+					 號中斷服務 (顯示字元輸出)�
+					�DL (DX Low Byte)為要輸出的字元 
+      32 000E  CD 21				INT  21H        ; INT 21H: DOS 
+					中斷 
+      33 0010  B4 4C				MOV  AH, 4CH    ; DOS 的第 4C
+					 號中斷服務 (帶回傳值結束)�
+					�AL (AX Low Byte)為回傳值 
+      34 0012  CD 21				INT  21H        ; INT 21H: DOS 
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:44:59
+                                                             Page     1-2
+
+
+					中斷 
+      35 0014				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:44:59
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	001B	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0014	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+T  . . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     32 Source  Lines
+     32 Total   Lines
+     16 Symbols
+
+  50470 + 466074 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

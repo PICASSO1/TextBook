@@ -1,0 +1,188 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 11:36:11
+                                                             Page     1-1
+
+
+       1				Ôªø ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010323 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 03 
+      11				 ; 
+      12				 ; Description: ÈÄô‰∏ÄÂÄãÁØÑ‰æãÂëàÁèæ‰∫
+					ÜÁµÑÂêàË™ûË®Ä‰∏≠ include Ê®ôÈ†≠Ê™îÊ°àÁö
+					ÑÂØ´Ê≥ï„ÄÇ 
+      13				 ; 
+      14				 
+      15				INCLUDE DOS.H 
+      16			     C	 
+      17			     C	;************************* 
+      18			     C	;**     ≈„•‹¶r¶Í   ** 
+      19			     C	;************************* 
+      20			     C	@PrintString  MACRO  string    ; ©w∏q§@
+					≠”¶W¨∞ PrintString ™∫•®∂∞°A∑|∂«ªº§@≠” s
+					tring ´¨∫A™∫∞—º∆ 
+      21			     C	  MOV  DX, OFFSET string       ; ±N str
+					ing •[§W∞æ≤æ∂q™∫∞Oæ–≈È¶Ïß}°A≤æ∞ ®Ï DX R
+					egister  
+      22			     C	  MOV  AH, 09H                 ; DOS ™∫
+					≤ƒ 09 ∏π§§¬_™A∞» (≈„•‹¶r¶Í)°FDX Registe
+					r ¨∞≠n≈„•‹™∫¶Ïß} 
+      23			     C	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      24			     C	ENDM                           ; •®∂∞©w
+					∏qµ≤ßÙ 
+      25			     C	 
+      26			     C	;************************* 
+      27			     C	;**     ≈„•‹¶r§∏   ** 
+      28			     C	;************************* 
+      29			     C	@PrintChar  MACRO  char 
+      30			     C	  MOV  DL, char                ; ±N cha
+					r ™∫∞Oæ–≈È¶Ïß}°A≤æ∞ ®Ï DX Low Byte 
+      31			     C	  MOV  AH, 02H                 ; DOS ™∫
+					≤ƒ 02 ∏π§§¬_™A∞» (≈„•‹øÈ•X)°FDL (DX Low
+					 Byte)¨∞≠nøÈ•X™∫¶r§∏ 
+      32			     C	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      33			     C	ENDM 
+      34			     C	 
+      35			     C	;************************* 
+      36			     C	;**     µ≤ßÙµ{¶°   ** 
+      37			     C	;************************* 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 11:36:11
+                                                             Page     1-2
+
+
+      38			     C	@EndDos  MACRO 
+      39			     C	  MOV  AH, 4CH                 ; DOS ™∫
+					≤ƒ 4C ∏π§§¬_™A∞» (±a¶^∂«≠»µ≤ßÙ)°FAL (AX
+					 Low Byte)¨∞¶^∂«≠» 
+      40			     C	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      41			     C	ENDM 
+      42			     C	 
+      43			     C	;************************* 
+      44			     C	;**     øÈ§J¶r§∏   ** 
+      45			     C	;************************* 
+      46			     C	@InputChar  MACRO char 
+      47			     C	  MOV  AH, 01H                 ; DOS ™∫
+					≤ƒ 01 ∏π§§¬_™A∞» (±q¡‰ΩL≈™®˙øÈ§J®√≈„•‹)
+					°FAL (AX Low Byte)¨∞øÈ§J≠» 
+      48			     C	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      49			     C	  MOV  char, AL 
+      50			     C	ENDM 
+      51			     C	 
+      52			     C	;************************* 
+      53			     C	;**     ¶r§∏+'0'   ** 
+      54			     C	;************************* 
+      55			     C	;ºv≈Tº»¶sæπ :AL ≠»∑|ßÔ≈‹ 
+      56			     C	@ASCChar  MACRO  char 
+      57			     C	  MOV  AL, char 
+      58			     C	  ADD  AL, '0' 
+      59			     C	ENDM 
+      60				 
+      61				 
+      62				.MODEL	SMALL 
+      63				 
+      64 0400				.STACK 
+      65				 
+      66 0000				.DATA 
+      67 0000  48 24				NUM1        DB  'H$' 
+      68 0002  61 70 70 6C 79 24		NUM2        DB  'apply$' 
+      69				 
+      70 0000				.CODE 
+      71 0000				main: 
+      72 0000  B8 ---- R			MOV          AX, @DATA    ; Êää
+					 .DATA Segment ÁöÑ‰ΩçÂùÄÂÇ≥ÈÄÅÂà∞ AX Êö
+					´Â≠òÂô® 
+      73 0003  8E D8				MOV          DS, AX       ; Êää
+					 AX Register ÁöÑË®òÊÜ∂È´î‰ΩçÂùÄË®≠ÂÆöÁµ
+					¶ Data Segment Register 
+      74					@PrintChar   NUM1         ; Âëº
+					Âè´ PrintChar Â∑®ÈõÜ‰∏¶ÂÇ≥ÈÅû NUM1 ÁöÑÂ
+					ÖßÂÆπ 
+      75 0005  8A 16 0000 R          1	  MOV  DL, NUM1                ; ±N cha
+					r ™∫∞Oæ–≈È¶Ïß}°A≤æ∞ ®Ï DX Low Byte 
+      76 0009  B4 02                 1	  MOV  AH, 02H                 ; DOS ™∫
+					≤ƒ 02 ∏π§§¬_™A∞» (≈„•‹øÈ•X)°FDL (DX Low
+					 Byte)¨∞≠nøÈ•X™∫¶r§∏ 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 11:36:11
+                                                             Page     1-3
+
+
+      77 000B  CD 21                 1	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      78					@PrintString NUM2         ; Âëº
+					Âè´ PrintString Â∑®ÈõÜ‰∏¶ÂÇ≥ÈÅû NUM2 Áö
+					ÑÂÖßÂÆπ 
+      79 000D  BA 0002 R             1	  MOV  DX, OFFSET NUM2       ; ±N strin
+					g •[§W∞æ≤æ∂q™∫∞Oæ–≈È¶Ïß}°A≤æ∞ ®Ï DX Reg
+					ister 
+      80 0010  B4 09                 1	  MOV  AH, 09H                 ; DOS ™∫
+					≤ƒ 09 ∏π§§¬_™A∞» (≈„•‹¶r¶Í)°FDX Registe
+					r ¨∞≠n≈„•‹™∫¶Ïß} 
+      81 0012  CD 21                 1	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      82					@EndDos                   ; Âëº
+					Âè´ EndDos Â∑®ÈõÜ 
+      83 0014  B4 4C                 1	  MOV  AH, 4CH                 ; DOS ™∫
+					≤ƒ 4C ∏π§§¬_™A∞» (±a¶^∂«≠»µ≤ßÙ)°FAL (AX
+					 Low Byte)¨∞¶^∂« 
+      84 0016  CD 21                 1	  INT  21H                     ; INT 21
+					H: DOS §§¬_ 
+      85 0018				END main 
+
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 11:36:11
+                                                             Symbols-1
+
+
+Macros:
+
+		N a m e			Lines
+
+@ASCCHAR . . . . . . . . . . . .  	   2
+@ENDDOS  . . . . . . . . . . . .  	   2
+@INPUTCHAR . . . . . . . . . . .  	   3
+@PRINTCHAR . . . . . . . . . . .  	   3
+@PRINTSTRING . . . . . . . . . .  	   3
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0008	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0018	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0002	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     76 Source  Lines
+     85 Total   Lines
+     22 Symbols
+
+  50578 + 449582 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

@@ -1,0 +1,115 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/17/23 23:06:19
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011723 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 17 
+      11				 ; 
+      12				 ; Description: 這乙章節很無聊�
+					�「INT 16H: BIOS 中斷」的鍵盤中
+					斷服務； 
+      13				 ;              BIOS 的第 00 號中�
+					�服務；從鍵盤的緩衝區讀取�
+					�盤碼 
+      14				 ;              回傳值：AH (AX High
+					 Byte)為緩衝區讀取到的鍵盤碼
+					；AL (AX Low Byte)為 ASCII 碼。 
+      15				 ;               
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23				 
+      24 0000				.CODE 
+      25 0000				main: 
+      26 0000  B8 ---- R			MOV  AX, @DATA    ; 把 .DATA S
+					egment 的位址傳送到 AX 暫存器�
+					��即 .DATA Segment 的起始位址放�
+					�� AX 
+      27 0003  8E D8				MOV  DS, AX       ; 把 AX Regi
+					ster 的記憶體位址設定給 Data S
+					egment Register 
+      28 0005  B4 00				MOV  AH, 00H      ; BIOS 的第
+					 00 號中斷服務：從鍵盤的緩�
+					�區讀取鍵盤碼 
+      29 0007  CD 16				INT  16H          ; INT 16H: BI
+					OS 中斷；此時的狀態是等待輸
+					入 
+      30 0009  50				PUSH AX           ; 將 AX Regi
+					ster 的內容移動到 Stack Segment 
+      31 000A  B2 0D				MOV  DL, 0DH      ; 將數值 0
+					x0D 移動到 DL (DX Low Byte) 
+      32 000C  B4 02				MOV  AH, 02H      ; DOS 的第 
+					02 號中斷服務 (顯示輸出)；DL 
+					(DX Low Byte)為輸出的字元 
+Microsoft (R) Macro Assembler Version 5.00                  1/17/23 23:06:19
+                                                             Page     1-2
+
+
+      33 000E  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      34 0010  58				POP  AX           ; 將 Stack S
+					egment 的內容移動到 AX Register�
+					�此時的內容為剛剛所讀取到�
+					�鍵盤碼及其 ASCII
+      35 0011  8A D0				MOV  DL, AL       ; 將 AL (AX 
+					Low Byte)的內容移動到 DL (DX Low 
+					Byte) 
+      36 0013  B4 02				MOV  AH, 02H      ; DOS 的第 
+					02 號中斷服務 (顯示輸出)；DL 
+					(DX Low Byte)為輸出的字元 
+      37 0015  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      38 0017  B4 4C				MOV  AH, 4CH      ; DOS 的第 
+					4C 號中斷服務 (帶回傳值結束)
+					；AL (AX Low Byte)為回傳值 
+      39 0019  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      40 001B				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/17/23 23:06:19
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001B	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     15 Symbols
+
+  50624 + 465920 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

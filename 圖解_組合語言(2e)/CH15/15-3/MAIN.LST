@@ -1,0 +1,175 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/22/23 09:24:27
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 22 
+      11				 ; 
+      12				 ; Description: 使用者輸入１６�
+					�位的加法運算 
+      13				 ;              這個範例很笨，�
+					�沒有做任何的防呆機制；隨�
+					�輸入一個字元都會去做運算�
+					� 
+      14				 ; 
+      15				 
+      16				.MODEL	SMALL 
+      17				 
+      18 0400				.STACK 
+      19				 
+      20 0000				.DATA 
+      21 0000  49 4E 50 55 54 20 41		MSG1 DB  'INPUT A: ? $' 
+      22       3A 20 3F 20 24		
+      23 000C  0D 0A 49 4E 50 55 54		MSG2 DB  0DH, 0AH, 'INPUT B: ? 
+					$' 
+      24       20 42 3A 20 3F 20 24	
+      25 001A  0D 0A 41 20 2B 20 42		MSG3 DB  0DH, 0AH, 'A + B = $' 
+      26       20 3D 20 24		
+      27				 
+      28 0000				.CODE 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV  AX, @DATA          ; 把 .
+					DATA Segment 的位址傳送到 AX 暫�
+					��器；即 .DATA Segment 的起始位�
+					��放到 AX 
+      31 0003  8E D8				MOV  DS, AX             ; 把 A
+					X Register 的記憶體位址設定給 
+					Data Segment Register 
+      32					; 顯示 INPUT A: ?  
+      33 0005  BA 0000 R			MOV  DX, OFFSET MSG1    ; 將 M
+					SG1 的記憶體位址，再加上偏�
+					�量，移動到 DX Register 
+      34 0008  B4 09				MOV  AH, 09H            ; DOS �
+					��第 09 號中斷服務 (顯示字串)
+					；DX Register 為要顯示的位址 
+      35 000A  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      36					; 輸入被加數 
+Microsoft (R) Macro Assembler Version 5.00                  1/22/23 09:24:27
+                                                             Page     1-2
+
+
+      37 000C  B4 01				MOV  AH, 01H            ; DOS �
+					��第 01 號中斷服務 (由鍵盤輸�
+					��字元並顯示)；AL (AX Low Byte)�
+					�輸入的字元 
+      38 000E  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      39 0010  2C 30				SUB  AL, 30H            ; 將�
+					�入的字元 AL (AX Low Byte) 轉換�
+					�「數值」 
+      40 0012  8A D8				MOV  BL, AL             ; 將�
+					�入的字元 AL (AX Low Byte) 移動�
+					� BL (BX Low Byte) 
+      41					; 顯示 INPUT B: ?  
+      42 0014  BA 000C R			MOV  DX, OFFSET MSG2    ; 將 M
+					SG2 的記憶體位址，再加上偏�
+					�量，移動到 DX Register 
+      43 0017  B4 09				MOV  AH, 09H            ; DOS �
+					��第 09 號中斷服務 (顯示字串)
+					；DX Register 為要顯示的位址 
+      44 0019  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      45					; 輸入加數 
+      46 001B  B4 01				MOV  AH, 01H            ; DOS �
+					��第 01 號中斷服務 (由鍵盤輸�
+					��字元並顯示)；AL (AX Low Byte)�
+					�輸入的字元 
+      47 001D  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      48 001F  2C 30				SUB  AL, 30H            ; 將�
+					�入的字元 AL (AX Low Byte) 轉換�
+					�「數值」 
+      49 0021  02 D8				ADD  BL, AL             ; 將�
+					�加數 (BL) + 加數 (AL)，儲存回 
+					BL (BX Low Byte) 
+      50					; 顯示 A + B =  
+      51 0023  BA 001A R			MOV  DX, OFFSET MSG3    ; 將 M
+					SG3 的記憶體位址，再加上偏�
+					�量，移動到 DX Register 
+      52 0026  B4 09				MOV  AH, 09H            ; DOS �
+					��第 09 號中斷服務 (顯示字串)
+					；DX Register 為要顯示的位址 
+      53 0028  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      54					; 開始計算 ....  
+      55 002A  8A D3				MOV  DL, BL             ; 將 B
+					L (BX Low Byte) 的內容移動到 DL (
+					DX Low Byte) 
+      56 002C  80 C2 30				ADD  DL, 30H            ; 將 D
+					L (DX Low Byte) 的內容 (和)轉換�
+					�字元 
+      57 002F  80 FA 39				CMP  DL, '9'            ; 比�
+					� DL (DX Low Byte) 的內容和 '9' (0x
+					39)是否相等 
+      58 0032  76 03				JBE  MAA                ; 當 Z
+Microsoft (R) Macro Assembler Version 5.00                  1/22/23 09:24:27
+                                                             Page     1-3
+
+
+					ero Flag == 1 || Carry Flag == 1 時，
+					就跳躍到 MAA 標籤所在的地方 
+      59 0034  80 C2 07				ADD  DL, 7              ; 否�
+					�，將 DL (DX Low Byte) 的內容加�
+					�７ 
+      60 0037				MAA: 
+      61 0037  B4 02				MOV  AH, 02H            ; DOS �
+					��第 02 號中斷服務 (顯示輸出)
+					；DL (DX Low Byte)為要輸出的字�
+					� 
+      62 0039  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      63 003B  B4 4C				MOV  AH, 4CH            ; DOS �
+					��第 4C 號中斷服務 (帶回傳值�
+					��束)；AL (AX Low Byte)為回傳值 
+      64 003D  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      65 003F				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/22/23 09:24:27
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0025	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	003F	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAA  . . . . . . . . . . . . . .  	L NEAR	0037	_TEXT
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	000C	_DATA
+MSG3 . . . . . . . . . . . . . .  	L BYTE	001A	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     62 Source  Lines
+     62 Total   Lines
+     19 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

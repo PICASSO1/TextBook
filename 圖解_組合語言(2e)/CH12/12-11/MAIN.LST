@@ -1,0 +1,225 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/12/23 23:14:11
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 12 
+      11				 ; 
+      12				 ; Description: 這是一個用堆疊 (
+					.STACK Segment) 來當作函式參數�
+					�遞的範例！ 
+      13				 ;              建議使用類似 8086
+					 Emulator 的圖形化介面，來觀�
+					�堆疊區段內資料的變化會比�
+					�清楚及理�
+      14				 ; 
+      15				 
+      16				.MODEL	SMALL 
+      17				 
+      18 0400				.STACK 
+      19				 
+      20 0000				.DATA 
+      21 0000  31 20 2B 20 34 20 3D		MSG1 DB  '1 + 4 = $' 
+      22       20 24			
+      23 0009  0D 0A 32 20 2A 20 33		MSG2 DB  0DH, 0AH, '2 * 3 = $' 
+      24       20 3D 20 24		
+      25				 
+      26 0000				.CODE 
+      27 0000				main: 
+      28 0000  B8 ---- R			MOV  AX, @DATA          ; 把 .
+					DATA Segment 的位址傳送到 AX 暫�
+					��器；即 .DATA Segment 的起始位�
+					��放到 AX 
+      29 0003  8E D8				MOV  DS, AX             ; 把 A
+					X Register 的記憶體位址設定給 
+					Data Segment Register 
+      30 0005  B8 0104				MOV  AX, 0104H          ; 將�
+					�值 0x0104 移動到 AX Register 
+      31 0008  BB 0203				MOV  BX, 0203H          ; 將�
+					�值 0x0203 移動到 BX Register 
+      32 000B  50				PUSH AX                 ; 將 A
+					X Register 的內容移動到 .STACK Se
+					gment 
+      33 000C  E8 0037 R			CALL ADDX               ; 呼�
+					� ADDX 函式 
+      34 000F  8B EC				MOV  BP, SP             ; 將 S
+					tack Pointer 的記憶體位址移動�
+					� Base Pointer 
+Microsoft (R) Macro Assembler Version 5.00                  1/12/23 23:14:11
+                                                             Page     1-2
+
+
+      35 0011  BA 0000 R			MOV  DX, OFFSET MSG1    ; 將 M
+					SG1 的記憶體位址，再加上偏�
+					�量，移動到 DX Register 
+      36 0014  B4 09				MOV  AH, 09H            ; DOS �
+					��第 09 號中斷服務 (顯示字串)
+					；DL (DX Low Byte)為要開始輸出�
+					�字串 
+      37 0016  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      38 0018  8A 56 01				MOV  DL, [BP+1]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					 (此時內容應為 0x04)再加上１(
+					此時內容應為 0x3
+      39 001B  B4 02				MOV  AH, 02H            ; DOS �
+					��第 02 號中斷服務 (顯示輸出�
+					��元)；DL (DX Low Byte)為要輸出�
+					�字元 ('5') 
+      40 001D  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      41				 
+      42 001F  53				PUSH BX                 ; 將 B
+					X Register 的內容移動到 .STACK Se
+					gment 
+      43 0020  E8 0047 R			CALL MULX               ; 呼�
+					� MULX 函式 
+      44 0023  8B EC				MOV  BP, SP             ; 將 S
+					tack Pointer 的內容移動到 Base Po
+					inter 
+      45 0025  BA 0009 R			MOV  DX, OFFSET MSG2    ; 將 M
+					SG2 的記憶體位址，再加上偏�
+					�量，移動到 DX Register 
+      46 0028  B4 09				MOV  AH, 09H            ; DOS �
+					��第 09 號中斷服務 (顯示字串)
+					；DL (DX Low Byte)為要開始輸出�
+					�字串 
+      47 002A  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      48 002C  8A 56 01				MOV  DL, [BP+1]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					 (此時內容應為 0x03)再加上１(
+					此時內容應為 0x3
+      49 002F  B4 02				MOV  AH, 02H            ; DOS �
+					��第 02 號中斷服務 (顯示輸出�
+					��元)；DL (DX Low Byte)為要輸出�
+					�字元 ('6') 
+      50 0031  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      51 0033  B4 4C				MOV  AH, 4CH            ; DOS �
+					��第 4C 號中斷服務 (帶回傳值�
+					��束)；AL (AX Low Byte)為回傳值 
+      52 0035  CD 21				INT  21H                ; INT 2
+					1H: DOS 中斷 
+      53				 
+      54 0037				ADDX PROC                 ; 定義 ADDX
+Microsoft (R) Macro Assembler Version 5.00                  1/12/23 23:14:11
+                                                             Page     1-3
+
+
+					 函式 
+      55 0037  8B EC				MOV  BP, SP             ; 將 S
+					tack Pointer 的內容移動到 Base Po
+					inter 
+      56 0039  8A 56 02				MOV  DL, [BP+2]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					，再加上２(此時內容應為 0x04
+					 == 4)移動到 DX Low
+      57 003C  8A 46 03				MOV  AL, [BP+3]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					，再加上３(此時內容應為 0x01
+					 == 1)移動到 AX Low
+      58 003F  02 C2				ADD  AL, DL             ; 將 A
+					X Low Byte (0x01 == 1) + DX Low Byte (0
+					x04 == 4) = (0x05 == 5)，儲存回 AX 
+					Low Byte 
+      59 0041  04 30				ADD  AL, '0'            ; 將 A
+					X Low Byte 的數值內容 (5)轉換成
+					字元'5' (0x35) 
+      60 0043  88 46 03				MOV  [BP+3], AL         ; 將 A
+					X Low Byte 的內容儲存回 Base Poin
+					ter 所指到的記憶體位址再加�
+					�３ 
+      61				                          ; 此時 .STA
+					CK Segment 內的資料會由 0x0104 �
+					�成 0x3504 
+      62 0046  C3				RET                     ; 回�
+					�值....  
+      63 0047				ADDX ENDP                 ; ADDX 函式
+					結束 
+      64				 
+      65 0047				MULX PROC                 ; 定義 MULX
+					 函式 
+      66 0047  8B EC				MOV  BP, SP             ; 將 S
+					tack Pointer 的內容移動到 Base Po
+					inter 
+      67 0049  8A 56 02				MOV  DL, [BP+2]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					，再加上２(此時內容應為 0x02
+					 == 2)移動到 DX Low
+      68 004C  8A 46 03				MOV  AL, [BP+3]         ; 將 B
+					ase Pointer 所指到的記憶體位址
+					，再加上３(此時內容應為 0x03
+					 == 3)移動到 AX Low
+      69 004F  F6 E2				MUL  DL                 ; 將 A
+					X Low Byte (0x02 == 2) * DX Low Byte (0
+					x03 == 3) = (0x06 == 6)，儲存回 AX 
+					Low Byte 
+      70 0051  04 30				ADD  AL, '0'            ; 將 A
+					X Low Byte 的數值內容 (6)轉換成
+					字元'6' (0x36) 
+      71 0053  88 46 03				MOV  [BP+3], AL         ; 將 A
+					X Low Byte 的內容儲存回 Base Poin
+					ter 所指到的記憶體位址再加�
+Microsoft (R) Macro Assembler Version 5.00                  1/12/23 23:14:11
+                                                             Page     1-4
+
+
+					�３ 
+      72				                          ; 此時 .STA
+					CK Segment 內的資料會由 0x0203 �
+					�成 0x3603 
+      73 0056  C3				RET                     ; 回�
+					�值....  
+      74 0057				MULX ENDP                 ; ADDX 函式
+					結束 
+      75 0057				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/12/23 23:14:11
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0014	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0057	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ADDX . . . . . . . . . . . . . .  	N PROC	0037	_TEXT	Length = 0010
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	0009	_DATA
+MULX . . . . . . . . . . . . . .  	N PROC	0047	_TEXT	Length = 0010
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     73 Source  Lines
+     73 Total   Lines
+     19 Symbols
+
+  50470 + 466074 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

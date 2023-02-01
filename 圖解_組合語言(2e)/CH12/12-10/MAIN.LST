@@ -1,0 +1,111 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:47:01
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011123 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 11 
+      11				 ; 
+      12				 ; Description: (NONE).  
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  B8 4142				MOV  AX, 4142H         ; 將數
+					值 0x1234 移動到 AX Register 
+      24 0003  BB 4344				MOV  BX, 4344H         ; 將數
+					值 0x5678 移動到 BX Register 
+      25 0006  B9 4546				MOV  CX, 4546H         ; 將數
+					值 0x9ABC 移動到 CX Register 
+      26 0009  BA 4748				MOV  DX, 4748H         ; 將數
+					值 0xDE39 移動到 DX Register 
+      27 000C  50				PUSH AX                ; 將 AX
+					 Register 的內容移動到 .STACK Seg
+					ment 
+      28 000D  53				PUSH BX                ; 將 BX
+					 Register 的內容移動到 .STACK Seg
+					ment 
+      29 000E  51				PUSH CX                ; 將 CX
+					 Register 的內容移動到 .STACK Seg
+					ment 
+      30 000F  52				PUSH DX                ; 將 DX
+					 Register 的內容移動到 .STACK Seg
+					ment 
+      31 0010  8B EC				MOV  BP, SP            ; 將 St
+					ack Pointer 的內容移動到 Base Poi
+					nter 
+      32 0012  8A 56 04				MOV  DL, [BP+4]        ; 將 Ba
+					se Pointer 所指到的記憶體位址 
+					(此時內容應為 0x48)再加上４(�
+					��時內容應為 0x44
+      33				;	MOV  AH, 09H           ; DOS �
+					�第 09 號中斷服務 (顯示字串)�
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:47:01
+                                                             Page     1-2
+
+
+					��DL (DX Low Byte)為要開始輸出的
+					字串 
+      34				;	INT  21H               ; INT 21
+					H: DOS 中斷 
+      35 0015  B4 02				MOV  AH, 02H           ; DOS �
+					�第 02 號中斷服務 (顯示輸出�
+					�元)；DL (DX Low Byte)為要輸出的
+					字元 
+      36 0017  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      37 0019  B4 4C				MOV  AH, 4CH           ; DOS �
+					�第 4C 號中斷服務 (帶回傳值�
+					�束)；AL (AX Low Byte)為回傳值 
+      38 001B  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      39 001D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:47:01
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     39 Source  Lines
+     39 Total   Lines
+     15 Symbols
+
+  50472 + 466072 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

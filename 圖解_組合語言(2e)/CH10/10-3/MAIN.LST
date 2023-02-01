@@ -1,0 +1,129 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:47:45
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 02 
+      11				 ; 
+      12				 ; Description: 這一個範例呈現�
+					�呼叫外部函式 (在別的檔案)�
+					�「傳遞參數」的寫法。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20 0000  07				NUM1   DB 7              ; 宣�
+					��一個變數 NUM1 ，將數值７以 
+					Byte 的資料型態來儲存 
+      21 0001  06				NUM2   DB 6              ; 宣�
+					��一個變數 NUM2 ，將數值６以 
+					Byte 的資料型態來儲存 
+      22 0002  ???? 0024			SUM    DW ?, '$'         ; 宣�
+					��一個變數 SUM ，其資料長度�
+					� Word (2 Bytes)且全部初始化為'$
+					' 
+      23				 
+      24 0000				.CODE 
+      25					PUBLIC SUM               ; 關�
+					��字 PUBLIC 告訴組譯器，變數 S
+					UM 大家都可以使用 
+      26				  EXTRN  BCD: NEAR, PrintStr: NEAR 
+      27				                           ; 使用關�
+					��字 EXTRN 來告訴程式，我們要
+					使用兩個外部函式 BCD 和 PrintS
+					tr ; 
+      28				                           ; 而 NEAR �
+					��示 PrintStr / BCD 和 main 都在同
+					一個 .CODE Segment ；反之則用 FA
+					R 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV    AX, @DATA         ; 把 
+					.DATA Segment 的位址傳送到 AX 暫
+					存器 
+      31 0003  8E D8				MOV    DS, AX            ; 把 
+					AX Register 的記憶體位址設定給
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:47:45
+                                                             Page     1-2
+
+
+					 Data Segment Register 
+      32 0005  A0 0000 R			MOV    AL, NUM1          ; 將 
+					NUM1 的內容移動到 AX Low Byte 
+      33 0008  02 06 0001 R			ADD    AL, NUM2          ; 將 
+					AX Low Byte 的內容 (NUM1, 7)再加�
+					� NUM2 (6)，並儲存回 AX Low Byte (
+					13) 
+      34 000C  E8 0000 E			CALL   BCD               ; 呼�
+					��函式 BCD 
+      35 000F  8D 16 0002 R			LEA    DX, SUM           ; 將 
+					SUM 的記憶體位址傳送給 DX Regi
+					ster 
+      36 0013  E8 0000 E			CALL   PrintStr          ; 呼�
+					��函式 PrintStr 
+      37 0016  EB 01 90				JMP    ENDDOS            ; 直�
+					��跳到 ENDDOS 標籤所在的地方 
+      38 0019				ENDDOS: 
+      39 0019  B4 4C				MOV    AH, 4CH           ; DOS 
+					的第 4C 號中斷服務 (帶回傳值
+					結束)；AL (AX Low Byte)為回傳值 
+      40 001B  CD 21				INT    21H               ; INT 
+					21H: DOS 中斷 
+      41 001D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 22:47:45
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0006	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+BCD  . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT	External
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0019	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+PRINTSTR . . . . . . . . . . . .  	L NEAR	0000	_TEXT	External
+
+SUM  . . . . . . . . . . . . . .  	L WORD	0002	_DATA	Global
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     41 Source  Lines
+     41 Total   Lines
+     21 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

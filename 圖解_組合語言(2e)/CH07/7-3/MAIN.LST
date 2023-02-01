@@ -1,0 +1,195 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/7/22 22:39:39
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build110722 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 07 
+      11				 ; 
+      12				 ; Description: 這個範例呈現字�
+					�搜尋指令 -- SCASB (Scan String by 
+					Byte)。 
+      13				 ;              和前置重複指令 -
+					- REPNE (Repeat)。 
+      14				 ; 
+      15				 ;              SCASB 這個指令： 
+      16				 ;              - 等價於 SCAS 指令
+					；但一次只能搜尋且比對一個
+					 Byte。 
+      17				 ;              - 搜尋且比對完成
+					之後，DI 值會被 +1 / -1 (依照 S
+					TD / CLD)。 
+      18				 ; 
+      19				 ;              REPNE 這個指令： 
+      20				 ;              - 會有條件重複地
+					執行 REPNE 後面所接的動作； 
+      21				 ;              - 而重複的次數，
+					則是 CX Register 逐一遞減至０�
+					�或 Zero Flag == 1 為止。 
+      22				 ; 
+      23				 ;              受影響的 Flag Regis
+					ter 位元：OF, SF, ZF, AF, PF, CF 
+      24				 ; 
+      25				 
+      26				.MODEL	SMALL 
+      27				 
+      28 0400				.STACK 
+      29				 
+      30 0000				.DATA 
+      31 0000  41 42 43 44 45 46 47		FIND   DB  'ABCDEFGHIJKLMNOPQRS
+					TUVWXYZ$'    ; 宣告變數名稱為 FI
+					ND，將２６個英文大寫字母以 
+					Byte 的資料型態�
+      32       48 49 4A 4B 4C 4D 4E	
+      33       4F 50 51 52 53 54 55	
+      34       56 57 58 59 5A 24	
+      35 001B  46 49 4E 44 24			SOUR   DB  'FIND$'             
+					             ; 宣告變數名稱為 SO
+					UR，將'FIND'以 Byte 的資料型態�
+Microsoft (R) Macro Assembler Version 5.00                  11/7/22 22:39:39
+                                                             Page     1-2
+
+
+					��存到 SOUR 
+      36 0020  4E 4F 54 20 46 49 4E		DEST   DB  'NOT FIND$'         
+					             ; 宣告變數名稱為 DE
+					ST，將'NOT FIND'以 Byte 的資料型
+					態儲存到 DEST 
+      37       44 24			
+      38				 
+      39 0000				.CODE 
+      40 0000				main: 
+      41 0000  B8 ---- R			MOV    AX, @DATA               
+					             ; 把 .DATA Segment 的位
+					址傳送到 AX 暫存器 
+      42 0003  8E D8				MOV    DS, AX                  
+					             ; 把 AX Register 的記�
+					�體位址設定給 Data Segment Regist
+					er； 
+      43 0005  8E C0				MOV    ES, AX                  
+					             ; 把 AX Register 的記�
+					�體位址設定給 Extra Segment Regis
+					ter； 
+      44 0007  FC				CLD                            
+					             ; 這裡使用 CLD 狀態�
+					��由記憶體位址「低」的地方�
+					��「高」處移動�
+      45 0008  B0 4D				MOV    AL, 'M'                 
+					             ; 把大寫字母'M'移動
+					到 AX (Low Byte) 暫存器 
+      46 000A  8D 3E 0000 R			LEA    DI, FIND                
+					             ; 將 FIND 變數的偏移
+					量，儲存到 DI Register 
+      47 000E  B9 001A				MOV    CX, 26                  
+					             ; 把數值２６移動到
+					 CX Register (設定搜尋的次數) 
+      48 0011  F2/ AE				REPNE  SCASB                   
+					             ; 在 FIND 中以 Byte 為
+					單位依序搜尋是否有 AL 內的�
+					�料 ('M')，且搜尋
+      49 0013  74 02				JE     ISFIND                  
+					             ; 假如「有」找到就
+					跳躍到 ISFIND 標籤執行下一段�
+					��式碼 
+      50 0015  75 0A				JNE    NOFIND                  
+					             ; 假如「沒」找到就
+					跳躍到 NOFIND 標籤執行下一段�
+					��式碼 
+      51				 
+      52 0017				ISFIND: 
+      53 0017  BA 001B R			MOV    DX, OFFSET SOUR         
+					             ; 把 SOUR 的記憶體位
+					址 (此時偏移量應為０)移動到
+					 DX Register 
+      54 001A  B4 09				MOV    AH, 09H                 
+					             ; DOS 的第 02 號中斷�
+					��務 (顯示輸出)；DL (DX Low Byte)
+Microsoft (R) Macro Assembler Version 5.00                  11/7/22 22:39:39
+                                                             Page     1-3
+
+
+					為要輸出的資料 
+      55 001C  CD 21				INT    21H                     
+					             ; INT 21H: DOS 中斷 
+      56 001E  EB 0B 90				JMP    ENDDOS                  
+					             ; 直接跳躍到 ENDDOS �
+					��籤執行下一段程式碼 
+      57				 
+      58 0021				NOFIND: 
+      59 0021  BA 0020 R			MOV    DX, OFFSET DEST         
+					             ; 把 DEST 的記憶體位
+					址 (此時偏移量應為０)移動到
+					 DX Register 
+      60 0024  B4 09				MOV    AH, 09H                 
+					             ; DOS 的第 02 號中斷�
+					��務 (顯示輸出)；DL (DX Low Byte)
+					為要輸出的資料 
+      61 0026  CD 21				INT    21H                     
+					             ; INT 21H: DOS 中斷 
+      62 0028  EB 01 90				JMP    ENDDOS                  
+					             ; 直接跳躍到 ENDDOS �
+					��籤執行下一段程式碼 
+      63				 
+      64 002B				ENDDOS: 
+      65 002B  B4 4C				MOV    AH, 4CH                 
+					             ; DOS 的第 4C 號中斷�
+					��務 (帶回傳值結束)；AL (AX Low
+					 Byte)為回傳值 
+      66 002D  CD 21				INT    21H                     
+					             ; INT 21H: DOS 中斷 
+      67 002F				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/7/22 22:39:39
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0029	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	002F	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+DEST . . . . . . . . . . . . . .  	L BYTE	0020	_DATA
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	002B	_TEXT
+
+FIND . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+ISFIND . . . . . . . . . . . . .  	L NEAR	0017	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NOFIND . . . . . . . . . . . . .  	L NEAR	0021	_TEXT
+
+SOUR . . . . . . . . . . . . . .  	L BYTE	001B	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     63 Source  Lines
+     63 Total   Lines
+     21 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

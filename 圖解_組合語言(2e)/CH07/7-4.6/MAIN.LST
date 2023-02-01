@@ -1,0 +1,161 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/15/22 22:42:25
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build111522 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 15 
+      11				 ; 
+      12				 ; Description: 這個範例並沒有�
+					�何意義！只想呈現 
+      13				 ;              字串載入指令 -- L
+					ODSW (Load  String by Word)；和 
+      14				 ;              字串比對指令 -- C
+					MPSW (Compare String by Word)。 
+      15				 ; 
+      16				 ;              LODSW 這個指令： 
+      17				 ;              - 將 DS:SI 記憶體�
+					�址上所指的字串，以 Word 為�
+					�位載入至 AX。 
+      18				 ;              - 搜尋且比對完成
+					之後，SI 值會被 +2 / -2 (依照 S
+					TD / CLD)。 
+      19				 ; 
+      20				 ;              CMPSW 這個指令： 
+      21				 ;              - 需要搭配 REPE / R
+					EPZ 指令來使用； 
+      22				 ;              - 而比較的結果會
+					清除或是設定 Zero Flag； 
+      23				 ;              - 字串相同，ZF == 
+					1；反之為０。 
+      24				 ; 
+      25				 
+      26				.MODEL	SMALL 
+      27				 
+      28 0400				.STACK 
+      29				 
+      30 0000				.DATA 
+      31 0000  1278				SOUR  DW  1278H            ; �
+					�告變數名稱為 SOUR，將數值 0x
+					1278 以 Word 的資料型態儲存 
+      32 0002  1234				DEST  DW  1234H            ; �
+					�告變數名稱為 DEST，將數值 0x
+					1234 以 Word 的資料型態儲存 
+      33				 
+      34 0000				.CODE 
+      35 0000				main: 
+      36 0000  B8 ---- R			MOV   AX, @DATA            ; �
+					� .DATA Segment 的位址傳送到 AX �
+Microsoft (R) Macro Assembler Version 5.00                  11/15/22 22:42:25
+                                                             Page     1-2
+
+
+					��存器 
+      37 0003  8E D8				MOV   DS, AX               ; �
+					� AX Register 的記憶體位址設定�
+					�� Data Segment Register； 
+      38 0005  8E C0				MOV   ES, AX               ; �
+					� AX Register 的記憶體位址設定�
+					�� Extra Segment Register； 
+      39 0007  FD				STD                        ; �
+					�裡使用 STD 狀態，由記憶體位
+					址「高」的地方往「低」處移
+					動。 
+      40 0008  B9 0002				MOV   CX, 2                ; �
+					�定 CMPSW 的比對次數.... 
+      41 000B  8D 36 0000 R			LEA   SI, SOUR             ; �
+					� SOUR 變數的偏移量，儲存到 S
+					I Register 
+      42 000F  8D 3E 0002 R			LEA   DI, DEST             ; �
+					� DEST 變數的偏移量，儲存到 D
+					I Register 
+      43 0013  F3/ A7				REPZ  CMPSW                ; �
+					�較２組數值是否相同？ 
+      44 0015  E3 0A				JCXZ  ENDDOS               ; �
+					� CX Register 為０時 (Jump CX Zero)�
+					��就跳躍到 ENDDOS 標籤執行下�
+					�段程式碼； 
+      45					                           ; �
+					� CMPSW 找到相異字元時，則 CX 
+					Register 不會等於０ 
+      46 0017  83 C6 02				ADD   SI, 02H              ; �
+					�果這一輪的比對不一樣，就�
+					� SI Register 的值 +２ 進行下一�
+					��的比對 
+      47 001A  AD				LODSW SOUR                 ; �
+					� SOUR 載入至 AL Register 
+MAIN.ASM(47): warning A4001: Extra characters on line
+      48 001B  8A D0				MOV   DL, AL               ; �
+					� AL Register 的資料移動至 DL Reg
+					ister；此時 AL 的值應為 0x78 ('x
+					') 
+      49					                           ; AX
+					 == 0x1278；AH == 0x12；AL == 0x78 
+      50 001D  B4 02				MOV   AH, 02H              ; DO
+					S 的第 02 號中斷服務 (顯示輸�
+					��)；DL (DX Low Byte)為要輸出的�
+					�料 
+      51 001F  CD 21				INT   21H                  ; IN
+					T 21H: DOS 中斷	 
+      52				 
+      53 0021				ENDDOS: 
+      54 0021  B4 4C				MOV   AH, 4CH              ; DO
+					S 的第 4C 號中斷服務 (帶回傳�
+					��結束)；AL (AX Low Byte)為回傳�
+					� 
+      55 0023  CD 21				INT   21H                  ; IN
+Microsoft (R) Macro Assembler Version 5.00                  11/15/22 22:42:25
+                                                             Page     1-3
+
+
+					T 21H: DOS 中斷 
+      56 0025				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/15/22 22:42:25
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0004	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0025	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+DEST . . . . . . . . . . . . . .  	L WORD	0002	_DATA
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0021	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+SOUR . . . . . . . . . . . . . .  	L WORD	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     56 Source  Lines
+     56 Total   Lines
+     18 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      2 Warning Errors
+      0 Severe  Errors

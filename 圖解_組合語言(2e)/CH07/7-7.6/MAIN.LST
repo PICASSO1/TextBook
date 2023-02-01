@@ -1,0 +1,122 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 09:49:45
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build111922 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 19 
+      11				 ; 
+      12				 ; Description: 這個範例呈現位�
+					�旋轉指令 -- RCL (Rotate Carry Left
+					)。 
+      13				 ;              - 可以將 Register or
+					 Memory 上的資料，向左旋轉１�
+					�� bit 
+      14				 ;              - 而位移量必須搭
+					配 CX Low Byte Register 來指定 
+      15				 ;              - 最左邊的位元會
+					移入到 Carry Flag  
+      16				 ;              - 而原本 Carry Flag 
+					的內容則是會移到最右邊的 bi
+					t 
+      17				 ;              - 受影響的旗標為
+					：OF、CF 
+      18				 ; 
+      19				 
+      20				.MODEL	SMALL 
+      21				 
+      22 0400				.STACK 
+      23				 
+      24 0000				.DATA 
+      25 0000  01				NUM   DB  01H      ; 宣告變�
+					��名稱為 NUM，將數值 0x01 (0000 
+					0001)以 Byte 的資料型態儲存 
+      26				 
+      27 0000				.CODE 
+      28 0000				main: 
+      29 0000  B8 ---- R			MOV   AX, @DATA    ; 把 .DATA 
+					Segment 的位址傳送到 AX 暫存器
+					 
+      30 0003  8E D8				MOV   DS, AX       ; 把 AX Reg
+					ister 的記憶體位址設定給 Data 
+					Segment Register 
+      31 0005  A0 0000 R			MOV   AL, NUM      ; 把數值 
+					NUM 設定給 AX Low Byte 
+      32 0008  B1 03				MOV   CL, 03H      ; 將數值�
+					��設定給 CX Low Byte 
+      33 000A  B4 01				MOV   AH, 01H      ; 將數值 
+					0x01 設定給 AX High Byte 
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 09:49:45
+                                                             Page     1-2
+
+
+      34 000C  9E				SAHF               ; 將 AX Hig
+					h Byte 的內容移動到 Flag Register
+					 
+      35 000D  D2 D0				RCL   AL, CL       ; 先將 Car
+					ry Flag 的值 (1)移動到最右邊的
+					 bit 變成 (0000 0001 1) 
+      36					                   ; 再將 AL 
+					內的值 (0000 0001 1)向左旋轉３�
+					�� bit 變成 (0000 1100 0 == 0x0C) 
+      37 000F  8A D0				MOV   DL, AL       ; 再將 AX 
+					Low Byte 的值移動到 DX Low Byte 
+      38 0011  80 C2 30				ADD   DL, '0'      ; 將 DL 內
+					的值 (0x0C)加上 '0' (48 == 0x30)，
+					變成可顯字元 ('<' == 0x3C) 
+      39 0014  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      40 0016  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷	 
+      41 0018  B4 4C				MOV   AH, 4CH      ; DOS 的第
+					 4C 號中斷服務 (帶回傳值結束
+					)；AL (AX Low Byte)為回傳值 
+      42 001A  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      43 001C				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 09:49:45
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0001	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001C	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     43 Source  Lines
+     43 Total   Lines
+     16 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

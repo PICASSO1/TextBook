@@ -1,0 +1,141 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 15:27:40
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012623 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 26 
+      11				 ; 
+      12				 ; Description: 更換程式原先的 I
+					SR (Interrupt Service Routine)程序 (I
+					NT 31H)。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0100				.STACK  0100H 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  EB 13 90				JMP  AA                  ; 直�
+					��跳到 AA 標籤所在之處開始執
+					行 
+      24 0003				INT05: 
+      25 0003  B8 B800				MOV  AX, 0B800H          ; 將 
+					0xB800 設定給 .EXTRA Segment Registe
+					r 
+      26 0006  8E C0				MOV  ES, AX 
+      27 0008  BF 0000				MOV  DI, 00H             ; 將 
+					DI Register 設定成 0x00 
+      28 000B  B9 0064				MOV  CX, 100             ; 將 
+					CX Register 設定成 100 
+      29 000E  B0 01				MOV  AL, 01H             ; 將 
+					AL (AX Low Byte)設定成 0x01 
+      30 0010  B4 07				MOV  AH, 07H             ; 將 
+					AH (AX High Byte)設定成 0x07 
+      31 0012  F3/ AB				REP  STOSW               ; 重�
+					��執行 STOSW 指令 100 次；Store T
+					O String by Word,  
+      32				                           ; 將 AX Reg
+					ister 的內容 (0x0701)移動至 ES:DI
+					 所指定的記憶體位址上 (B800:0
+					000) 
+      33 0014  CF				IRET                     ; 執�
+					��完之後要離開中斷向量的區�
+					�� ....  
+      34 0000				NUL SEGMENT                ; 標記一�
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 15:27:40
+                                                             Page     1-2
+
+
+					��空白區段 (NULL Segment) ....  
+      35					; 
+      36 0000				NUL ENDS 
+      37 0015				AA: 
+      38 0015  0E				PUSH CS                  ; 將 
+					.CODE Segment Register 的記憶體位�
+					��先移動至 .STACK Segment 
+      39 0016  1F				POP  DS                  ; 從 
+					.STACK Segment 取值再放進 .DATA Se
+					gment； 
+      40				                           ; 即將 .CO
+					DE Segment Register 的內容移動至 
+					.DATA Segment Register 
+      41 0017  BA 0003 R			MOV  DX, OFFSET INT05    ; 將�
+					��籤 INT60 的記憶體位址，再加
+					上偏移量，移動至 DX Register 
+      42 001A  B0 05				MOV  AL, 05H             ; 設�
+					��中斷向量編號為 05H 
+      43 001C  B4 25				MOV  AH, 25H             ; DOS 
+					的第 25 號中斷服務 (設定中斷
+					向量)；AL (AX Low Byte)為中斷向�
+					��的定義值 
+      44 001E  CD 21				INT  21H                 ; INT 
+					21H: DOS 中斷 
+      45 0020  B4 62				MOV  AH, 62H             ; DOS 
+					的第 62 號中斷服務─取得 .COD
+					E Segment 的記憶體位址，存放�
+					� BX Register 
+      46 0022  CD 21				INT  21H                 ; INT 
+					21H: DOS 中斷	 
+      47 0024  BA ---- R			MOV  DX, SEG NUL         ; 將�
+					��白區段 (NULL Segment)的長度存�
+					��至 DX Register 
+      48 0027  2B D3				SUB  DX, BX              ; 計�
+					��中斷程序的長度 (DX) 
+      49 0029  B4 31				MOV  AH, 31H             ; 更�
+					��原本的 ISR ；而新的 ISR (INT05
+					)的記憶體位址就是 DS:DX  
+      50 002B  CD 21				INT  21H                 ; INT 
+					21H: DOS 中斷 
+      51 002D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 15:27:40
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0100	PARA	STACK	'STACK'
+NUL  . . . . . . . . . . . . . .  	0000	PARA	NONE	
+_TEXT  . . . . . . . . . . . . .  	002D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+AA . . . . . . . . . . . . . . .  	L NEAR	0015	_TEXT
+
+INT05  . . . . . . . . . . . . .  	L NEAR	0003	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     51 Source  Lines
+     51 Total   Lines
+     18 Symbols
+
+  50586 + 463750 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

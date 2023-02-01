@@ -1,0 +1,32 @@
+
+1. 
+ - DOSBox0.74-win32-installer.exe
+ - MASM_5.00.RAR
+
+2. Install DOSBox0.74-win32-installer.exe, this is a DOS emulator for Windows 10 (64-bit).
+
+3. Unzip MASM_5.00.RAR, there are four files under "MYDEBUG" folder: 
+ - MASM.EXE
+ - LINK.EXE
+ - debug.exe
+ - example.asm
+
+4. To create a folder under Disk C, like: C:\${MYDEBUG}\
+   And copy above four files to here.
+
+5. Edit: C:\Users\${your_name}\AppData\Local\DOSBox\dosbox-0.74-3.conf
+   Add below message under "[autoexec]" Tag:
+
+   MOUNT D C:\MYDEBUG\
+
+   "C:\MYDEBUG\" will be treated as Disk D. 
+
+6. Run DOSBox 0.74-3:
+ - Z:\>D:
+ - D:\>
+ - D:\>MASM.EXE MAIN.ASM
+   Create MAIN.OBJ, MAIN.LST, MAIN.CRF
+ - D:\>LINK.EXE MAIN.OBJ
+   Create MAIN.EXE and MAIN.MAP
+
+7. But I don't how to create the Library.

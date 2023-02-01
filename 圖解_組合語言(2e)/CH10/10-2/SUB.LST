@@ -1,0 +1,79 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 21:30:35
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+SUB.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: SUB.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 02 
+      11				 ; 
+      12				 ; Description: 這一個範例呈現�
+					�呼叫外部函式 (在別的檔案)�
+					�寫法。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22				PUBLIC   PrintStr          ; 關鍵字 
+					PUBLIC 告訴組譯器，這個函式�
+					�家都可以使用 
+      23 0000				PrintStr proc              ; 這是宣�
+					��一個函式的寫法；後面要加�
+					��關鍵字 proc 
+      24 0000  B4 09				MOV    AH, 09H           ; DOS 
+					的第 09 號中斷服務 (顯示字串
+					)；DX Register 為要顯示的位址 
+      25 0002  CD 21				INT    21H               ; INT 
+					21H: DOS 中斷 
+      26 0004  C3				RET                      ; retu
+					rn 離開函式 
+      27 0005				PrintStr endp              ; 函式的�
+					��束，後面要加上 endp 
+      28 0005				END 
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 21:30:35
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0005	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+PRINTSTR . . . . . . . . . . . .  	N PROC	0000	_TEXT	Global	Length = 0005
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  SUB		
+
+
+     28 Source  Lines
+     28 Total   Lines
+     15 Symbols
+
+  50680 + 465864 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

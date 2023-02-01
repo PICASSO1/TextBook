@@ -1,0 +1,119 @@
+Microsoft (R) Macro Assembler Version 5.00                  12/4/22 11:23:39
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build120422 
+       9				 ; 
+      10				 ; Date: 2022 / 12 / 04 
+      11				 ; 
+      12				 ; Description: 此一範例呈現了�
+					�圈指令的用法； 
+      13				 ;              - LOOP:   指令會依�
+					�� CX Register 的值依序遞減，直
+					到０為止 
+      14				 ;              - LOOPE:  指令會依�
+					�� CX Register 的值依序遞減，直
+					到０為止；或 
+      15				 ;                        兩運算元�
+					��比較結果『不相等』」 (Zero 
+					Flag 會被設定成０)，直接停止
+					迴圈 
+      16				 ;              - LOOPNE: 指令會依�
+					�� CX Register 的值依序遞減，直
+					到０為止；或 
+      17				 ;                        兩運算元�
+					��比較結果『相等』」 (Zero Fla
+					g 會被設定成１)，直接停止迴
+					圈 
+      18				 ; 
+      19				 
+      20				.MODEL	SMALL 
+      21				 
+      22 0400				.STACK 
+      23				 
+      24 0000				.DATA 
+      25				 
+      26 0000				.CODE 
+      27 0000				main: 
+      28 0000  B8 ---- R			MOV    AX, @DATA    ; 把 .DATA
+					 Segment 的位址傳送到 AX 暫存�
+					� 
+      29 0003  8E D8				MOV    DS, AX       ; 把 AX Re
+					gister 的記憶體位址設定給 Data
+					 Segment Register 
+      30 0005  B9 0005				MOV    CX, 05H      ; 設定迴
+					圈 (Loop)的次數為 5 (0x05) 
+      31 0008				AGAIN: 
+      32 0008  B4 01				MOV    AH, 01H      ; DOS 的�
+					� 01 號中斷服務 (從鍵盤讀取�
+Microsoft (R) Macro Assembler Version 5.00                  12/4/22 11:23:39
+                                                             Page     1-2
+
+
+					�入並顯示)；AX Low Byte 會顯示�
+					��輸入的字元 
+      33 000A  CD 21				INT    21H          ; INT 21H: 
+					DOS 中斷 
+      34 000C  3C 74				CMP    AL, 't'      ; 將 AX Lo
+					w Byte 裡的值和字元't' (0x74)做�
+					��對 
+      35 000E  E1 F8				LOOPE  AGAIN        ; 若 CMP �
+					��結果不相等 (Zero Flag 會被設�
+					��成０)，或是 CX == 0 就會停止
+					迴圈 
+      36 0010  EB 01 90				JMP    ENDDOS       ; 直接跳
+					到 ENDDOS 標籤所在的程式碼 
+      37 0013				ENDDOS: 
+      38 0013  B4 4C				MOV    AH, 4CH      ; DOS 的�
+					� 4C 號中斷服務 (帶回傳值結�
+					�)；AL (AX Low Byte)為回傳值 
+      39 0015  CD 21				INT    21H          ; INT 21H: 
+					DOS 中斷 
+      40 0017				END main 
+Microsoft (R) Macro Assembler Version 5.00                  12/4/22 11:23:39
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0017	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+AGAIN  . . . . . . . . . . . . .  	L NEAR	0008	_TEXT
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0013	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     17 Symbols
+
+  50624 + 465920 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

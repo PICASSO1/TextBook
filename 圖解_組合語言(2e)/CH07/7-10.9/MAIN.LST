@@ -1,0 +1,124 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/24/22 21:47:20
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build112422 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 24 
+      11				 ; 
+      12				 ; Description: 這個範例呈現未�
+					�裝運算指令 -- DAS (Decimal Adjust
+					 for Subtraction)。 
+      13				 ;              - 在執行完 SUB 之�
+					��，可把 AX Low Byte 的值調整為
+					１０進制；規則： 
+      14				 ;                若 AL 的低 4 bit �
+					��於 A ~ F 之間或 AF == 1 時，AL 
+					的數值內容 -0x06 且 AF = 1 
+      15				 ;                若 AL 的高 4 bit �
+					��於 A ~ F 之間或 CF == 1 時，AL 
+					的數值內容 -0x60 且 CF = 1 
+      16				 ;              - 受影響的旗標為
+					：SF、ZF、PF 
+      17				 ;              - DAS 會搭配 SUB 來
+					使用 
+      18				 ; 
+      19				 
+      20				.MODEL	SMALL 
+      21				 
+      22 0400				.STACK 
+      23				 
+      24 0000				.DATA 
+      25 0000  FA				NUM1  DB  250      ; 宣告變�
+					��名稱為 NUM1，將數值 250 以 By
+					te 的資料型態儲存 
+      26 0001  5A				NUM2  DB   90      ; 宣告變�
+					��名稱為 NUM2，將數值  90 以 By
+					te 的資料型態儲存 
+      27				 
+      28 0000				.CODE 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV   AX, @DATA    ; 把 .DATA 
+					Segment 的位址傳送到 AX 暫存器
+					 
+      31 0003  8E D8				MOV   DS, AX       ; 把 AX Reg
+					ister 的記憶體位址設定給 Data 
+					Segment Register 
+      32 0005  A0 0000 R			MOV   AL, NUM1     ; 把 NUM1 �
+					��數值 (0xFA == 250) 設定給 AX Low
+Microsoft (R) Macro Assembler Version 5.00                  11/24/22 21:47:20
+                                                             Page     1-2
+
+
+					 Byte 
+      33 0008  8A 1E 0001 R			MOV   BL, NUM2     ; 把 NUM2 �
+					��數值 (0x5A ==  90) 設定給 BX Low
+					 Byte 
+      34 000C  2A C3				SUB   AL, BL       ; 兩者相�
+					��之後，儲存回 AX Low Byte (0xA0 
+					== 160) 
+      35 000E  2F				DAS                ; 因為 AL 
+					的高 4 bit (0xA)介於 A ~ F ，所�
+					� AL 會再減上 96 (0x60) 
+      36 000F  8A D0				MOV   DL, AL       ; 把 AL 的
+					內容移動到 DL (0x40 == 64) 
+      37 0011  80 C2 30				ADD   DL, 30H      ; 將 DX Low
+					 Byte 的數值 (0x40)加上 0x30 ('0')
+					變成可顯字元 ('p') 
+      38 0014  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      39 0016  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      40 0018  B4 4C				MOV   AH, 4CH      ; DOS 的第
+					 4C 號中斷服務 (帶回傳值結束
+					)；AL (AX Low Byte)為回傳值 
+      41 001A  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      42 001C				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/24/22 21:47:20
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0002	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001C	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     42 Source  Lines
+     42 Total   Lines
+     17 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

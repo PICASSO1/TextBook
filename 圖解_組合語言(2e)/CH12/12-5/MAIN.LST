@@ -1,0 +1,112 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:30:47
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010523 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 05 
+      11				 ; 
+      12				 ; Description: 「基底相對定址�
+					�」：利用 Base Pointer 或 BX Regis
+					ter 再加上一個偏移量 (OFFSET)�
+					�得到一個�
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  B8 4142				MOV  AX, 4142H   ; 將數值 0x
+					4142 移動到 AX Register 
+      24 0003  BB 4344				MOV  BX, 4344H   ; 將數值 0x
+					4344 移動到 BX Register 
+      25 0006  B9 4546				MOV  CX, 4546H   ; 將數值 0x
+					4546 移動到 CX Register 
+      26 0009  BA 4748				MOV  DX, 4748H   ; 將數值 0x
+					4748 移動到 DX Register 
+      27 000C  50				PUSH AX          ; 將 AX Regis
+					ter 的內容丟進 .STACK Segment 
+      28 000D  53				PUSH BX          ; 將 BX Regis
+					ter 的內容丟進 .STACK Segment 
+      29 000E  51				PUSH CX          ; 將 CX Regis
+					ter 的內容丟進 .STACK Segment 
+      30 000F  52				PUSH DX          ; 將 DX Regis
+					ter 的內容丟進 .STACK Segment 
+      31 0010  8B EC				MOV  BP, SP      ; 將 Stack Po
+					inter 的記憶體位址移動到 Base 
+					Pointer 
+      32				                   ; 此時的 Stack Po
+					inter 所指到的「記憶體位址的
+					內容」應為 0x48 
+      33 0012  8A 56 07				MOV  DL, [BP+7]  ; 而 Base Poi
+					nter 所指的記憶體位址，再加�
+					�� 7 Bytes 
+      34				                   ; 因為 .STACK Segm
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:30:47
+                                                             Page     1-2
+
+
+					ent 是由「記憶體位址高的地�
+					�往下減少」， 
+      35				                   ; 所以 +7 之後�
+					�記憶體位址的內容應為 0x41 ('
+					A') 
+      36 0015  B4 02				MOV  AH, 02H     ; DOS 的第 0
+					2 號中斷服務 (顯示字元輸出)�
+					��DL (DX Low Byte)為要輸出的字元
+					 
+      37 0017  CD 21				INT  21H         ; INT 21H: DOS
+					 中斷 
+      38 0019  B4 4C				MOV  AH, 4CH     ; DOS 的第 4
+					C 號中斷服務 (帶回傳值結束)�
+					��AL (AX Low Byte)為回傳值 
+      39 001B  CD 21				INT  21H         ; INT 21H: DOS
+					 中斷 
+      40 001D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 22:30:47
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     15 Symbols
+
+  50472 + 466072 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

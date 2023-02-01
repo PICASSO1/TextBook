@@ -1,0 +1,126 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/19/22 19:12:09
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build111922 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 19 
+      11				 ; 
+      12				 ; Description: 這個範例呈現位�
+					�平移指令 -- SAR (Shift Arithmetic 
+					Right)。 
+      13				 ;              SHL / SAL 這２組指�
+					��的功能「一模一樣」；但是�
+					�� 
+      14				 ;              SHR / SAR 這２組指�
+					��的功能「不太一樣」！ 
+      15				 ;              - 可以將 Register or
+					 Memory 上的資料，向右位移１�
+					�� bit 
+      16				 ;              - 而位移量必須搭
+					配 CX Low Byte Register 來指定 
+      17				 ;              - 最左邊的位元「
+					保持不變」；而最右邊移出的
+					位元則是會移入到 Carry Flag 
+      18				 ; 
+      19				 ;              這個範例用的不�
+					�，SAR 指令主要是用在負數的�
+					��現；但是在電腦的世界裡並�
+					��有 
+      20				 ;              「負數」的觀念�
+					�而是用最左邊的 bit 和 Sign Fla
+					g 來表示。 
+      21				 ;              所以要顯示出負�
+					�必須要以"字串"的方式，例如
+					：-2。但我還不會寫。 
+      22				 ; 
+      23				 
+      24				.MODEL	SMALL 
+      25				 
+      26 0400				.STACK 
+      27				 
+      28 0000				.DATA 
+      29 0000  40				NUM   DB  40H      ; 宣告變�
+					��名稱為 NUM，將數值 0x40 (0100 
+					0000)以 Byte 的資料型態儲存 
+      30				 
+      31 0000				.CODE 
+      32 0000				main: 
+Microsoft (R) Macro Assembler Version 5.00                  11/19/22 19:12:09
+                                                             Page     1-2
+
+
+      33 0000  B8 ---- R			MOV   AX, @DATA    ; 把 .DATA 
+					Segment 的位址傳送到 AX 暫存器
+					 
+      34 0003  8E D8				MOV   DS, AX       ; 把 AX Reg
+					ister 的記憶體位址設定給 Data 
+					Segment Register 
+      35 0005  A0 0000 R			MOV   AL, NUM      ; 把數值 
+					NUM 設定給 AX Low Byte 
+      36 0008  B1 05				MOV   CL, 05H      ; 將數值�
+					��設定給 CX Low Byte 
+      37 000A  D2 F8				SAR   AL, CL       ; 將 AL 內
+					的值 (0x40 == 0100 0000)向左位移�
+					��個 bit 
+      38 000C  8A D0				MOV   DL, AL       ; 再將 AX 
+					Low Byte 的值移動到 DX Low Byte 
+      39 000E  80 C2 30				ADD   DL, 30H      ; 將 DL 內
+					的值 (0x02)加上 0x30 (48)，變成�
+					��顯字元 ('2') 
+      40 0011  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      41 0013  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷	 
+      42 0015  B4 4C				MOV   AH, 4CH      ; DOS 的第
+					 4C 號中斷服務 (帶回傳值結束
+					)；AL (AX Low Byte)為回傳值 
+      43 0017  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      44 0019				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/19/22 19:12:09
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0001	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0019	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     44 Source  Lines
+     44 Total   Lines
+     16 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

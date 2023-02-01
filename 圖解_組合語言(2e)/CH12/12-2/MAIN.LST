@@ -1,0 +1,80 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 21:37:02
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010323 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 03 
+      11				 ; 
+      12				 ; Description: 「暫存器定址法�
+					�：組合語言當中的指令，所�
+					�定的「運算元」或是「資料�
+					�，都是指�
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  B0 40				MOV  AL, 64     ; 將數值 64 
+					移動到 AX Low Byte 
+      24 0002  8A D0				MOV  DL, AL     ; 將 AX Low By
+					te 的內容移動到 DX Low Byte 
+      25 0004  B4 02				MOV  AH, 02H    ; DOS 的第 02
+					 號中斷服務 (顯示字元輸出)�
+					�DL (DX Low Byte)為要輸出的字元 
+      26 0006  CD 21				INT  21H        ; INT 21H: DOS 
+					中斷 
+      27 0008  B4 4C				MOV  AH, 4CH    ; DOS 的第 4C
+					 號中斷服務 (帶回傳值結束)�
+					�AL (AX Low Byte)為回傳值 
+      28 000A  CD 21				INT  21H        ; INT 21H: DOS 
+					中斷 
+      29 000C				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 21:37:02
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	000C	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     29 Source  Lines
+     29 Total   Lines
+     15 Symbols
+
+  50624 + 465920 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

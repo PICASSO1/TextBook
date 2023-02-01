@@ -1,0 +1,45 @@
+﻿
+1. 這一個章節主要是在介紹組合語言在字串處理的部份。
+
+2. 總共是分成５大類：
+ - MOVS (Move String)
+ - CMPS (Compare String)
+ - SCAS (Scan String)
+ - LODS (Load String)
+ - STOS (Store String)
+
+3. 除此之外，針對不同的平臺，還會衍生出一些帶有「後贅字」的指令，例如：
+ - MOVS  (Move String)
+ - MOVSB (Move String by Byte)
+ - MOVSW (Move String by Word [2 Bytes])
+ - MOVSD (Move String by Double Word [4 Bytes])
+
+4. 教科書建議最好是直接使用「帶有後贅字」的指令，較能夠讓人理解！例如，倘若使用：
+   MOVS 反而會讓人語意不清，到底移動的字串要以什麼為單位。
+
+5. 要進行字串的相關組合語言的指令時，還必須宣告是 STD 狀態，還是 CLD 狀態？差異如下：
+
+   High Address 0x0006  ! <-- SI        ! <-- DI
+                0x0005  !               !
+                0x0004  O     |         O     | 
+                0x0003  L     |         L     | 
+                0x0002  L     |         L     | 
+                0x0001  E     ↓         E     ↓ 
+   Low Address  0x0000  H      		      H
+   
+                      Source        Destination
+   
+   STD (Set Direction Flag)狀態，就是 SI Register 會先從記憶體位址「高」的地方，往記憶體位址「低」的地方移動。
+   
+   
+   High Address 0x0006	!	              !	
+                0x0005	!     ↑         !     ↑
+                0x0004	O     |         O     | 
+                0x0003	L     |         L     | 
+                0x0002	L     |         L     | 
+                0x0001	E               E      
+   Low Address  0x0000	H <-- SI        H <-- DI
+   
+                      Source        Destination
+   
+   CLD (Clear Direction Flag)狀態，就是 SI Register 會先從記憶體位址「低」的地方，往記憶體位址「高」的地方移動。

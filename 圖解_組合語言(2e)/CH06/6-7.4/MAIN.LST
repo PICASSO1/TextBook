@@ -1,0 +1,134 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 11:48:49
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build103022 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 30 
+      11				 ; 
+      12				 ; Description: 這個範例呈現算�
+					�指令中的除法指令 -- IDIV。 
+      13				 ;              IDIV 其實和 DIV 的�
+					��理方式是一樣的；差別在於 
+					IDIV 多了正負號的處理。 
+      14				 ;              其特性為將「被�
+					�數」放進 AX 暫存器中；「除�
+					��」放進一般暫存器 or 記憶體
+					。 
+      15				 ;              「商」會放在 AL �
+					��而「餘數」會放在 AH。 
+      16				 ;              字組 (Word)除以位�
+					��組 (Byte)的時候，被除數 (字�
+					��)會存放在 AX Register； 
+      17				 ;              除數 (位元組)存�
+					�在一般暫存器 or 記憶體，商�
+					��存放在 AL，餘數存放在 AH。 
+      18				 ;              雙字組 (Double Word)
+					除以字組 (Word)的時候，被除�
+					� (雙字組)會存放在 AX & DX Regis
+					ter； 
+      19				 ;              除數 (字組)存放�
+					�一般暫存器 or 記憶體，商數�
+					��放在 AX，餘數存放在 DX。 
+      20				 ; 
+      21				 
+      22				.MODEL	SMALL 
+      23				 
+      24 0400				.STACK 
+      25				 
+      26 0000				.DATA 
+      27 0000  FFEF				NUM1 DW -17      ; 宣告變數
+					名稱為 NUM1，將 -17 (0001 0001) �
+					� Word (2 Byte, 0000 0000 0001 0001) �
+					�資料型態儲存到
+      28 0002  FD				NUM2 DB -3       ; 宣告變數
+					名稱為 NUM2，將 -3 (1111 1101) 以
+					 Byte 的資料型態儲存到 NUM2 
+      29				 
+      30 0000				.CODE 
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 11:48:49
+                                                             Page     1-2
+
+
+      31 0000				main: 
+      32 0000  B8 ---- R			MOV  AX, @DATA   ; 把 .DATA Se
+					gment 的位址傳送到 AX 暫存器 
+      33 0003  8E D8				MOV  DS, AX      ; 把 AX Regis
+					ter 的記憶體位址設定給 Data Se
+					gment Register； 
+      34				                   ; 換句話說，就
+					是把 .DATA Segment 此時的記憶體
+					位址，設定給 Data Segment Registe
+					r 
+      35 0005  8A 16 0002 R			MOV  DL, NUM2    ; 把 NUM2 (-3
+					, 1111 1101) 設定給 DX Low Byte 
+      36 0009  A1 0000 R			MOV  AX, NUM1    ; 把 NUM1 (-1
+					7, 0000 0000 0001 0001) 設定給 AX Re
+					gister 
+      37 000C  F6 FA				IDIV DL          ; AX (-17) / D
+					L (-3) = 5 (0x05) (AL) .... 2 (0x02) (A
+					H) ----> AX == 0x0205 
+      38 000E  8A D0				MOV  DL, AL      ; 把 AL (0x05
+					) 的資料移動到 DL 作為輸出 (�
+					��時 AL 的值應為 0 且為回傳值
+					)。 
+      39 0010  80 C2 30				ADD  DL, '0'     ; 把此時的
+					 DL (0x05) 再加上 '0' (0x30) = 0x35 
+					('5') 
+      40 0013  B4 02				MOV  AH, 02H     ; DOS 的第 0
+					2 號中斷服務 (顯示輸出)；DL (
+					DX Low Byte)為要輸出的資料 
+      41 0015  CD 21				INT  21H         ; INT 21H: DOS
+					 中斷 
+      42 0017  B4 4C				MOV  AH, 4CH     ; DOS 的第 4
+					C 號中斷服務 (帶回傳值結束)�
+					��BL (BX Low Byte)為回傳值 
+      43 0019  CD 21				INT  21H         ; INT 21H: DOS
+					 中斷 
+      44 001B				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/30/22 11:48:49
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0003	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001B	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L WORD	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0002	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     44 Source  Lines
+     44 Total   Lines
+     17 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

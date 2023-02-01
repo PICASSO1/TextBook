@@ -1,0 +1,340 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012523 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 25 
+      11				 ; 
+      12				 ; Description: 一個用組合語言�
+					�建立、開啟和關閉檔案的範�
+					�。 
+      13				 ; 
+      14				 
+      15				@CreateFile  MACRO  PATH, ATTRIB    ; �
+					��義一個巨集，用來「建立」�
+					��案 
+      16					MOV  DX, OFFSET PATH           
+					   ; 將 PATH 的記憶體位址，再�
+					��上偏移量，移動到 DX Register 
+      17					MOV  CL, ATTRIB                
+					   ; 將檔案的屬性值，移動到 
+					CL (CX Low Byte) 
+      18					MOV  CH, 0                     
+					   ; 將 CH (CX High Byte) 初始化為
+					 0x00 (因為用不到) 
+      19					NOV  AH, 3CH                   
+					   ; DOS 的第 3C 號中斷服務 (建
+					立檔案)。 
+      20				                                    ; D
+					S:DX 為 ASCIIZ 字串的記憶體位�
+					�；CX Register 為檔案屬性 
+      21				                                    ; C
+					arry Flag == 0 開檔成功，AX Regist
+					er 回傳檔案代碼； 
+      22				                                    ; C
+					arry Flag == 1 開檔失敗，AX Regist
+					er 回傳錯誤代碼 (03H / 04H / 05H)
+					。 
+      23					INT  21H                       
+					   ; INT 21H: DOS 中斷 
+      24				ENDM 
+      25				 
+      26				@OpenFile  MACRO  PATH, MODE        ; �
+					��義一個巨集，用來「開啟」�
+					��案 
+      27					MOV  DX, OFFSET PATH           
+					   ; 將 PATH 的記憶體位址，再�
+					��上偏移量，移動到 DX Register 
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Page     1-2
+
+
+      28					MOV  AL, MODE                  
+					   ; MODE: 00H: 唯讀檔；01H: 寫入
+					檔；02H: 可寫入或是讀取的檔�
+					�� 
+      29					MOV  AH, 3DH                   
+					   ; DOS 的第 3D 號中斷服務 (開
+					啟檔案)。 
+      30				                                    ; D
+					S:DX 為 ASCIIZ 字串的記憶體位�
+					�；AL (AX Low Byte) 為檔案模式 
+      31				                                    ; C
+					arry Flag == 0 開檔成功，AX Regist
+					er 回傳檔案代碼； 
+      32				                                    ; C
+					arry Flag == 1 開檔失敗，AX Regist
+					er 回傳錯誤代碼 (02H / 03H / 04H 
+					/ 0CH)。 
+      33					INT  21H                       
+					   ; INT 21H: DOS 中斷 
+      34				ENDM 
+      35				 
+      36				@CloseFile  MACRO  FILEHAND         ; �
+					��義一個巨集，用來「關閉」�
+					��案 
+      37					MOV  BX, FILEHAND              
+					   ; 設定檔案代碼....  
+      38					MOV  AH, 3EH                   
+					   ; DOS 的第 3E 號中斷服務 (關
+					閉檔案)，BX Register 為檔案代�
+					�； 
+      39				                                    ; �
+					��關檔失敗，AX Register 回傳錯�
+					��代碼。 
+      40					INT  21H                       
+					   ; INT 21H: DOS 中斷 
+      41				ENDM 
+      42				 
+      43				@OutPutStr  MACRO  String           ; �
+					��義一個巨集，用來「輸出」�
+					��串 
+      44					MOV  DX, OFFSET String         
+					   ; 將 String 的記憶體位址，�
+					�加上偏移量，移動到 DX Registe
+					r 
+      45					MOV  AH, 09H                   
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位址 
+      46					INT  21H                       
+					   ; INT 21H: DOS 中斷 
+      47				ENDM 
+      48				 
+      49				@InPutStr  MACRO  String            ; �
+					��義一個巨集，用來「輸入」�
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Page     1-3
+
+
+					��串 
+      50					MOV  DX, OFFSET String         
+					   ; 將 String 的記憶體位址，�
+					�加上偏移量，移動到 DX Registe
+					r 
+      51					MOV  AH, 0AH                   
+					   ; DOS 的第 0A 號中斷服務：�
+					�鍵盤的輸入，先移動到緩衝�
+					� 
+      52					INT  21H                       
+					   ; INT 21H: DOS 中斷 
+      53				ENDM 
+      54				 
+      55				.MODEL	SMALL 
+      56				 
+      57 0400				.STACK 
+      58				 
+      59 0000				.DATA 
+      60 0000  4B 45 59 20 49 4E 20		MSG1        DB  'KEY IN File Na
+					me: $' 
+      61       46 69 6C 65 20 4E 61	
+      62       6D 65 3A 20 24		
+      63 0013  0D 0A 46 69 6C 65 20		MSG2        DB  0DH, 0AH, 'File
+					 CAN NOT Open!! $' 
+      64       43 41 4E 20 4E 4F 54	
+      65       20 4F 70 65 6E 21 21	
+      66       20 24			
+      67 002A  0D 0A 46 69 6C 65 20		MSG3        DB  0DH, 0AH, 'File
+					 is already open; but now is close!! $'
+					 
+      68       69 73 20 61 6C 72 65	
+      69       61 64 79 20 6F 70 65	
+      70       6E 3B 20 62 75 74 20	
+      71       6E 6F 77 20 69 73 20	
+      72       63 6C 6F 73 65 21 21	
+      73       20 24			
+      74 0056  0A				FILEBUFFER  DB  10, 11 DUP(?) 
+      75       000B[			
+      76	    ??			
+      77			 ]	
+      78				
+      79 0062  ????				FILEH       DW  ? 
+      80				 
+      81 0000				.CODE 
+      82 0000				main: 
+      83 0000  B8 ---- R			MOV  AX, @DATA                 
+					   ; 把 .DATA Segment 的位址傳送�
+					�� AX 暫存器；即 .DATA Segment 的
+					起始位址放到 AX 
+      84 0003  8E D8				MOV  DS, AX                    
+					   ; 把 AX Register 的記憶體位址
+					設定給 Data Segment Register 
+      85					@OutPutStr  MSG1               
+					   ; 輸出「KEY IN File Name: 」 
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Page     1-4
+
+
+      86 0005  BA 0000 R             1		MOV  DX, OFFSET MSG1           
+					 ; 將 String 的記憶體位址，再�
+					��上偏移量，移動到 DX Register 
+      87 0008  B4 09                 1		MOV  AH, 09H                   
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位� 
+      88 000A  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+      89					@InPutStr  FILEBUFFER          
+					   ; 輸入檔案名稱 ....  
+      90 000C  BA 0056 R             1		MOV  DX, OFFSET FILEBUFFER     
+					       ; 將 String 的記憶體位址�
+					��再加上偏移量，移動到 DX Reg
+					ister 
+      91 000F  B4 0A                 1		MOV  AH, 0AH                   
+					   ; DOS 的第 0A 號中斷服務：�
+					�鍵盤的輸入，先移動到緩衝� 
+      92 0011  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+      93 0013  8A 1E 0057 R			MOV  BL, FILEBUFFER + 1        
+					   ; 將使用者所輸入的檔案名�
+					��，移動到 BX Register 
+      94 0017  B7 00				MOV  BH, 00H                   
+					   ; 將 BH (BX High Byte)初始化為 
+					0x00；因為只用到 BL (BX Low Byte)
+					 
+      95 0019  C6 87 0058 R 00			MOV  [FILEBUFFER + BX + 2], 00H
+					   ; 在 FILEBUFFER 變數的最後面�
+					��上 0x00 變成 ASCIIZ 字串的形�
+					� 
+      96					@OpenFile  [FILEBUFFER+2], 00H 
+					   ; 開檔！但 FILEBUFFER 的前２ 
+					Bytes (10 & 11)不要！ 
+      97 001E  BA 0058 R             1		MOV  DX, OFFSET [FILEBUFFER+2] 
+					             ; 將 PATH 的記憶體位
+					址，再加上偏移量，移動到 DX
+					 Register 
+      98 0021  B0 00                 1		MOV  AL, 00H                   
+					  ; MODE: 00H: 唯讀檔；01H: 寫入�
+					��；02H: 可寫入或是讀取的檔�
+					 
+      99 0023  B4 3D                 1		MOV  AH, 3DH                   
+					   ; DOS 的第 3D 號中斷服務 (開
+					啟檔案)。 
+     100			     1	[FILEBUFFER+2]                         
+					         ; Carry Flag == 1 開檔失敗
+					??006D??003A??000AX Register 回傳錯�
+					��代碼 (02H /
+MAIN.ASM(75): warning A4001: Extra characters on line
+     101 0025  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+     102 0027  A3 0062 R			MOV  FILEH, AX                 
+					   ; 將開檔的結果代碼，移動�
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Page     1-5
+
+
+					��變數 FILEH 
+     103 002A  72 12				JC   NUMBER                    
+					   ; 若開檔失敗 (Carry Flag == 1)�
+					��，則跳到 NUMBER 標籤所在的�
+					�方 
+     104					@OutPutStr  MSG3               
+					   ; 輸出「File is already open; but
+					 now is close!! 」 
+     105 002C  BA 002A R             1		MOV  DX, OFFSET MSG3           
+					 ; 將 String 的記憶體位址，再�
+					��上偏移量，移動到 DX Register 
+     106 002F  B4 09                 1		MOV  AH, 09H                   
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位� 
+     107 0031  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+     108					@CloseFile  FILEH              
+					   ; 關檔！ 
+     109 0033  8B 1E 0062 R          1		MOV  BX, FILEH                 
+					; 設定檔案代碼.... 
+     110 0037  B4 3E                 1		MOV  AH, 3EH                   
+					   ; DOS 的第 3E 號中斷服務 (關
+					閉檔案)，BX Register 為檔案代�
+					�� 
+     111 0039  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+     112 003B  EB 08 90				JMP  ENDDOS                    
+					   ; 直接跳到 ENDDOS 標籤所在�
+					�地方 
+     113 003E				NUMBER: 
+     114					@OutPutStr  MSG2               
+					   ; 輸出「File CAN NOT Open!! 」 
+     115 003E  BA 0013 R             1		MOV  DX, OFFSET MSG2           
+					 ; 將 String 的記憶體位址，再�
+					��上偏移量，移動到 DX Register 
+     116 0041  B4 09                 1		MOV  AH, 09H                   
+					   ; DOS 的第 09 號中斷服務 (顯
+					示字串)；DX Register 為要顯示�
+					�位� 
+     117 0043  CD 21                 1		INT  21H                       
+					   ; INT 21H: DOS 中� 
+     118 0045				ENDDOS: 
+     119 0045  B4 4C				MOV  AH, 4CH                   
+					   ; DOS 的第 4C 號中斷服務 (帶
+					回傳值結束)；AL (AX Low Byte)為�
+					��傳值 
+     120 0047  CD 21				INT  21H                       
+					   ; INT 21H: DOS 中斷 
+     121 0049				END main 
+
+Microsoft (R) Macro Assembler Version 5.00                  1/25/23 16:54:36
+                                                             Symbols-1
+
+
+Macros:
+
+		N a m e			Lines
+
+@CLOSEFILE . . . . . . . . . . .  	   4
+@CREATEFILE  . . . . . . . . . .  	   8
+@INPUTSTR  . . . . . . . . . . .  	   3
+@OPENFILE  . . . . . . . . . . .  	   7
+@OUTPUTSTR . . . . . . . . . . .  	   3
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0064	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0049	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0045	_TEXT
+
+FILEBUFFER . . . . . . . . . . .  	L BYTE	0056	_DATA
+FILEH  . . . . . . . . . . . . .  	L WORD	0062	_DATA
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	0013	_DATA
+MSG3 . . . . . . . . . . . . . .  	L BYTE	002A	_DATA
+
+NUMBER . . . . . . . . . . . . .  	L NEAR	003E	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     86 Source  Lines
+    109 Total   Lines
+     27 Symbols
+
+  50422 + 433354 Bytes symbol space free
+
+      2 Warning Errors
+      0 Severe  Errors

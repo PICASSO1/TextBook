@@ -1,0 +1,136 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:26:05
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011023 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 10 
+      11				 ; 
+      12				 ; Description: .STACK Segment 除了 P
+					USH & POP 指令之外，還有 PUSHAW 
+					& POPAW。 
+      13				 ;              不過，以上這兩�
+					�指令只能夠在 80286 上執行；8
+					0386 並不支援此二種指令。 
+      14				 ;              但此一範例經過�
+					�寫，亦能夠達到與教科書一�
+					�的執行結果！ 
+      15				 ; 
+      16				 
+      17				;.286                    ; 80286 suppor
+					t PUSHAW & POPAW instructions ONLY!! 
+      18				 
+      19				.MODEL	SMALL 
+      20				 
+      21 0400				.STACK 
+      22				 
+      23 0000				.DATA 
+      24 0000  54 45 53 54 20 53 54		MSG  DB  'TEST STACK',0DH,0AH,'
+					$' 
+      25       41 43 4B 0D 0A 24	
+      26				 
+      27 0000				.CODE 
+      28 0000				main: 
+      29 0000  B8 1234				MOV  AX, 1234H         ; 將數
+					值 0x1234 移動到 AX Register 
+      30 0003  BB 5678				MOV  BX, 5678H         ; 將數
+					值 0x5678 移動到 BX Register 
+      31 0006  B9 9ABC				MOV  CX, 9ABCH         ; 將數
+					值 0x9ABC 移動到 CX Register 
+      32 0009  BA DE39				MOV  DX, 0DE39H        ; 將數
+					值 0xDE39 移動到 DX Register 
+      33				;	PUSHAW                 ; 此一
+					指令，等價於依序執行：PUSH A
+					X, BX, CX, DX 和 Flag Register 
+      34 000C  50				PUSH AX 
+      35 000D  53				PUSH BX 
+      36 000E  51				PUSH CX 
+      37 000F  52				PUSH DX 
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:26:05
+                                                             Page     1-2
+
+
+      38 0010  9C				PUSHF                  ; 將 Fl
+					ag Register 的內容移動到 Stack Se
+					gment 
+      39 0011  B8 ---- R			MOV  AX, @DATA         ; 把 .D
+					ATA Segment 的位址傳送到 AX 暫�
+					�器；即 .DATA Segment 的起始位�
+					�放到 AX 
+      40 0014  8E D8				MOV  DS, AX            ; 把 AX
+					 Register 的記憶體位址設定給 D
+					ata Segment Register 
+      41 0016  BA 0000 R			MOV  DX, OFFSET MSG    ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+      42 0019  B4 09				MOV  AH, 09H           ; DOS �
+					�第 09 號中斷服務 (顯示字串)�
+					��DL (DX Low Byte)為要開始輸出的
+					字串 
+      43 001B  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      44				;	POPAW                  ; 此一
+					指令，等價於依序執行：POP Fl
+					ag Register, DX, CX, BX 和 AX 
+      45 001D  9D				POPF 
+      46 001E  5A				POP DX                 ; DX Hig
+					h Byte: 0xDE; DX Low Byte: 0x39 ('9') 
+      47 001F  59				POP CX 
+      48 0020  5B				POP BX 
+      49 0021  58				POP AX 
+      50 0022  B4 02				MOV  AH, 02H           ; DOS �
+					�第 02 號中斷服務 (顯示輸出�
+					�元)；DL (DX Low Byte)為要輸出的
+					字元 
+      51 0024  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      52 0026  B4 4C				MOV  AH, 4CH           ; DOS �
+					�第 4C 號中斷服務 (帶回傳值�
+					�束)；AL (AX Low Byte)為回傳值 
+      53 0028  CD 21				INT  21H               ; INT 21
+					H: DOS 中斷 
+      54 002A				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/11/23 22:26:05
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	000D	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	002A	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     53 Source  Lines
+     53 Total   Lines
+     16 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

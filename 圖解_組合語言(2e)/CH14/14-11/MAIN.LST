@@ -1,0 +1,118 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:21:21
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build011923 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 19 
+      11				 ; 
+      12				 ; Description: 這乙章節很無聊�
+					�「INT 21H: DOS 中斷」的印表機�
+					��出服務； 
+      13				 ;              DOS 的第 05 號中斷
+					服務 (印表機輸出)；DL (DX Low B
+					yte)為要輸出的字元 
+      14				 ;              承範例 14-10 ，此�
+					��範例展現如何使用印表機來�
+					��印字串。 
+      15				 ;              列印字串的方式�
+					�是以一個字元、一個字元地�
+					�序輸出。 
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  54 47 20 69 73 20 67		MSG  DB  'TG is good!! $' 
+      24       6F 6F 64 21 21 20 24	
+      25 000E  000E				LEN  DW  $-MSG 
+      26				 
+      27 0000				.CODE 
+      28 0000				main: 
+      29 0000  B8 ---- R			MOV  AX, @DATA    ; 把 .DATA S
+					egment 的位址傳送到 AX 暫存器�
+					��即 .DATA Segment 的起始位址放�
+					�� AX 
+      30 0003  8E D8				MOV  DS, AX       ; 把 AX Regi
+					ster 的記憶體位址設定給 Data S
+					egment Register 
+      31 0005  8B 0E 000E R			MOV  CX, LEN      ; 把字串�
+					�長度 LEN 移動到 CX Register 
+      32 0009  8D 36 0000 R			LEA  SI, MSG      ; 將字串 M
+					SG 的記憶體位址存入到 SI Regis
+					ter 
+      33 000D				next: 
+      34 000D  B4 05				MOV  AH, 05H      ; DOS 的第 
+					05 號中斷服務 (印表機輸出)；
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:21:21
+                                                             Page     1-2
+
+
+					DL (DX Low Byte)為要輸出的字元 
+      35 000F  8A 14				MOV  DL, [SI]     ; 將 SI Regi
+					ster 的「內容」移動到 DL (DX Lo
+					w Byte) 
+      36 0011  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      37 0013  46				INC  SI           ; 將 SI Regi
+					ster 的值 +１；即指到下一個�
+					�元的記憶體位址 
+      38 0014  E2 F7				LOOP next         ; 重覆 next
+					 標籤的行為，直到 CX == 0 為�
+					�！ 
+      39 0016  B4 4C				MOV  AH, 4CH      ; DOS 的第 
+					4C 號中斷服務 (帶回傳值結束)
+					；AL (AX Low Byte)為回傳值 
+      40 0018  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      41 001A				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/19/23 22:21:21
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0010	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001A	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+LEN  . . . . . . . . . . . . . .  	L WORD	000E	_DATA
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+NEXT . . . . . . . . . . . . . .  	L NEAR	000D	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     18 Symbols
+
+  50544 + 466000 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

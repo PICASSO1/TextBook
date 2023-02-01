@@ -1,0 +1,112 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 20:52:44
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010223 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 02 
+      11				 ; 
+      12				 ; Description: 這一個範例呈現�
+					�函式的寫法和呼叫。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20 0000  49 20 4C 4F 56 45 20		MSG    DB  'I LOVE ASSEMBLY LAN
+					GUAGE.$' 
+      21       41 53 53 45 4D 42 4C	
+      22       59 20 4C 41 4E 47 55	
+      23       41 47 45 2E 24		
+      24				                           ; 宣告一�
+					��字串變數 MSG 裡面的資料用 B
+					yte 的方式來儲存 
+      25 0000				.CODE 
+      26 0000				main: 
+      27 0000  B8 ---- R			MOV    AX, @DATA         ; 把 
+					.DATA Segment 的位址傳送到 AX 暫
+					存器 
+      28 0003  8E D8				MOV    DS, AX            ; 把 
+					AX Register 的記憶體位址設定給
+					 Data Segment Register 
+      29 0005  E8 000F R			CALL   PrintStr          ; 呼�
+					��函式 PrintStr 
+      30 0008  EB 01 90				JMP    ENDDOS            ; 直�
+					��跳到 ENDDOS 標籤所在的地方 
+      31 000B				ENDDOS: 
+      32 000B  B4 4C				MOV    AH, 4CH           ; DOS 
+					的第 4C 號中斷服務 (帶回傳值
+					結束)；AL (AX Low Byte)為回傳值 
+      33 000D  CD 21				INT    21H               ; INT 
+					21H: DOS 中斷 
+      34 000F				PrintStr proc              ; 這是宣�
+					��一個函式的寫法；後面要加�
+					��關鍵字 proc 
+      35 000F  BA 0000 R			MOV    DX, OFFSET MSG    ; 將�
+					��數 MSG 再加上 OFFSET 的偏移量
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 20:52:44
+                                                             Page     1-2
+
+
+					的記憶體位址，移動到 DX Regis
+					ter 
+      36 0012  B4 09				MOV    AH, 09H           ; DOS 
+					的第 09 號中斷服務 (顯示字串
+					)；DX Register 為要顯示的位址 
+      37 0014  CD 21				INT    21H               ; INT 
+					21H: DOS 中斷 
+      38 0016  C3				RET                      ; retu
+					rn 離開函式 
+      39 0017				PrintStr endp              ; 函式的�
+					��束，後面要加上 endp 
+      40 0017				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/2/23 20:52:44
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	001A	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0017	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	000B	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+PRINTSTR . . . . . . . . . . . .  	N PROC	000F	_TEXT	Length = 0008
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     37 Source  Lines
+     37 Total   Lines
+     18 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

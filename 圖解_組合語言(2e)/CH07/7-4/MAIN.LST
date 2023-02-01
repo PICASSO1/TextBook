@@ -1,0 +1,176 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/9/22 22:05:55
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build110922 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 09 
+      11				 ; 
+      12				 ; Description: 這個範例呈現字�
+					�載入指令 -- LODS (Load  String by 
+					Byte or Word)。 
+      13				 ;              和前置重複指令 -
+					- REPE (Repeat)。 
+      14				 ;              還有字串比對指�
+					� -- CMPSB (Compare String by Byte)。 
+      15				 ; 
+      16				 ;              LODS 這個指令： 
+      17				 ;              - 將 DS:SI 記憶體�
+					�址上所指的字串，以 Byte or Wo
+					rd 為單位載入至 AL or AX。 
+      18				 ;              - 搜尋且比對完成
+					之後，SI 值會被 +1 / -1 (依照 S
+					TD / CLD)。 
+      19				 ; 
+      20				 ;              REPE 這個指令： 
+      21				 ;              - 會有條件重複地
+					執行 REPE 後面所接的動作； 
+      22				 ;              - 而重複的次數，
+					則是 CX Register 逐一遞減至０�
+					�或 Zero Flag == 0 為止。 
+      23				 ; 
+      24				 ;              CMPSB 這個指令： 
+      25				 ;              - 需要搭配 REPE 指
+					令來使用； 
+      26				 ;              - 而比較的結果會
+					清除或是設定 Zero Flag； 
+      27				 ;              - 字串相同，ZF == 
+					1；反之為０。 
+      28				 ; 
+      29				 
+      30				.MODEL	SMALL 
+      31				 
+      32 0400				.STACK 
+      33				 
+      34 0000				.DATA 
+      35 0000  54 47 20 69 73 20 64		SOUR  DB  'TG is dood boy$'    
+					; 宣告變數名稱為 SOUR，將８�
+					�'K'以 Byte 的資料型態儲存到 S
+Microsoft (R) Macro Assembler Version 5.00                  11/9/22 22:05:55
+                                                             Page     1-2
+
+
+					OUR 
+      36       6F 6F 64 20 62 6F 79	
+      37       24			
+      38 000F  54 47 20 69 73 20 67		DEST  DB  'TG is good boy$'    
+					; 宣告變數名稱為 DEST，將８�
+					�'8'以 Byte 的資料型態儲存到 D
+					EST 
+      39       6F 6F 64 20 62 6F 79	
+      40       24			
+      41 001E  001E				SLEN  DW  $-SOUR               
+					; 宣告變數名稱為 SLEN，將 SOUR
+					 的字串長度以 Word 的資料型�
+					�儲存 
+      42				 
+      43 0000				.CODE 
+      44 0000				main: 
+      45 0000  B8 ---- R			MOV   AX, @DATA                
+					; 把 .DATA Segment 的位址傳送到 
+					AX 暫存器 
+      46 0003  8E D8				MOV   DS, AX                   
+					; 把 AX Register 的記憶體位址設
+					定給 Data Segment Register； 
+      47 0005  8E C0				MOV   ES, AX                   
+					; 把 AX Register 的記憶體位址設
+					定給 Extra Segment Register； 
+      48 0007  FC				CLD                            
+					; 這裡使用 CLD 狀態，由記憶�
+					�位址「低」的地方往「高」�
+					�移動。 
+      49 0008  8B 0E 001E R			MOV   CX, SLEN                 
+					; 將 SOUR 的字串長度移動到 CX 
+					Register 
+      50 000C  8D 36 0000 R			LEA   SI, SOUR                 
+					; 將 SOUR 變數的偏移量，儲存�
+					�� SI Register 
+      51 0010  8D 3E 000F R			LEA   DI, DEST                 
+					; 將 DEST 變數的偏移量，儲存�
+					�� DI Register 
+      52 0014  F3/ A6				REPE  CMPSB                    
+					; 比較２組字串是否相同？ 
+      53 0016  E3 08				JCXZ  ENDDOS                   
+					; 若 CX Register 為０時 (Jump CX Ze
+					ro)，就跳躍到 ENDDOS 標籤執行�
+					��一段程式碼； 
+      54					                               
+					; 若 CMPSB 找到相異字元時，則
+					 CX Register 不會等於０ 
+      55 0018  4E				DEC   SI                       
+					; SI Register 再 -1，因為是使用 
+					CLD 狀態。 
+      56 0019  AC				LODS  SOUR                     
+					; 將 SOUR 載入至 AL Register 
+      57 001A  8A D0				MOV   DL, AL                   
+					; 將 AL Register 的資料移動至 DL
+Microsoft (R) Macro Assembler Version 5.00                  11/9/22 22:05:55
+                                                             Page     1-3
+
+
+					 Register 
+      58 001C  B4 02				MOV   AH, 02H                  
+					; DOS 的第 02 號中斷服務 (顯示
+					輸出)；DL (DX Low Byte)為要輸出�
+					��資料 
+      59 001E  CD 21				INT   21H                      
+					; INT 21H: DOS 中斷	 
+      60				 
+      61 0020				ENDDOS: 
+      62 0020  B4 4C				MOV   AH, 4CH                  
+					; DOS 的第 4C 號中斷服務 (帶回
+					傳值結束)；AL (AX Low Byte)為回�
+					��值 
+      63 0022  CD 21				INT   21H                      
+					; INT 21H: DOS 中斷 
+      64 0024				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/9/22 22:05:55
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0020	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0024	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+DEST . . . . . . . . . . . . . .  	L BYTE	000F	_DATA
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0020	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+SLEN . . . . . . . . . . . . . .  	L WORD	001E	_DATA
+SOUR . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     60 Source  Lines
+     60 Total   Lines
+     19 Symbols
+
+  50582 + 465962 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

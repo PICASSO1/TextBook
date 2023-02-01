@@ -1,0 +1,124 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 23:10:41
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build103122 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 31 
+      11				 ; 
+      12				 ; Description: 這個範例呈現算�
+					�指令中的邏輯指令 -- NOT 和 TE
+					ST。 
+      13				 ;              TEST 指令的作用是
+					測試運算元的內容是否相同，
+					且只針對旗標值改變而已， 
+      14				 ;              並不改變運算元�
+					�內容。 
+      15				 ;              TEST 受影響的 Flag 
+					Register 位元：SF, ZF, PF, CF = 0, O
+					F = 0 
+      16				 ;              此一程式的功能�
+					�：若鍵盤輸入'1'，就跟著列�
+					�出'1'；否則為'0'。 
+      17				 ; 
+      18				 
+      19				.MODEL	SMALL 
+      20				 
+      21 0400				.STACK 
+      22				 
+      23 0000				.DATA 
+      24				 
+      25 0000				.CODE 
+      26 0000				main: 
+      27 0000  B4 01				MOV  AH, 01H          ; DOS 的
+					第 01 號中斷服務 (從鍵盤讀取
+					輸入)；並儲存在 AX Low Byte 
+      28 0002  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      29 0004  F6 D0				NOT  AL               ; 把鍵�
+					��的輸入值做 NOT 運算 
+      30 0006  A8 01				TEST AL, 01H          ; 用 TES
+					T 指令判斷結果是否為 0 ；注�
+					��！ 
+      31					                      ; 如果�
+					��盤輸入為 '1' 的時候，因為 '
+					1' 和 '1' 相等，結果為０；ZF �
+					��被設定成１！ 
+      32 0008  74 09				JE   GOX              ; 若 Zer
+					o Flag == 1 時，跳至 GOX ；否則�
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 23:10:41
+                                                             Page     1-2
+
+
+					��續執行 
+      33 000A  B2 30				MOV  DL, '0'          ; 準備�
+					��出 '0' 
+      34 000C  B4 02				MOV  AH, 02H          ; DOS 的
+					第 02 號中斷服務 (顯示輸出)�
+					�DL (DX Low Byte)為要輸出的資料 
+      35 000E  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      36 0010  EB 07 90				JMP  EDOS             ; 跳躍�
+					�� EDOS 結束程式 
+      37 0013				GOX: 
+      38 0013  B2 31				MOV  DL, '1'          ; 準備�
+					��出 '1' 
+      39 0015  B4 02				MOV  AH, 02H          ; DOS 的
+					第 02 號中斷服務 (顯示輸出)�
+					�DL (DX Low Byte)為要輸出的資料 
+      40 0017  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      41 0019				EDOS: 
+      42 0019  B4 4C				MOV  AH, 4CH          ; DOS 的
+					第 4C 號中斷服務 (帶回傳值結
+					束)；AL (AX Low Byte)為回傳值 
+      43 001B  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      44 001D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 23:10:41
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+EDOS . . . . . . . . . . . . . .  	L NEAR	0019	_TEXT
+
+GOX  . . . . . . . . . . . . . .  	L NEAR	0013	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     44 Source  Lines
+     44 Total   Lines
+     17 Symbols
+
+  50624 + 465920 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

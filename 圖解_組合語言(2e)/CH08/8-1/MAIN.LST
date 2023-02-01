@@ -1,0 +1,176 @@
+Microsoft (R) Macro Assembler Version 5.00                  12/3/22 21:09:16
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build120322 
+       9				 ; 
+      10				 ; Date: 2022 / 12 / 03 
+      11				 ; 
+      12				 ; Description: 此一程序的用意�
+					�以讓使用者輸入１~３然後會�
+					��示相對應的字串 
+      13				 ;              示範了 CMP 和無條
+					件跳躍指令 JMP 的用法 
+      14				 ;              而有條件跳躍指�
+					�，除了 Jump Equal (Zero Flag == 1)�
+					��外，總共還有１７種 
+      15				 ;              不再一一列舉 
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  3D 3E 4B 45 59 20 49		MSG1  DB '=>KEY IN NUMBR 1$'   
+					 ; 宣告４組字串，裡面的元素
+					以 Byte 的型態來儲存 
+      24       4E 20 4E 55 4D 42 52	
+      25       20 31 24			
+      26 0011  3D 3E 4B 45 59 20 49		MSG2  DB '=>KEY IN NUMBR 2$' 
+      27       4E 20 4E 55 4D 42 52	
+      28       20 32 24			
+      29 0022  3D 3E 4B 45 59 20 49		MSG3  DB '=>KEY IN NUMBR 3$' 
+      30       4E 20 4E 55 4D 42 52	
+      31       20 33 24			
+      32 0033  3D 3E 4E 4F 54 20 4B		MSG4  DB '=>NOT KEY IN NUMBER 1
+					 OR 2 OR 3$' 
+      33       45 59 20 49 4E 20 4E	
+      34       55 4D 42 45 52 20 31	
+      35       20 4F 52 20 32 20 4F	
+      36       52 20 33 24		
+      37				 
+      38 0000				.CODE 
+      39 0000				main: 
+      40 0000  B8 ---- R			MOV   AX, @DATA                
+					 ; 把 .DATA Segment 的位址傳送到
+					 AX 暫存器 
+      41 0003  8E D8				MOV   DS, AX                   
+Microsoft (R) Macro Assembler Version 5.00                  12/3/22 21:09:16
+                                                             Page     1-2
+
+
+					 ; 把 AX Register 的記憶體位址�
+					�定給 Data Segment Register 
+      42 0005  B4 01				MOV   AH, 01H                  
+					 ; DOS 的第 01 號中斷服務 (從�
+					�盤讀取輸入並顯示)；AX Low Byt
+					e 會顯示要輸入�
+      43 0007  CD 21				INT   21H                      
+					 ; INT 21H: DOS 中斷 
+      44 0009  3C 31				CMP   AL, '1'                  
+					 ; 如果 AX Low Byte 的值等價於 0
+					x31 ('1') 
+      45 000B  74 0B				JE    PMSG1                    
+					 ; 此時 Zero Flag == 1 進行 Jump Eq
+					ual 到 PMSG1 標籤所在的程式碼 
+      46 000D  3C 32				CMP   AL, '2'                  
+					 ; 如果 AX Low Byte 的值等價於 0
+					x32 ('2') 
+      47 000F  74 11				JE    PMSG2                    
+					 ; 此時 Zero Flag == 1 進行 Jump Eq
+					ual 到 PMSG2 標籤所在的程式碼 
+      48 0011  3C 33				CMP   AL, '3'                  
+					 ; 如果 AX Low Byte 的值等價於 0
+					x33 ('3') 
+      49 0013  74 17				JE    PMSG3                    
+					 ; 此時 Zero Flag == 1 進行 Jump Eq
+					ual 到 PMSG3 標籤所在的程式碼 
+      50 0015  EB 1F 90				JMP   PMSG4                    
+					 ; 此時 Zero Flag == 1 進行 Jump Eq
+					ual 到 PMSG4 標籤所在的程式碼 
+      51 0018				PMSG1: 
+      52 0018  BA 0000 R			MOV   DX, OFFSET MSG1          
+					 ; 將 MSG1 所在的記憶體位址，
+					再加上偏移量；移動到 DX Regis
+					ter 
+      53 001B  B4 09				MOV   AH, 09H                  
+					 ; DOS 的第 09 號中斷服務 (顯�
+					�字串)；AX Register 為要開始顯�
+					��的位址 
+      54 001D  CD 21				INT   21H                      
+					 ; INT 21H: DOS 中斷 
+      55 001F  EB 1F 90				JMP   ENDDOS                   
+					 ; 直接跳到 ENDDOS 標籤所在的�
+					��式碼 
+      56 0022				PMSG2: 
+      57 0022  BA 0011 R			MOV   DX, OFFSET MSG2 
+      58 0025  B4 09				MOV   AH, 09H 
+      59 0027  CD 21				INT   21H 
+      60 0029  EB 15 90				JMP   ENDDOS 
+      61 002C				PMSG3: 
+      62 002C  BA 0022 R			MOV   DX, OFFSET MSG3 
+      63 002F  B4 09				MOV   AH, 09H 
+      64 0031  CD 21				INT   21H 
+      65 0033  EB 0B 90				JMP   ENDDOS 
+      66 0036				PMSG4: 
+Microsoft (R) Macro Assembler Version 5.00                  12/3/22 21:09:16
+                                                             Page     1-3
+
+
+      67 0036  BA 0033 R			MOV   DX, OFFSET MSG4 
+      68 0039  B4 09				MOV   AH, 09H 
+      69 003B  CD 21				INT   21H 
+      70 003D  EB 01 90				JMP   ENDDOS 
+      71 0040				ENDDOS: 
+      72 0040  B4 4C				MOV   AH, 4CH                  
+					 ; DOS 的第 4C 號中斷服務 (帶�
+					�傳值結束)；AL (AX Low Byte)為回
+					傳值 
+      73 0042  CD 21				INT   21H                      
+					 ; INT 21H: DOS 中斷 
+      74 0044				END main 
+Microsoft (R) Macro Assembler Version 5.00                  12/3/22 21:09:16
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0053	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0044	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0040	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	0011	_DATA
+MSG3 . . . . . . . . . . . . . .  	L BYTE	0022	_DATA
+MSG4 . . . . . . . . . . . . . .  	L BYTE	0033	_DATA
+
+PMSG1  . . . . . . . . . . . . .  	L NEAR	0018	_TEXT
+PMSG2  . . . . . . . . . . . . .  	L NEAR	0022	_TEXT
+PMSG3  . . . . . . . . . . . . .  	L NEAR	002C	_TEXT
+PMSG4  . . . . . . . . . . . . .  	L NEAR	0036	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     64 Source  Lines
+     64 Total   Lines
+     24 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

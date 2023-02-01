@@ -1,0 +1,179 @@
+﻿
+01、MAIN.ASM(9): warning A4001: Extra characters on line
+
+說明：在行 (line)上有額外多餘的字元 (character)。
+      在一行上已經接受了定義指令說明的足夠訊息，而又有多餘的字元。
+      組譯器會提示警告訊息。一般由於指令中出現多餘或是非法的字元。
+
+修正：仔細地檢查組譯地指令。
+
+
+02、MAIN.ASM(13): warning A4016: Reserved word used as symbol:AAA
+
+說明：在符號的使用上，使用了保留字。
+      使用了組譯器的保留字；不能當作符號名稱來使用。
+
+修正：請重新命名符號。
+
+
+03、MAIN.ASM(33): warning A4031: Operand types must match
+
+說明：MAIN.ASM 檔案中的第３３行：MOV AX, RESULT，其中 RESULT 是用 DB 定義的，其屬性為字節；與１６位元的 AX 暫存器不匹配。
+      另一種情況，將１６位元的暫存器移動到其它暫存器的 High / Low Byte (８位元)。
+
+修正：你寫錯了！請選擇相同位元的暫存器，或是資料型態。
+
+
+04. MAIN.ASM(19): warning A4057: Illegal size for operand
+
+說明：非法的運算元；例如：PUSH AL。
+      PUSH / POP .STACK Segment 必須以１６位元為單位。
+
+修正：改用組譯器的指令所規定的位元數的暫存器；如：PUSH AX
+
+
+05. MAIN.ASM(55): warning A4085: End of file, no END directive
+
+說明：在檔案的結尾沒有"END"這個假指令。
+
+修正：把"END"加上去就行了！
+
+
+06. MAIN.ASM(32): warning A4101: Missing data; zero assumed
+
+說明：在組合語言檔案的第３２行指令缺少了運算元。
+
+修正：在指令上加入合適的運算元。
+
+// ========================================================================================================================
+
+07. MAIN.ASM(54): error A2000: Block nesting error
+
+說明：此錯誤訊息通常見於一個 Segment 定義開始和結尾的名稱並不一致。
+
+修正：請再確認 Segment 的定義，務必前後均保持一致。
+
+
+08. MAIN.ASM(5): error A2005: Symbol is multidefined: DATA
+
+說明：符號重複定義： DATA
+
+修正：將其中一個 DATA 符號重新定義。
+
+
+09. MAIN.ASM(7): error A2009: Symbol not defined: B9H
+
+說明：符號沒有被定義：B9H
+      來源運算元為１６進制的 B9H；依照組合語言的規定，若要表達為１６進制的值，應再前面加上０，讓組譯器區分此為數值、常數或是符號。
+      另一原因可能為程序中使用的符號變數沒有被定義。
+
+修正：以 0B9H 取代原本的 B9H；使用假指令來定義變數。
+
+
+10. MAIN.ASM(11): error A2009: Symbol not defined: NO
+
+說明：符號沒有被定義：NO
+      在符號中使用了減號 '-' ，減號在組合語言中是當作減號，因此組合語言提示符號 NO 沒有定義。
+      組合語言規範符號名稱是可以使用底線 '_'。
+
+修正：將符號名稱 "no-count" 改成 "no_count"。
+
+
+11. MAIN.ASM(28): error A2010: Syntax error
+
+說明：語法錯誤！
+
+修正：請依照組合語言的規範重新修正！
+
+
+12. MAIN.ASM(2): error A2018: Operand must be register: DX
+
+說明：運算元必須是暫存器：DX
+
+修正：請依照組合語言的規範重新修正！
+
+
+13. MAIN.ASM(16): error A2028: Operator expected
+
+說明：組合語言是需要指令 (Instruction)的！例如：MOV DX OFFSETBUF2 
+      非常顯然，OFFSET 和 BUF2 中間少了逗號 ','。
+
+修正：請在細心些，多注意一下語法的格式。
+
+
+14. MAIN.ASM(47): error A2029: Division by 0 or overflow
+
+說明：除以０ (除數為０)；或是溢位 (Overflow / Underflow)。例如：AND AL, 0010
+      0000 數值溢位，組合語言當中預設為十進制，而該指令的來源超出範圍 (10 == 0001 0000 再加上 AX Low Byte 就溢位了)。
+
+修正：若欲表達為二進制，應在該數後面加上'b'。
+
+
+15. MAIN.ASM(8): error A2048: Must be index or base register
+
+說明：必須是 SI / DI 或是 BX 暫存器。
+      有些指令必須搭配特定的暫存器來操作。例如：MOV AL, [SI+DX] 顯然地，應將 DX 修正為 BX
+
+修正：請按照定址方式規範修改。
+
+
+16. MAIN.ASM(6): error A2049: Illegal use of register
+
+說明：暫存器非法使用。例如：
+      MOVAL, DL+20H 格式完全錯誤！
+
+修正：請依照組合語言的規範重新修正！
+
+
+17. MAIN.ASM(48): error A2050: Value out of range
+
+說明：數值超出範圍。例如：AND AL, 00010000
+      組合語言當中預設為十進制，00010000 轉換為二進制為 0010 0111 0001 0000 ，不能放進１６位元的 AX Low Byte (８位元)。
+
+修正：請將８位元的暫存器 AL 置換成１６位元的暫存器 AX 。
+
+
+18. MAIN.ASM(10): error A2052: Improper operand type
+
+說明：不當的運算元。例如：MOV RESULT, [SI]
+      組合語言規範兩個運算元不得同時為數值。
+
+修正：請先將運算元傳送至暫存器，再由暫存器傳送至另一個儲存單位。
+
+
+19. MAIN.ASM(3):error A2053:Jump out of range by 82 byte(s)
+
+說明：超出範圍８２ Bytes。
+      MOV 指令超出所允許的範圍。
+
+修正：可在 MOV 指令與目標指令中間，多增加一條無條件地轉移指令。
+
+
+20. MAIN.ASM(21): error A2056: Immediate mode illegal
+
+說明：非法的立即模式。例如：IDIV 8
+      IDIV 的運算元不得為常數８。
+
+修正：可在該指令之前新增乙條傳送指令，先將常數８儲存在一個暫存器中，如 BL；修正為：IDIV BL
+
+
+21. MAIN.ASM(41): error A2062: Missing or unreachable CS
+
+說明：遺失或是未找到的 Code Segment (.CODE)
+      缺少區段暫存器說明 ASSUME 假指令所導致。
+
+修正：在組合語言中增加區段暫存器說明的 ASSUME 假指令。
+
+
+22. MAIN.ASM(26): error A2105: Expected: comma
+
+說明：組合語言的指令當中，缺少逗號 ','
+
+修正：那就在兩個運算元當中新增一個逗號 ','
+
+
+23. MAIN.ASM(46): error A2105: Expected: instruction or directive
+
+說明：超出預期的指令；指令輸入錯誤。
+
+修正：請依照組合語言的規範重新修正！

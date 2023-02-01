@@ -1,0 +1,130 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 11:51:18
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012623 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 26 
+      11				 ; 
+      12				 ; Description: 自行撰寫一個新�
+					� ISR (Interrupt Service Routine)程序
+					 (INT 60H)。 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  0E				PUSH CS                  ; 將 
+					.CODE Segment Register 的記憶體位�
+					��先移動至 .STACK Segment 
+      24 0001  1F				POP  DS                  ; 從 
+					.STACK Segment 取值再放進 .DATA Se
+					gment； 
+      25				                           ; 即將 .CO
+					DE Segment Register 的內容移動至 
+					.DATA Segment Register 
+      26 0002  BA 0010 R			MOV  DX, OFFSET INT60    ; 將�
+					��籤 INT60 的記憶體位址，再加
+					上偏移量，移動至 DX Register 
+      27 0005  B0 60				MOV  AL, 60H             ; 設�
+					��中斷向量編號為 60H 
+      28 0007  B4 25				MOV  AH, 25H             ; DOS 
+					的第 25 號中斷服務 (設定中斷
+					向量)；AL (AX Low Byte)為中斷向�
+					��的定義值 
+      29 0009  CD 21				INT  21H                 ; INT 
+					21H: DOS 中斷 
+      30 000B				PRINT: 
+      31 000B  CD 60				INT  60H                 ; INT 
+					60H: 執行我們自行設定的中斷�
+					��量 (功能) 
+      32 000D  EB 13 90				JMP  ENDDOS              ; 直�
+					��跳到 ENDDOS 標籤所在的地方 
+      33 0010				INT60: 
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 11:51:18
+                                                             Page     1-2
+
+
+      34 0010  B8 B800				MOV  AX, 0B800H          ; 將 
+					0xB800 設定給 .EXTRA Segment Registe
+					r 
+      35 0013  8E C0				MOV  ES, AX 
+      36 0015  BF 0000				MOV  DI, 00H             ; 將 
+					DI Register 設定成 0x00 
+      37 0018  B9 0064				MOV  CX, 100             ; 將 
+					CX Register 設定成 100 
+      38 001B  B0 01				MOV  AL, 01H             ; 將 
+					AL (AX Low Byte)設定成 0x01 
+      39 001D  B4 07				MOV  AH, 07H             ; 將 
+					AH (AX High Byte)設定成 0x07 
+      40 001F  F3/ AB				REP  STOSW               ; 重�
+					��執行 STOSW 指令 100 次；Store T
+					O String by Word,  
+      41				                           ; 將 AX Reg
+					ister 的內容 (0x0701)移動至 ES:DI
+					 所指定的記憶體位址上 (B800:0
+					000) 
+      42 0021  CF				IRET                     ; 執�
+					��完之後要離開中斷向量的區�
+					�� ....  
+      43 0022				ENDDOS: 
+      44 0022  B4 4C				MOV  AH, 4CH             ; DOS 
+					的第 4C 號中斷服務 (帶回傳值
+					結束)；AL (AX Low Byte)為回傳值 
+      45 0024  CD 21				INT  21H                 ; INT 
+					21H: DOS 中斷 
+      46 0026				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/26/23 11:51:18
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0026	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	0022	_TEXT
+
+INT60  . . . . . . . . . . . . .  	L NEAR	0010	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+PRINT  . . . . . . . . . . . . .  	L NEAR	000B	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     46 Source  Lines
+     46 Total   Lines
+     18 Symbols
+
+  50586 + 465958 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

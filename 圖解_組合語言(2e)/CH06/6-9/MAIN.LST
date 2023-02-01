@@ -1,0 +1,127 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 22:24:47
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build103122 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 31 
+      11				 ; 
+      12				 ; Description: 這個範例呈現算�
+					�指令中的邏輯指令 -- OR。 
+      13				 ;              此一範例會將大�
+					�字母轉換成小寫字母。 
+      14				 ;              受影響的 Flag Regis
+					ter 位元：SF, ZF, PF, CF = 0, OF = 0
+					 
+      15				 ; 
+      16				 
+      17				.MODEL	SMALL 
+      18				 
+      19 0400				.STACK 
+      20				 
+      21 0000				.DATA 
+      22 0000  41 42 43 44 45 46 47		MSG  DB               'ABCDEFGH
+					IJKLMNOPQRSTUVWXYZ$' 
+      23       48 49 4A 4B 4C 4D 4E	
+      24       4F 50 51 52 53 54 55	
+      25       56 57 58 59 5A 24	
+      26				                        ; 我們定義�
+					��個變數 MSG ，裡面存放 A ~ Z�
+					�且最後記得用 '$' 做結尾 
+      27 = 001B					SUMM EQU              $-MSG 
+      28				                        ; '$' 代表「
+					目前的記憶體位址」；而 $ - M
+					SG 的記憶體位址 ('A')等 
+      29				                        ; 價於字串�
+					��度，即 SUMM == 26 
+      30 0000				.CODE 
+      31 0000				main: 
+      32 0000  B8 ---- R			MOV  AX, @DATA        ; 把 .DA
+					TA Segment 的位址傳送到 AX 暫存
+					器 
+      33 0003  8E D8				MOV  DS, AX           ; 把 AX 
+					Register 的記憶體位址設定給 Da
+					ta Segment Register； 
+      34				                        ; 換句話說�
+					��就是把 .DATA Segment 此時的記�
+					��體位址，設定給 Data Segment Re
+					gister   
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 22:24:47
+                                                             Page     1-2
+
+
+      35 0005  BB 0000				MOV  BX, 0H           ; 把數�
+					�� 0 移動到 BX Register 
+      36 0008  B9 001B				MOV  CX, SUMM         ; 把 SUM
+					M (26) 移動到 CX Register 
+      37 000B				again: 
+      38 000B  8A 97 0000 R			MOV  DL, MSG[BX]      ; 這種�
+					��法想像成Ｃ語言的陣列存取�
+					��可！ 
+      39 000F  80 CA 20				OR   DL, 00100000B    ; 這個�
+					��作，就是把大寫字母轉換成�
+					��寫字母。 
+      40 0012  B4 02				MOV  AH, 02H          ; DOS 的
+					第 02 號中斷服務 (顯示輸出)�
+					�DL (DX Low Byte)為要輸出的資料 
+      41 0014  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      42 0016  43				INC  BX               ; 把 MSG
+					 的記憶體位址 +1  
+      43 0017  E2 F2				LOOP again            ; 跳到 
+					again 開始的地方，不斷重複。
+					 
+      44 0019  B4 4C				MOV  AH, 4CH          ; DOS 的
+					第 4C 號中斷服務 (帶回傳值結
+					束)；AL (AX Low Byte)為回傳值 
+      45 001B  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+      46 001D				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/31/22 22:24:47
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	001B	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+AGAIN  . . . . . . . . . . . . .  	L NEAR	000B	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG  . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+SUMM . . . . . . . . . . . . . .  	NUMBER	001B	
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     43 Source  Lines
+     43 Total   Lines
+     18 Symbols
+
+  50470 + 466074 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

@@ -1,0 +1,211 @@
+
+壹、印表機虛擬指令：PAGE / TITLE / SUBTTL
+
+貳、區段定義：SEGMENT / ENDS / ASSUME / END
+
+參、資料定義：BYTE / DB / DW / DD / DQ / DT / EQU / = / DUP / PTR
+
+肆、其他指令：OFFSET / SEG / ORG
+
+;;===================================================================
+
+壹、印表機虛擬指令：
+
+1. PAGE
+
+用途：用來設定印表機的「列數」及「寬度」。
+
+語法：PAGE n1, n2    ; n1 為列數，n2 為寬度
+
+範例：PAGE 10,30
+      將印表機設定成每頁１０列，每列最多３０個字元的寬度。
+
+2. TITLE
+
+用途：在印表機的每乙頁的「第二行」上列印出標題
+
+語法：TITLE TEXT    ; 每乙組組合語言的程式碼中，只能有一個 TITLE 指令；
+                    ; 內容不得超過６０個字元；
+                    ; 此指令支援跳頁功能。
+
+範例：TITLE "Hello!! "
+      在每乙頁的第二行列印出"Hello!! "的字樣。
+
+3. SUBTTL
+
+用途：在印表機的每乙頁的「第三行」上列印出副標題
+
+語法：SUBTTL TEXT    ; 內容不得超過６０個字元；
+                     ; 並無支援跳頁的功能
+
+範例：SUBTTL "World!! "
+      在每乙頁的第三行列印出"World!! "的字樣。
+
+;;===================================================================
+
+貳、區段定義：
+
+1. SEGMENT
+
+用途：此一指令是代表區段 (Segment)起始的指令，告訴組譯器區段的起始位址。
+
+語法：區段名稱 SEGMENT    ; 區段名稱必須是唯一的
+
+範例：CODE SEGMENT
+
+2. ENDS
+
+用途：此一指令是代表區段 (Segment)結束的指令，告訴組譯器區段的結束位址。
+      與 SEGMENT 指令成對出現
+
+語法：區段名稱 ENDS
+
+範例：
+      CODE SEGMENT
+
+      ; .... 
+
+      CODE ENDS
+
+3. ASSUME
+
+用途：可以指定區段暫存器的指令，告訴組譯器個區段間的配置。
+
+語法：ASSUME 區段暫存器:區段名稱
+
+範例：ASSUME CS:CODE, DS:DATA, SS:STACK, ES:EXTRA
+      將 CODE  Segment 指定給 Code  Segment 暫存器
+      將 DATA  Segment 指定給 Data  Segment 暫存器
+      將 STACK Segment 指定給 Stack Segment 暫存器
+      將 Extra Segment 指定給 Extra Segment 暫存器
+
+4. END
+
+用途：代表程式碼結束的指令。
+
+語法：END 程式名稱
+
+範例：
+      CODE SEGMENT                         ; .CODE 區段的起始
+      ASSUME CS:CODE, DS:DATA, SS:STACK
+      main:                                ; main() 函式的開始
+      ; .... 
+      CODE ENDS                            ; .CODE 區段的結束
+      END main                             ; main() 函式的結束
+
+;;===================================================================
+
+參、資料定義：
+
+01. ~ 06. 
+
+ ┌─────────────┬────────┬──────────┬─────────────────────┐
+ │ Instruction │  SIZE  │  LENGTH  │                     │
+ ├─────────────┼────────┼──────────┼─────────────────────┤
+ │    BYTE     │  byte  │  1 Byte  │        N / A        │
+ │     DB      │  byte  │  1 Byte  │ Define Byte         │
+ │     DW      │  word  │  2 Byte  │ Define Word         │
+ │     DD      │  dword │  4 Byte  │ Define Double World │
+ │     DQ      │  qword │  8 Byte  │ Define Quad World   │
+ │     DT      │  tbyte │ 10 Byte  │ Define Ten Byte     │
+ └─────────────┴────────┴──────────┴─────────────────────┘
+
+用途：它會配置記憶體空間給常數，常數中的每一個字元以 LENGTH 來存放。
+
+語法：常數名稱 (Instruction) 描述
+
+範例：0D, 0A 會被儲存在 mess 常數裡面；其中：
+
+mess BYTE 0Dh, 0Ah    ; 其資料會被存成 0x0D, 0x0A (各 1 Byte)
+mess DB   0Dh, 0Ah    ; 其資料會被存成 0x0D, 0x0A (各 1 Byte)
+mess DW   0Dh, 0Ah    ; 其資料會被存成：
+                      ;   0x00, 0x0D, 0x00, 0x0A (各 2 Byte)
+mess DD   0Dh, 0Ah    ; 其資料會被存成：
+                      ;   0x00, 0x00, 0x00, 0x0D, 
+                      ;   0x00, 0x00, 0x00, 0x0A (各 4 Byte)
+mess DQ   0Dh, 0Ah    ; 其資料會被存成：
+                      ;   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D, 
+                      ;   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A (各 8 Byte)
+mess DT   0Dh, 0Ah    ; 其資料會被存成：
+                      ;   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x0D, 
+                      ;   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x0A (各 10 Byte)
+
+07. EQU
+
+用途：它可以定義一個「可替換」變數
+
+語法：變數名稱 EQU 描述
+
+範例：
+      CRLF EQU 0Dh    ; 定義變數 CRLF 為 0x0D
+      CRLF EQU 0Ah    ; 重新定義 CRLF 為 0x0A
+
+08. =
+
+用途：它可以定義一個「不可替換」變數
+
+語法：常數名稱 = 描述
+
+範例：
+      GGYY = 13h      ; 定義一個常數 GGYY 為 0x13
+
+09. DUP
+
+用途：Duplicate (重複)；可以用來重複定義資料。
+
+語法：DUP 資料
+
+範例：
+      BUF DD 100 DUP(1)
+      ; 定義 100 個內容為數值 1 的資料，且以 dword 的格式儲存在變數 BUF
+
+10. PTR
+
+用途：可以改變變數原本的資料型態 (類似C語言的資料型態轉換)。
+
+語法：資料型態 PTR 描述
+
+範例：
+      MOV AX, WORD PTR 7788h
+      ; 假設原本的 0x7788 是以 DD, DQ 或是 DT 的方式儲存；
+      ; 但現轉換成 DW (2 Bytes)，最後再移動到 AX Register。
+
+;;===================================================================
+
+肆、其他指令：OFFSET / SEG / ORG
+
+1. OFFSET
+
+用途：可以用來計算 Segment 內的位址。
+
+語法：OFFSET 區段名稱或是變數
+
+範例：
+      MOV DX, OFFSET GGYY    ; 把 GGYY 所在的記憶體位址，移動到 DX Register。
+
+2. SEG
+
+用途：可以用來計算標明的區段的位址。
+
+語法：SEG 區段名稱或是變數
+
+範例：
+      MOV CX, SEG GGYY
+      ; 假設 GGYY 是存放在 .DATA Segment ；且記憶體位址為 0x000A，
+      ; 而儲存 .DATA Segment 的暫存器 DS (Data Segment Register)的值為 0x13E6。
+      ; 此時是把 0x13E6 這個值，移動到 CX Register。
+
+3. ORG
+
+用途：重新定義記憶體位址；可由程式設計師來指定程式或是資料所存放的位址。
+
+語法：ORG 記憶體位址
+      一般而言，當我們要產生 .com 檔案時，其 Instruction Pointer Register 
+      必須要從 0x0100 開始，就必須使用此一指令。
+
+範例：
+      .CODE
+      ORG 100H
+      MOV DX, OFFSET GGYY
+      MOV AH, 09H
+      INT 21H

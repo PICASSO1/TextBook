@@ -1,0 +1,428 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012023 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 20 
+      11				 ; 
+      12				 ; Description: 這乙章節很無聊�
+					�「INT 16H: BIOS 中斷」的鍵盤中
+					斷服務； 
+      13				 ;              BIOS 的第 02 號中�
+					�服務─回傳鍵盤控制鍵的狀�
+					�；其狀態值會回傳到 AL (AX Low
+					 Byte) 
+      14				 ;              AL (AX Low Byte)的內�
+					��定義如下： 
+      15				 ;              Bit 0: 按下左邊的 
+					Shift 鍵 
+      16				 ;              Bit 1: 按下右邊的 
+					Shift 鍵 
+      17				 ;              Bit 2: 按下 Ctrl 鍵 
+      18				 ;              Bit 3: 按下 Alt 鍵 
+      19				 ;              Bit 4: 按下 Scroll Lo
+					ck 鍵 
+      20				 ;              Bit 5: 按下 Num Lock 
+					鍵 
+      21				 ;              Bit 6: 按下 CAPs Lock
+					 鍵  
+      22				 ;              Bit 7: 按下 Insert �
+					� 
+      23				 ; 
+      24				 
+      25				@PrintStr  MACRO  MSG   ; 定義一個�
+					��為 PrintStr 的巨集，會傳遞一
+					個參數名為 MSG  
+      26					MOV  DX, OFFSET MSG   ; 將 MSG
+					 的記憶體位址，再加上偏移�
+					�，移動到 DX Register 
+      27					MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位址 
+      28					INT  21H              ; INT 21H
+					: DOS 中斷 
+      29				ENDM 
+      30				 
+      31				POPPUSHAX  MACRO        ; 定義一個�
+					��為 POPPUSHAX 的巨集；並沒有�
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-2
+
+
+					�遞任何參數 
+      32					POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+      33					PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+      34				ENDM 
+      35				 
+      36				.MODEL	SMALL 
+      37				 
+      38 0400				.STACK 
+      39				 
+      40 0000				.DATA 
+      41 0000  55 53 45 52 20 70 72		MSG1 DB  'USER press the Right 
+					Shift!! $' 
+      42       65 73 73 20 74 68 65	
+      43       20 52 69 67 68 74 20	
+      44       53 68 69 66 74 21 21	
+      45       20 24			
+      46 001E  55 53 45 52 20 70 72		MSG2 DB  'USER press the Left S
+					hift!! $' 
+      47       65 73 73 20 74 68 65	
+      48       20 4C 65 66 74 20 53	
+      49       68 69 66 74 21 21 20	
+      50       24			
+      51 003B  55 53 45 52 20 70 72		MSG3 DB  'USER press the Right 
+					Ctrl!! $' 
+      52       65 73 73 20 74 68 65	
+      53       20 52 69 67 68 74 20	
+      54       43 74 72 6C 21 21 20	
+      55       24			
+      56 0058  55 53 45 52 20 70 72		MSG4 DB  'USER press the Left A
+					lt!! $' 
+      57       65 73 73 20 74 68 65	
+      58       20 4C 65 66 74 20 41	
+      59       6C 74 21 21 20 24	
+      60 0073  6B 65 79 62 6F 61 72		MSG5 DB  'keyboard Scroll is li
+					ght!! $' 
+      61       64 20 53 63 72 6F 6C	
+      62       6C 20 69 73 20 6C 69	
+      63       67 68 74 21 21 20 24	
+      64 008F  6B 65 79 62 6F 61 72		MSG6 DB  'keyboard Num Lock is 
+					light!! $' 
+      65       64 20 4E 75 6D 20 4C	
+      66       6F 63 6B 20 69 73 20	
+      67       6C 69 67 68 74 21 21	
+      68       20 24			
+      69 00AD  6B 65 79 62 6F 61 72		MSG7 DB  'keyboard CAPs Lock is
+					 light!! $' 
+      70       64 20 43 41 50 73 20	
+      71       4C 6F 63 6B 20 69 73	
+      72       20 6C 69 67 68 74 21	
+      73       21 20 24			
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-3
+
+
+      74 00CC  55 53 45 52 20 70 72		MSG8 DB  'USER press Insert!! $
+					' 
+      75       65 73 73 20 49 6E 73	
+      76       65 72 74 21 21 20 24	
+      77				 
+      78 0000				.CODE 
+      79 0000				main: 
+      80 0000  B8 ---- R			MOV  AX, @DATA        ; 把 .DA
+					TA Segment 的位址傳送到 AX 暫存
+					器；即 .DATA Segment 的起始位址
+					放到 AX 
+      81 0003  8E D8				MOV  DS, AX           ; 把 AX 
+					Register 的記憶體位址設定給 Da
+					ta Segment Register 
+      82 0005				START: 
+      83 0005  B4 02				MOV  AH, 02H          ; BIOS �
+					�第 02 號中斷服務─回傳鍵盤�
+					��制鍵的狀態 
+      84 0007  CD 16				INT  16H              ; INT 16H
+					: BIOS 中斷； 
+      85				 
+      86 0009  50				PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+      87 000A  24 01				AND  AL, 00000001B    ; 將 AL 
+					(AX Low Byte)的內容，和 0x01 做 A
+					ND 運算 
+      88 000C  3C 01				CMP  AL, 01H          ; 倘若�
+					��為 0x01 
+      89 000E  74 40				JE   RSHIFT           ; 就跳�
+					�� RSHIFT 標籤所在的地方 
+      90				                        ; 以下雷同�
+					��予以省略！ 
+      91					POPPUSHAX 
+      92 0010  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+      93 0011  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+      94 0012  24 02				AND  AL, 00000010B 
+      95 0014  3C 02				CMP  AL, 02H 
+      96 0016  74 42				JE   LSHIFT 
+      97				 
+      98					POPPUSHAX 
+      99 0018  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     100 0019  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     101 001A  24 04				AND  AL, 00000100B 
+     102 001C  3C 04				CMP  AL, 04H 
+     103 001E  74 44				JE   CTRL 
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-4
+
+
+     104				 
+     105					POPPUSHAX 
+     106 0020  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     107 0021  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     108 0022  24 08				AND  AL, 00001000B 
+     109 0024  3C 08				CMP  AL, 08H 
+     110 0026  74 46				JE   ALT 
+     111				 
+     112					POPPUSHAX 
+     113 0028  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     114 0029  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     115 002A  24 10				AND  AL, 00010000B 
+     116 002C  3C 10				CMP  AL, 10H 
+     117 002E  74 48				JE   SCROLL 
+     118				 
+     119					POPPUSHAX 
+     120 0030  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     121 0031  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     122 0032  24 20				AND  AL, 00100000B 
+     123 0034  3C 20				CMP  AL, 20H 
+     124 0036  74 4A				JE   NUM 
+     125				 
+     126					POPPUSHAX 
+     127 0038  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     128 0039  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     129 003A  24 40				AND  AL, 01000000B 
+     130 003C  3C 40				CMP  AL, 40H 
+     131 003E  74 4C				JE   CAPS 
+     132				 
+     133					POPPUSHAX 
+     134 0040  58                    1		POP  AX               ; 把 Sta
+					ck Segment 的內容，移動到 AX Reg
+					ister 
+     135 0041  50                    1		PUSH AX               ; 把 AX 
+					Register 的內容，移動到 Stack Se
+					gment 
+     136 0042  24 80				AND  AL, 10000000B 
+     137 0044  3C 80				CMP  AL, 80H 
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-5
+
+
+     138 0046  74 4E				JE   INTS 
+     139				 
+     140 0048				WAITX: 
+     141 0048  B4 01				MOV  AH, 01H          ; BIOS �
+					�第 01 號中斷服務─檢查鍵盤�
+					��狀態 
+     142 004A  CD 16				INT  16H              ; INT 16H
+					: BIOS 中斷； 
+     143 004C  75 52				JNE  ENDDOS           ; 當 Zer
+					o Flag != 1 的時候，跳躍到 ENDDO
+					S 標籤所在的地方 
+     144 004E  EB B5				JMP  START            ; 反之�
+					��則是跳躍到 START 標籤所在的
+					地方 
+     145				 
+     146 0050				RSHIFT: 
+     147					@PrintStr  MSG1 
+     148 0050  BA 0000 R             1		MOV  DX, OFFSET MSG1   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     149 0053  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     150 0055  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     151 0057  EB 47 90				JMP  ENDDOS 
+     152 005A				LSHIFT: 
+     153					@PrintStr  MSG2 
+     154 005A  BA 001E R             1		MOV  DX, OFFSET MSG2   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     155 005D  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     156 005F  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     157 0061  EB 3D 90				JMP  ENDDOS 
+     158 0064				CTRL: 
+     159					@PrintStr  MSG3 
+     160 0064  BA 003B R             1		MOV  DX, OFFSET MSG3   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     161 0067  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     162 0069  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     163 006B  EB 33 90				JMP  ENDDOS 
+     164 006E				ALT: 
+     165					@PrintStr  MSG4 
+     166 006E  BA 0058 R             1		MOV  DX, OFFSET MSG4   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     167 0071  B4 09                 1		MOV  AH, 09H          ; DOS 的
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-6
+
+
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     168 0073  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     169 0075  EB 29 90				JMP  ENDDOS 
+     170 0078				SCROLL: 
+     171					@PrintStr  MSG5 
+     172 0078  BA 0073 R             1		MOV  DX, OFFSET MSG5   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     173 007B  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     174 007D  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     175 007F  EB 1F 90				JMP  ENDDOS 
+     176 0082				NUM: 
+     177					@PrintStr  MSG6 
+     178 0082  BA 008F R             1		MOV  DX, OFFSET MSG6   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     179 0085  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     180 0087  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     181 0089  EB 15 90				JMP  ENDDOS 
+     182 008C				CAPS: 
+     183					@PrintStr  MSG7 
+     184 008C  BA 00AD R             1		MOV  DX, OFFSET MSG7   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     185 008F  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     186 0091  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     187 0093  EB 0B 90				JMP  ENDDOS 
+     188 0096				INTS: 
+     189					@PrintStr  MSG8 
+     190 0096  BA 00CC R             1		MOV  DX, OFFSET MSG8   ; 將 MS
+					G 的記憶體位址，再加上偏移�
+					��，移動到 DX Register 
+     191 0099  B4 09                 1		MOV  AH, 09H          ; DOS 的
+					第 09 號中斷服務 (顯示字串)�
+					�DX Register 為要顯示的位� 
+     192 009B  CD 21                 1		INT  21H              ; INT 21H
+					: DOS 中� 
+     193 009D  EB 01 90				JMP  ENDDOS 
+     194				 
+     195 00A0				ENDDOS: 
+     196 00A0  B4 4C				MOV  AH, 4CH          ; DOS 的
+					第 4C 號中斷服務 (帶回傳值結
+					束)；AL (AX Low Byte)為回傳值 
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Page     1-7
+
+
+     197 00A2  CD 21				INT  21H              ; INT 21H
+					: DOS 中斷 
+     198 00A4				END main 
+
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Symbols-1
+
+
+Macros:
+
+		N a m e			Lines
+
+@PRINTSTR  . . . . . . . . . . .  	   3
+POPPUSHAX  . . . . . . . . . . .  	   2
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	00E1	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	00A4	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ALT  . . . . . . . . . . . . . .  	L NEAR	006E	_TEXT
+
+CAPS . . . . . . . . . . . . . .  	L NEAR	008C	_TEXT
+CTRL . . . . . . . . . . . . . .  	L NEAR	0064	_TEXT
+
+ENDDOS . . . . . . . . . . . . .  	L NEAR	00A0	_TEXT
+
+INTS . . . . . . . . . . . . . .  	L NEAR	0096	_TEXT
+
+LSHIFT . . . . . . . . . . . . .  	L NEAR	005A	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+MSG1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG2 . . . . . . . . . . . . . .  	L BYTE	001E	_DATA
+MSG3 . . . . . . . . . . . . . .  	L BYTE	003B	_DATA
+MSG4 . . . . . . . . . . . . . .  	L BYTE	0058	_DATA
+MSG5 . . . . . . . . . . . . . .  	L BYTE	0073	_DATA
+MSG6 . . . . . . . . . . . . . .  	L BYTE	008F	_DATA
+MSG7 . . . . . . . . . . . . . .  	L BYTE	00AD	_DATA
+MSG8 . . . . . . . . . . . . . .  	L BYTE	00CC	_DATA
+
+NUM  . . . . . . . . . . . . . .  	L NEAR	0082	_TEXT
+
+RSHIFT . . . . . . . . . . . . .  	L NEAR	0050	_TEXT
+
+SCROLL . . . . . . . . . . . . .  	L NEAR	0078	_TEXT
+START  . . . . . . . . . . . . .  	L NEAR	0005	_TEXT
+
+WAITX  . . . . . . . . . . . . .  	L NEAR	0048	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+Microsoft (R) Macro Assembler Version 5.00                  1/20/23 21:47:17
+                                                             Symbols-2
+
+
+
+
+    132 Source  Lines
+    170 Total   Lines
+     36 Symbols
+
+  50578 + 449582 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

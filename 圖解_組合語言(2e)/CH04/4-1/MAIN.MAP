@@ -1,0 +1,10 @@
+;起始位址  結束位址  長度  區段名稱          進入點
+ Start  Stop   Length Name                   Class
+ 00000H 00009H 0000AH _TEXT                  CODE
+ 0000AH 0000AH 00000H _DATA                  DATA
+ 00010H 0040FH 00400H STACK                  STACK
+
+ Origin   Group
+ 0000:0   DGROUP
+
+Program entry point at 0000:0000

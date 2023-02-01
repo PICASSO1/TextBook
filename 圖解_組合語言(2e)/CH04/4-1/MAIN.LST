@@ -1,0 +1,71 @@
+Microsoft (R) Macro Assembler Version 5.00                  10/16/22 21:02:54
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build101022 
+       9				 ; 
+      10				 ; Date: 2022 / 10 / 10 
+      11				 ; 
+      12				 ; Description: This is a very easy exa
+					mple for Assembly. 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0000				.CODE 
+      18				
+ 
+      Address  Machine Code Assembly
+      19 0000				main: 
+      20 0000  B2 54				mov dl, "T" 
+      21 0002  B4 02				mov ah, 02h 
+      22 0004  CD 21				int 21h 
+      23 0006  B4 4C				mov ah, 4ch 
+      24 0008  CD 21				int 21h 
+      25				 
+      26 0400				.STACK 
+      27				 
+      28 000A				END main 
+Microsoft (R) Macro Assembler Version 5.00                  10/16/22 21:02:54
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'    ; The size of the .DATA Segment is 0x00
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'     ; The size of the .STACK Segment is 0x400
+_TEXT  . . . . . . . . . . . . .  	000A	WORD	PUBLIC	'CODE'    ; The size of the .CODE Segment is 0x000A
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     28 Source  Lines
+     28 Total   Lines
+     15 Symbols
+
+  50626 + 465918 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

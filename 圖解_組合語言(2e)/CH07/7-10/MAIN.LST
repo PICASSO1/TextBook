@@ -1,0 +1,138 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 22:21:48
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+main.asm(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build112022 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 20 
+      11				 ; 
+      12				 ; Description: 這個範例呈現未�
+					�裝運算指令 -- AAM (ASCII Adjust A
+					fter Multiply)。 
+      13				 ;              - 將 AX Register 的�
+					�容調整為十進制的值；其中�
+					� 
+      14				 ;                高位元儲存至 AX
+					 High Byte；而低位元儲存至 AX L
+					ow Byte 
+      15				 ;              - 亦稱為「未包裝
+					乘法調整指令」 
+      16				 ;              - 受影響的旗標為
+					：SF、ZF、PF 
+      17				 ;              - AAM 會搭配 MUL 來
+					使用 
+      18				 ; 
+      19				 
+      20				.MODEL	SMALL 
+      21				 
+      22 0400				.STACK 
+      23				 
+      24 0000				.DATA 
+      25 0000  0F				NUM1   DB  0FH     ; 宣告變�
+					��名稱為 NUM1，將數值 0x0F (0000
+					 1111 == 15)以 Byte 的資料型態儲
+					存 
+      26 0001  04				NUM2   DB  04H     ; 宣告變�
+					��名稱為 NUM2，將數值 0x04 (0000
+					 0100)以 Byte 的資料型態儲存 
+      27				 
+      28 0000				.CODE 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV   AX, @DATA    ; 把 .DATA 
+					Segment 的位址傳送到 AX 暫存器
+					 
+      31 0003  8E D8				MOV   DS, AX       ; 把 AX Reg
+					ister 的記憶體位址設定給 Data 
+					Segment Register 
+      32 0005  A0 0000 R			MOV   AL, NUM1     ; 把數值 
+					NUM1 設定給 AX Low Byte 
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 22:21:48
+                                                             Page     1-2
+
+
+      33 0008  8A 1E 0001 R			MOV   BL, NUM2     ; 把數值 
+					NUM2 設定給 BX Low Byte 
+      34 000C  F6 E3				MUL   BL           ; 將 BL (4)
+					 * AL (15) 且儲存回 AL (60 == 0x3C)
+					；此值並非 BCD 碼 
+      35 000E  B4 00				MOV   AH, 00H      ; 將 AX Hig
+					h Byte 設置為０ 
+      36 0010  D4 0A				AAM                ; 將整個 
+					AX Register 調整為１０進制；原
+					本 AH: 0x00; AL: 0x3C 
+      37				                     ; 調整後 AH: 0x
+					06 (6); AL: 0x00 (0) 
+      38 0012  8B D8				MOV   BX, AX       ; 將 AX Reg
+					ister 的內容移置 BX Register 
+      39 0014  8A D7				MOV   DL, BH       ; 將 BX Hig
+					h Byte 的內容移置 DX Low Byte 
+      40 0016  80 C2 30				ADD   DL, 30H      ; 將 DX Low
+					 Byte 的數值 (0x06)加上 0x30 ('0')
+					變成可顯字元 ('6') 
+      41 0019  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      42 001B  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷	 
+      43 001D  8A D3				MOV   DL, BL       ; 將 BX Low
+					 Byte 的內容移置 DX Low Byte 
+      44 001F  80 C2 30				ADD   DL, 30H      ; 將 DX Low
+					 Byte 的數值 (0x00)加上 0x30 ('0')
+					變成可顯字元 ('0') 
+      45 0022  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      46 0024  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷	 
+      47 0026  B4 4C				MOV   AH, 4CH      ; DOS 的第
+					 4C 號中斷服務 (帶回傳值結束
+					)；AL (AX Low Byte)為回傳值 
+      48 0028  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      49 002A				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/20/22 22:21:48
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0002	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	002A	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  main		
+
+
+     49 Source  Lines
+     49 Total   Lines
+     17 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

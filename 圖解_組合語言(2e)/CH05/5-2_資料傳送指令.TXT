@@ -1,0 +1,216 @@
+
+甲、一般傳送指令：MOV / XCHG
+
+乙、位址傳送指令：LEA / LDS / LES
+
+丙、堆疊傳送指令：PUSH / POP / POPF / PUSHA / POPA
+
+丁、旗標傳送指令：LAHF / SAHF
+
+戊、I/O 傳送指令：IN / OUT
+
+己、資料查詢指令：XLAT
+
+;;===================================================================
+
+甲、一般傳送指令：
+
+1. MOV
+
+用途：在 Register 中搬移資料；僅限定於 CPU 內部。絕對沒有記憶體對記憶體。
+
+語法：
+      MOV Register X, Register Y    ; 暫存器內容移動到另一個暫存器
+      MOV Register X, 記憶體        ; 記憶體的內容移動到暫存器
+      MOV 記憶體, Register Y        ; 暫存器的內容移動到記憶體
+      MOV Register, 1234H           ; 將「數值」移動到暫存器
+
+範例：N / A (太簡單了，不列舉！)
+
+2. XCHG
+
+用途：ExChange，交換；可以用來交換資料。也沒有「記憶體對記憶體」的交換方式。
+
+語法：
+      XCHG Register X, Register Y
+      XCHG Register X, 記憶體
+      XCHG 記憶體, Register Y
+
+範例：
+      XCHG AH, BL      ; AX Register High Byte 和 BX Register Low Byte 交換
+      XCHG CX, DX      ; DX Register 和 CX Register 交換
+      XCHG [DX], BX    ; BX Register 和 DX Register 記憶體的內容資料交換
+
+;;===================================================================
+
+乙、位址傳送指令：
+
+1. LEA
+
+用途：將有效的記憶體位址存入暫存器中，功能是在定義記憶體中的標名或變數，
+      利用 LEA 來計算有效的偏移位址，在存入記憶體。(很難懂？)
+
+語法：LEA Register, 記憶體
+
+範例：
+      LEA DX, GGYY           ; 這兩行指令的意義完全相同！
+      MOV DX, OFFSET GGYY    ; 把 GGYY 再加上 OFFSET 的記憶體位址，
+                             ; 移動到 DX Register。
+      差異在於：LEA 是 CPU 內部的指令；且 OFFSET 不能夠執行間接的定址運算。
+
+2. LDS
+
+用途：會將資料 (數值)載入到「指定的暫存器」和「Data Segment 暫存器」中。
+      倘若資料為雙字組型態時 (DW)，Low Byte 的資料會儲存在指定的暫存器，
+      而 High Byte 的資料則是存入到 DS 暫存器。
+
+語法：LDS Register, 記憶體位址
+
+範例：
+      GGYY DW 12345678H    ; 宣告一個變數 GGYY，其值為 0x12345678，以 DD 的資料型態來儲存。
+      LDS  DI, GGYY        ; 此時，GGYY 的 Low Byte: 0x5678 儲存在 DI Register
+                           ; 而 High Byte: 0x1234 則是儲存在 Data Segment Register。
+
+3. LES
+
+用途：用法與 LDS 非常類似，差別在於儲存在「Extra Segment 暫存器」中。
+      會將資料 (數值)載入到「指定的暫存器」和「Extra Segment 暫存器」中。
+      倘若資料為雙字組型態時 (DW)，Low Byte 的資料會儲存在指定的暫存器，
+      而 High Byte 的資料則是存入到 ES 暫存器。
+
+語法：LES Register, 記憶體位址
+
+範例：
+      GGYY DW 87654321H    ; 宣告一個變數 GGYY，其值為 0x87654321，以 DD 的資料型態來儲存。
+      LES  SI, GGYY        ; 此時，GGYY 的 Low Byte: 0x4321 儲存在 SI Register
+                           ; 而 High Byte: 0x8765 則是儲存在 Extra Segment Register。
+
+;;===================================================================
+
+丙、堆疊傳送指令：
+
+1. PUSH
+
+用途：將資料存入到堆疊 (Stack)中，且 Stack Pointer Register 的值會 -2 (Byte)。
+      因為 .STACK Segment 會由記憶體「位址高」的地方往記憶體「位址低」的地方增加。
+      而 -2 Byte 是因為書本的範例 8088 是 16-bit 的 CPU ；倘若是 32 / 64 bit 的 CPU
+      則是分別 -4 / -8。
+
+語法：PUSH Register / 記憶體 / 區段暫存器
+
+範例：
+      PUSH BX
+      PUSH CS
+      PUSH [SI]
+
+2. POP
+
+用途：將資料從 .STACK Segment 當中取出；PUSH 的反向操作。
+
+語法：POP Register / 記憶體 / 區段暫存器
+
+範例：
+      POP [SI]
+      POP CS
+      POP BX
+
+3. POPF
+
+用途：功能與 POP 類似；差別在於取出之後，放置在「旗標暫存器 (Flag Register)」。
+
+語法：POPF
+
+範例：N / A
+
+4. PUSHA
+
+用途：將當時相關暫存器的值，「依序地」放入到 .STACK Segment 中。
+      順序為：AX, CX, DX, BX, SP, BP, SI, DI。
+
+語法：PUSHA
+
+範例：N / A
+
+5. POPA
+
+用途：PUSHA 的反向操作；從 .STACK Segment 當中「依序地」取出放置到相關的暫存器中。
+      順序為：DI, SI, BP, SP, BX, DX, CX, AX。
+
+語法：POPA
+
+範例：N / A
+
+;;===================================================================
+
+丁、旗標傳送指令：
+
+1. LAHF (Load to AH from Flag)
+
+用途：將旗標暫存器 (Flag Register)的 Low Byte 存入到 AH (AX Register 的 High Byte)。
+
+語法：LAHF
+
+範例：N / A
+
+2. SAHF (Save from AH to Flag)
+
+用途：將 AH (AX Register 的 High Byte) 的7, 6, 4, 2, 0 bit 的值取出，在分別儲存到
+      旗標暫存器 (Flag Register) 的 SF, ZF, AF, PF, CF bit。
+
+語法：SAHF
+
+範例：
+      MOV AH, 01H    ; 將 0x01 設定給 AH
+      SAHF           ; 此時，AH 的 第 0 bit (1)會設定給 Flag Register 的 CF (Carry Flag)。
+
+;;===================================================================
+
+戊、I/O 傳送指令：
+
+1. OUT
+
+用途：將 Register 的內容送至 I/O Port。
+      I/O Port 為 8-bit，使用 AL (AX Register Low Byte)。
+      I/O Port 為 16-bit，使用 AX Register。
+
+語法：OUT I/O Port, Register
+
+範例：
+      MOV DX, 550H
+      OUT DX, AL      ; 將 AL 的值送到 I/O Port Address 0x0550
+                      ; 因為 0x0550 (1360) > 0xFF (255) 所以採用間接定址法。
+
+2. IN
+
+用途：將 I/O Port 的內容讀取到 Register。
+      I/O Port 為 8-bit，使用 AL (AX Register Low Byte)。
+      I/O Port 為 16-bit，使用 AX Register。
+
+語法：IN Register, I/O Port
+
+範例：
+      MOV DX, 550H
+      IN  AX, DX      ; 將 I/O Port Address 0x0550 的值送到 AX Register。
+                      ; 因為 0x0550 (1360) > 0xFF (255) 所以採用間接定址法。
+
+;;===================================================================
+
+己、資料查詢指令：
+
+1. XLAT (難以理解的指令功能)
+
+用途：尋找表格的資料所用，以 DS:BX 為表格的起始位址。
+      此指令會讀取 AL Register 對應的資料。最後將結果回傳至 AL Register 中。
+
+語法：XLAT
+
+範例：
+      MOV BX, OFFSET GGYY    ; 將資料 GGYY 的偏移量，移動至 BX Register；
+      MOV AL, 4              ; 設定 AL Register 的值為 4 (OFFSET)
+      XLAT                   ; 倘若 GGYY 的資料內容如下：
+
+      ┌───┬───┬───┬───┬───┬───┬─
+      │ A │ B │ C │ D │ E │ F │ .... 
+      └───┴───┴───┴───┴───┴───┴─
+      └ Start Address: DS:BX
+        讀取 GGYY OFFSET 為 4 的值：'D' 且儲存回 AL Register。

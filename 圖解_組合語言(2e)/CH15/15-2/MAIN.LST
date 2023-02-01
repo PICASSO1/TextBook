@@ -1,0 +1,156 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/21/23 22:02:14
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build012123 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 21 
+      11				 ; 
+      12				 ; Description: 使用者輸入一位�
+					�加法運算 
+      13				 ; 
+      14				 
+      15				.MODEL	SMALL 
+      16				 
+      17 0400				.STACK 
+      18				 
+      19 0000				.DATA 
+      20				 
+      21 0000				.CODE 
+      22 0000				main: 
+      23 0000  B8 ---- R			MOV  AX, @DATA    ; 把 .DATA S
+					egment 的位址傳送到 AX 暫存器�
+					��即 .DATA Segment 的起始位址放�
+					�� AX 
+      24 0003  8E D8				MOV  DS, AX       ; 把 AX Regi
+					ster 的記憶體位址設定給 Data S
+					egment Register 
+      25					; 輸入被加數 
+      26 0005  B4 01				MOV  AH, 01H      ; DOS 的第 
+					01 號中斷服務 (由鍵盤輸入字�
+					��並顯示)；AL (AX Low Byte)為輸�
+					�的字元 
+      27 0007  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      28 0009  8A D8				MOV  BL, AL       ; 將輸入�
+					�字元 AL (AX Low Byte) 移動到 BL (
+					BX Low Byte) 
+      29 000B  2C 30				SUB  AL, '0'      ; 將輸入�
+					�字元 AL (AX Low Byte) 轉換成「�
+					�值」 
+      30 000D  B2 20				MOV  DL, ' '      ; 將空白�
+					� (Space) 移動到 DL (DX Low Byte) 
+      31 000F  B4 02				MOV  AH, 02H      ; DOS 的第 
+					02 號中斷服務 (顯示輸出)；DL 
+					(DX Low Byte)為要輸出的字元 
+      32 0011  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      33					; 輸出加號和空白鍵 
+Microsoft (R) Macro Assembler Version 5.00                  1/21/23 22:02:14
+                                                             Page     1-2
+
+
+      34 0013  B2 2B				MOV  DL, '+' 
+      35 0015  B4 02				MOV  AH, 02H 
+      36 0017  CD 21				INT  21H 
+      37 0019  B2 20				MOV  DL, ' ' 
+      38 001B  B4 02				MOV  AH, 02H 
+      39 001D  CD 21				INT  21H 
+      40					; 輸入加數 
+      41 001F  B4 01				MOV  AH, 01H      ; DOS 的第 
+					01 號中斷服務 (由鍵盤輸入字�
+					��並顯示)；AL (AX Low Byte)為輸�
+					�的字元 
+      42 0021  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      43 0023  2C 30				SUB  AL, 30H      ; 將輸入�
+					�字元 AL (AX Low Byte) 轉換成「�
+					�值」 
+      44 0025  02 C3				ADD  AL, BL       ; 將被加�
+					� (BL) + 加數 (AL)，儲存回 AL (AX
+					 Low Byte) 
+      45					; 開始計算 ....  
+      46 0027  B4 00				MOV  AH, 00H      ; 將 AH (AX 
+					High Byte)初始化為 0x00 
+      47 0029  37				AAA               ; 未包裝�
+					�算指令：將 AX Register 調整為�
+					��０進制 
+      48 002A  8B D8				MOV  BX, AX       ; 將 AX Regi
+					ster 的內容移動到 BX Register  
+      49 002C  B2 20				MOV  DL, ' '      ; 將空白�
+					� (Space) 移動到 DL (DX Low Byte) 
+      50 002E  B4 02				MOV  AH, 02H      ; DOS 的第 
+					02 號中斷服務 (顯示輸出)；DL 
+					(DX Low Byte)為要輸出的字元 
+      51 0030  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      52					; 輸出等號和空白鍵 
+      53 0032  B2 3D				MOV  DL, '=' 
+      54 0034  B4 02				MOV  AH, 02H 
+      55 0036  CD 21				INT  21H 
+      56 0038  B2 20				MOV  DL, ' ' 
+      57 003A  B4 02				MOV  AH, 02H 
+      58 003C  CD 21				INT  21H 
+      59				  ; 輸出十位數 
+      60 003E  8A D7				MOV  DL, BH 
+      61 0040  80 C2 30				ADD  DL, '0' 
+      62 0043  B4 02				MOV  AH, 02H 
+      63 0045  CD 21				INT  21H 
+      64				  ; 輸出個位數 
+      65 0047  8A D3				MOV  DL, BL 
+      66 0049  80 C2 30				ADD  DL, '0' 
+      67 004C  B4 02				MOV  AH, 02H 
+      68 004E  CD 21				INT  21H 
+      69 0050  B4 4C				MOV  AH, 4CH      ; DOS 的第 
+					4C 號中斷服務 (帶回傳值結束)
+					；AL (AX Low Byte)為回傳值 
+Microsoft (R) Macro Assembler Version 5.00                  1/21/23 22:02:14
+                                                             Page     1-3
+
+
+      70 0052  CD 21				INT  21H          ; INT 21H: DO
+					S 中斷 
+      71 0054				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/21/23 22:02:14
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0054	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     71 Source  Lines
+     71 Total   Lines
+     15 Symbols
+
+  50624 + 465920 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

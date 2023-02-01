@@ -1,0 +1,103 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 22:11:58
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2023, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build010323 
+       9				 ; 
+      10				 ; Date: 2023 / 01 / 03 
+      11				 ; 
+      12				 ; Description: 「暫存器間接定�
+					�法」：顧名思義，暫存器所�
+					�放的資料是記憶體位址； 
+      13				 ;              將運算元中的暫�
+					�器以 [] 含括住，代表暫存器�
+					��接定址法。 
+      14				 ; 
+      15				 
+      16				.MODEL	SMALL 
+      17				 
+      18 0400				.STACK 
+      19				 
+      20 0000				.DATA 
+      21 0000  41 42 43 44 45 46 47		T    DB  'ABCDEFGHIJKLMNOPQRSTU
+					VWXYZ$' 
+      22       48 49 4A 4B 4C 4D 4E	
+      23       4F 50 51 52 53 54 55	
+      24       56 57 58 59 5A 24	
+      25				 
+      26 0000				.CODE 
+      27 0000				main: 
+      28 0000  B8 ---- R			MOV  AX, @DATA  ; 把 .DATA Seg
+					ment 的位址傳送到 AX 暫存器；
+					即 .DATA Segment 的起始位址放到
+					 AX 
+      29 0003  8E D8				MOV  DS, AX     ; 把 AX Regist
+					er 的記憶體位址設定給 Data Seg
+					ment Register 
+      30 0005  BB 0002				MOV  BX, 02H    ; 將數值 0x0
+					2 移動到 BX Register ；因為字串
+					是從「位移兩個位址處」開始
+					存放 
+      31 0008  8A 17				MOV  DL, [BX]   ; 將 BX Regist
+					er 中的記憶體位址 (0x02)，移�
+					�到 DX Low Byte 
+      32 000A  B4 02				MOV  AH, 02H    ; DOS 的第 02
+					 號中斷服務 (顯示字元輸出)�
+					�DL (DX Low Byte)為要輸出的字元 
+      33 000C  CD 21				INT  21H        ; INT 21H: DOS 
+					中斷 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 22:11:58
+                                                             Page     1-2
+
+
+      34 000E  B4 4C				MOV  AH, 4CH    ; DOS 的第 4C
+					 號中斷服務 (帶回傳值結束)�
+					�AL (AX Low Byte)為回傳值 
+      35 0010  CD 21				INT  21H        ; INT 21H: DOS 
+					中斷 
+      36 0012				END main 
+Microsoft (R) Macro Assembler Version 5.00                  1/3/23 22:11:58
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	001B	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0012	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+T  . . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     33 Source  Lines
+     33 Total   Lines
+     16 Symbols
+
+  50546 + 465998 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

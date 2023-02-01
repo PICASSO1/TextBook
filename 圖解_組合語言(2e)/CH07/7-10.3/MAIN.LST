@@ -1,0 +1,149 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 23:06:46
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+MAIN.ASM(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build112122 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 21 
+      11				 ; 
+      12				 ; Description: 這個範例呈現未�
+					�裝運算指令 -- AAD (ASCII Adjust B
+					efore Division)。 
+      13				 ;              - 將 AX Register 的�
+					�容調整為十進制的值；其中�
+					� 
+      14				 ;                高位元儲存至 AX
+					 High Byte；而低位元儲存至 AX L
+					ow Byte 
+      15				 ;              - 亦稱為「未包裝
+					除法調整指令」 
+      16				 ;              - 受影響的旗標為
+					：SF、ZF、PF 
+      17				 ;              - AAD 會搭配 DIV 來
+					使用 
+      18				 ; 
+      19				 
+      20				.MODEL	SMALL 
+      21				 
+      22 0400				.STACK 
+      23				 
+      24 0000				.DATA 
+      25 0000  0504				NUM1  DW  0504H    ; 宣告變�
+					��名稱為 NUM1，將數值 0x0504 (00
+					00 0101 0000 0100)以 Word 的資料型
+					態儲存 
+      26 0002  0105				NUM2  DW  0105H    ; 宣告變�
+					��名稱為 NUM2，將數值 0x0105 (00
+					00 0001 0000 0101)以 Word 的資料型
+					態儲存 
+      27				 
+      28 0000				.CODE 
+      29 0000				main: 
+      30 0000  B8 ---- R			MOV   AX, @DATA    ; 把 .DATA 
+					Segment 的位址傳送到 AX 暫存器
+					 
+      31 0003  8E D8				MOV   DS, AX       ; 把 AX Reg
+					ister 的記憶體位址設定給 Data 
+					Segment Register 
+      32 0005  8B 0E 0002 R			MOV   CX, NUM2     ; 把 NUM2 �
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 23:06:46
+                                                             Page     1-2
+
+
+					��數值 (0x0105) 設定給 CX Register
+					 
+      33 0009  8B C1				MOV   AX, CX       ; 再將 CX 
+					設定給 AX (因應 AAD 的運作) 
+      34 000B  D5 0A				AAD                ; 將整個 
+					AX Register 調整為１０進制；原
+					本 AH: 0x01; AL: 0x05 
+      35				                     ; 調整後 AH: 0x
+					00 (0); AL: 0x0F (15) 
+      36 000D  8A C8				MOV   CL, AL       ; 調整完�
+					��將 AX Low Byte 放到 CX Low Byte 
+      37 000F  A1 0000 R			MOV   AX, NUM1     ; 再把 NUM
+					1 的數值 0x0504 設定給 AX Registe
+					r 
+      38 0012  D5 0A				AAD                ; 將整個 
+					AX Register 調整為１０進制；原
+					本 AH: 0x05; AL: 0x04 
+      39				                     ; 調整後 AH: 0x
+					00 (0); AL: 0x36 (54) 
+      40 0014  F6 F1				DIV   CL           ; AL (0x36 =
+					= 54) / CL (0x0F == 15) = 3 (0x03) (AL)
+					 .... 9 (0x09) (AH) ----> AX == 0x0903 
+      41 0016  8A FC				MOV   BH, AH       ; 先將餘�
+					�� (AH)設定給 BX High Byte (為了�
+					�面的顯示) 
+      42 0018  8A D0				MOV   DL, AL       ; 將 AX Low
+					 Byte 的內容移置 DX Low Byte 
+      43 001A  80 C2 30				ADD   DL, 30H      ; 將 DX Low
+					 Byte 的數值 (0x03)加上 0x30 ('0')
+					變成可顯字元 ('3') 
+      44 001D  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      45 001F  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      46 0021  8A D7				MOV   DL, BH       ; 將 BX Hig
+					h Byte 的內容移置 DX Low Byte 
+      47 0023  80 C2 30				ADD   DL, 30H      ; 將 DX Low
+					 Byte 的數值 (0x09)加上 0x30 ('0')
+					變成可顯字元 ('9') 
+      48 0026  B4 02				MOV   AH, 02H      ; DOS 的第
+					 02 號中斷服務 (顯示字元)；DX
+					 Low Byte 為要輸出的資料 
+      49 0028  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      50 002A  B4 4C				MOV   AH, 4CH      ; DOS 的第
+					 4C 號中斷服務 (帶回傳值結束
+					)；AL (AX Low Byte)為回傳值 
+      51 002C  CD 21				INT   21H          ; INT 21H: D
+					OS 中斷 
+      52 002E				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 23:06:46
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0004	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	002E	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+NUM1 . . . . . . . . . . . . . .  	L WORD	0000	_DATA
+NUM2 . . . . . . . . . . . . . .  	L WORD	0002	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  MAIN		
+
+
+     52 Source  Lines
+     52 Total   Lines
+     17 Symbols
+
+  50622 + 465922 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors

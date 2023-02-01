@@ -1,0 +1,138 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/5/22 23:25:36
+                                                             Page     1-1
+
+
+       1				﻿ ; 
+main.asm(1): warning A4001: Extra characters on line
+       2				 ; File Name: MAIN.ASM 
+       3				 ; 
+       4				 ; CopyLeft (C) 2022, Picasso's Fantasy
+					 Notepad. All rights reserved. 
+       5				 ; 
+       6				 ; Author: Pablo Picasso G. (PabloPicas
+					so.G@gmail.com) 
+       7				 ; 
+       8				 ; Version: 1.0.0.build110522 
+       9				 ; 
+      10				 ; Date: 2022 / 11 / 05 
+      11				 ; 
+      12				 ; Description: 這個範例呈現字�
+					�搬移指令 -- MOVSW (Move String by 
+					Word)。 
+      13				 ;              這個指令一次只�
+					�移動１Word (2 Bytes) 的資料。 
+      14				 ;              因為一次只能移�
+					�２ Bytes 且移動９次，共１８ 
+					Bytes！ 
+      15				 ;              所以最後呈現的�
+					�果為「ASSEMBLY       LAN99999」。
+					 
+      16				 ; 
+      17				 
+      18				.MODEL	SMALL 
+      19				 
+      20 0400				.STACK 
+      21				 
+      22 0000				.DATA 
+      23 0000  41 53 53 45 4D 42 4C		SOUR DB  'ASSEMBLY       LANGUA
+					GE$'    ; 宣告變數名稱為 SOUR，
+					以 Byte 的資料型態儲存 
+      24       59 20 20 20 20 20 20	
+      25       20 4C 41 4E 47 55 41	
+      26       47 45 24			
+      27 0018  39 39 39 39 39 39 39		DEST DB  '999999999999999999999
+					99$'    ; 宣告變數名稱為 DEST，
+					將２３個'9'以 Byte 的資料型態
+					儲存 
+      28       39 39 39 39 39 39 39	
+      29       39 39 39 39 39 39 39	
+      30       39 39 24			
+      31				 
+      32 0000				.CODE 
+      33 0000				main: 
+      34 0000  B8 ---- R			MOV  AX, @DATA                 
+					        ; 把 .DATA Segment 的位址�
+					�送到 AX 暫存器 
+      35 0003  8E D8				MOV  DS, AX                    
+					        ; 把 AX Register 的記憶體�
+					��址設定給 Data Segment Register；
+Microsoft (R) Macro Assembler Version 5.00                  11/5/22 23:25:36
+                                                             Page     1-2
+
+
+					 
+      36 0005  8E C0				MOV  ES, AX                    
+					        ; 把 AX Register 的記憶體�
+					��址設定給 Extra Segment Register�
+					� 
+      37 0007  FC				CLD                            
+					        ; 在這裡我們使用 CLD 狀
+					態，由記憶體位址「低」的地
+					方往「高」處移�
+      38 0008  BE 0000 R			MOV  SI, OFFSET SOUR           
+					        ; 把 SOUR 的記憶體位址 (
+					此時偏移量為０)移動到 Source 
+					Index Register 
+      39 000B  BF 0018 R			MOV  DI, OFFSET DEST           
+					        ; 把 DEST 的記憶體位址 (
+					此時偏移量為０)移動到 Destina
+					tion Index Register 
+      40 000E  B9 0009				MOV  CX, 9                     
+					        ; 把數值９移動到 CX Regi
+					ster 
+      41 0011  F3/ A5				REP  MOVSW                     
+					        ; 把 SI Register 的資料分�
+					��移動 CX(９) 次到 DI Register 
+      42 0013  BA 0018 R			MOV  DX, OFFSET DEST           
+					        ; 再把 DEST 的記憶體位�
+					�，移動到 DX Register 
+      43 0016  B4 09				MOV  AH, 09H                   
+					        ; DOS 的第 02 號中斷服務
+					 (顯示輸出)；DL (DX Low Byte)為�
+					�輸出的資料 
+      44 0018  CD 21				INT  21H                       
+					        ; INT 21H: DOS 中斷 
+      45 001A  B4 4C				MOV  AH, 4CH                   
+					        ; DOS 的第 4C 號中斷服務
+					 (帶回傳值結束)；AL (AX Low Byte
+					)為回傳值 
+      46 001C  CD 21				INT  21H                       
+					        ; INT 21H: DOS 中斷 
+      47 001E				END main 
+Microsoft (R) Macro Assembler Version 5.00                  11/5/22 23:25:36
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0030	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0400	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	001E	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+DEST . . . . . . . . . . . . . .  	L BYTE	0018	_DATA
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	_TEXT
+
+SOUR . . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  main		
+
+
+     41 Source  Lines
+     41 Total   Lines
+     17 Symbols
+
+  50584 + 465960 Bytes symbol space free
+
+      1 Warning Errors
+      0 Severe  Errors
