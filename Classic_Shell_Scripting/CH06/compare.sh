@@ -31,4 +31,10 @@ echo "\${VAR%VWXYZ}: "${VAR%VWXYZ}
 # VAR 變數當中，後面有符合 "V*Z" 的部份全部移除
 echo "\${VAR%%V*Z}:  "${VAR%%V*Z}
 
+# VAR 變數當中，從第 11 個元素開始列印
+echo "\${VAR:11}:    "${VAR:11}
+
+# VAR 變數當中，從第 8 個元素開始，列印 20 個元素
+echo "\${VAR:8:20}:  "${VAR:8:20}
+
 exit 5
