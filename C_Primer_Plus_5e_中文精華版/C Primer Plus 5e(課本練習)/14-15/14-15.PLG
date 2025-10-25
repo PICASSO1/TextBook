@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 14-15 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP83.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/14-15.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\Administrator\орн▒\My C-codes\14-15\14-15.C"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP83.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP84.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/14-15.pdb" /debug /machine:I386 /out:"Debug/14-15.exe" /pdbtype:sept 
+".\Debug\14-15.OBJ"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP84.tmp"
+<h3>Output Window</h3>
+Compiling...
+14-15.C
+C:\Documents and Settings\Administrator\орн▒\My C-codes\14-15\14-15.C(3) : fatal error C1083: Cannot open include file: 'stdbool.h': No such file or directory
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+14-15.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

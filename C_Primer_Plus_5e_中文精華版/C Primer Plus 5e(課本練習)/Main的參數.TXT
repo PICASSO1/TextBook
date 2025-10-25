@@ -1,0 +1,121 @@
+int main(int argc, char *argv[], char *envp[])
+{
+...
+}
+
+argc告訴你使用者在執行這程式的時候傳入的數值有幾個
+argv告訴你使用者在執行這程式的時候傳入的數值是什麼
+envp告訴你使用者在執行這程式的時候電腦系統裡的環境變數(Environment Variables)有哪幾個
+
+使用者可以利用這種方法來輸入程式需要的值(在程式裡用scanf是另一種方法)
+
+比如說我的程式執行檔的名字是test：
+
+set HELLO=hello  <===設環境變數HELLO為hello
+test how are you <===執行我程式的執行檔.傳入"how","are",和"you"
+
+所以
+argc是4. 因為有傳入3個字串"how","are",和"you"外加執行檔自己
+argv是{"test", "how", "are", "you"}因為有傳入3個字串"how","are",和"you"外加執行檔自己
+也就是說argv裡的第1個字串,argv[0],是"test"
+argv裡的第2個字串,argv[1],是"test"
+argv裡的第3個字串,argv[2],是"test"
+argv裡的第4個字串,argv[3],是"test"
+envp是{"HELLO=hello", NULL}.因有一個環境變數
+也就是說envp裡的第1個字串,envp[0],是"HELLO=hello"
+但因envp裡最後一個環境變數一定是NULL.所以envp裡的第2個字串,envp[1],是NULL
+
+第二個例子:
+比如說我的程式執行檔的名字是add
+set WHO=john  <===設環境變數WHO為john
+add 1 2 <===執行我程式的執行檔.傳入"1"和"2"
+
+所以
+argc是3. 因為有傳入2個字串"1","2"外加執行檔自己
+argv是{"add", "1", "2"}. 因為有傳入2個字串"1"和"2"外加執行檔自己
+也就是說argv裡的第1個字串,argv[0],是"add"
+argv裡的第2個字串,argv[1],是"1"
+argv裡的第3個字串,argv[2],是"2"
+envp是{"WHO=john", NULL}.因有一個環境變數
+也就是說envp裡的第1個字串,envp[0],是"WHO=john"
+但因envp裡最後一個環境變數一定是NULL，所以envp裡的第2個字串,envp[1],是NULL
+
+以下程式顯示出所有使用者在執行是輸入的數值和環境變數
+#include <stdio.h>
+int main(int argc, char *argv[], char *envp[])
+{
+    int i;
+    //從0到argc-1顯示出所有的輸入值
+    for (i = 0; i < argc; i++)
+        printf("%s ", argv[i]);
+    printf("\n");
+    //從第一個環境變數到最後一個(NULL)
+    //顯示出所有的環境變數
+    for (i = 0; envp[i]; i++)
+        printf("%s\n", envp[i]);
+    return(0);
+}
+
+懂不懂?不懂請再問?
+----------------------------------------------
+//add1.c
+#include <stdio.h>
+int main()
+{
+    int a, b;
+
+    printf(“Please enter A:”);
+    scanf(“%d”, &a);
+    printf(“Please enter B:”);
+    scanf(“%d”, &b);
+    printf(“A+B=%d”, a+b);
+    return 0;
+}
+
+//add2.c
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, char *argv[])
+{
+    int a, b;
+
+    a = atoi(argv[1]);
+    b = atoi(argv[1]);
+    printf(“A+B=%d”, a+b);
+    return 0 ;
+}
+
+第1個程式用printf和scanf向使用者要A和B的值
+第2個程式用使用者執行程式時傳入的值. 所以在執行add2時要傳入A和B的值
+
+第1個程式執行的結果:
+add1
+Please enter A:
+10
+Please enter B:
+20
+A+B=30
+
+第2個程式執行的結果:
+add2 10 20
+A+B=30
+
+在Dev -C++和VC++, 如果你沒有主動去改它的執行時的輸入值和環境變數. 它在幫你執行程式時是不會傳入任何輸入值和環境變數. 最簡單的方法是
+在cmd裡到你放.C的資料夾. 到一個叫debug的資料夾裡去. 然後再自己設定環境變數和自己執行你的程式
+
+例. 我的add2.c在c:\temp裡. 在Dev-C++或VC++裡compile完之後. 我打開一個cmd視窗. 在cmd視窗裡執行以下的指令
+c:
+cd c:\temp
+cd debug
+set HELLO=hello
+add2 10 20
+之後會顯示
+A+B=30
+
+懂不懂?不懂請再問?
+----------------------------------------------
+argc一定是1以上.因為使用者輸入執行檔
+argv[0]一定是執行檔的名字.因為使用者輸入執行檔
+像我第一次的例子.如果執行檔的名字是test
+那我一定要輸入test才能執行test.所以argc是1,argv[0]是"test"
+懂不懂?不懂請再問

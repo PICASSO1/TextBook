@@ -1,0 +1,1 @@
+int CheckDot(char *string);

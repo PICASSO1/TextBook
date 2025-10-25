@@ -1,0 +1,30 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 11-10 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF0.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/11-10.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"O:\My C-codes\11-10\11-10.C"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF0.tmp" 
+<h3>Output Window</h3>
+Compiling...
+11-10.C
+O:\My C-codes\11-10\11-10.C(13) : warning C4047: 'function' : 'const char *' differs in levels of indirection from 'char (*)[11]'
+O:\My C-codes\11-10\11-10.C(13) : warning C4024: 'put1' : different types for formal and actual parameter 1
+O:\My C-codes\11-10\11-10.C(14) : warning C4047: 'function' : 'const char *' differs in levels of indirection from 'char (*)[11]'
+O:\My C-codes\11-10\11-10.C(14) : warning C4024: 'puts' : different types for formal and actual parameter 1
+O:\My C-codes\11-10\11-10.C(18) : warning C4715: 'main' : not all control paths return a value
+
+
+
+<h3>Results</h3>
+11-10.OBJ - 0 error(s), 5 warning(s)
+</pre>
+</body>
+</html>
