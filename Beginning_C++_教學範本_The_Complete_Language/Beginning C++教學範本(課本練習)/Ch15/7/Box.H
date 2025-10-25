@@ -1,0 +1,19 @@
+#ifndef BOX_H
+#define BOX_H
+
+using namespace std;
+
+class Box
+{
+protected:
+	double length;
+	double breadth;
+	double height;
+public:
+	Box(double lv = 1.0, double bv = 1.0, double hv = 1.0);
+	Box(const Box &aBox);
+	~Box(void);
+	double volume(void) const;
+};
+
+#endif

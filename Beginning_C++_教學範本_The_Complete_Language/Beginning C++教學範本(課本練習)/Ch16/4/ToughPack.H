@@ -1,0 +1,16 @@
+#ifndef TOUGHPACK_H
+#define TOUGHPACK_H
+#include "Box.H"
+
+using namespace std;
+
+class ToughPack: public Box
+{
+public:
+	ToughPack(double lengthValue, double breadthValue, double heightValue);
+	virtual double volume(const int i = 500) const;
+//protected:
+//	virtual double volume(const int i = 500) const;
+};
+
+#endif

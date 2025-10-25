@@ -1,0 +1,30 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 10 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP64D.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/10.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"C:\Documents and Settings\Administrator\桌面\III\C++\Beginning C++教學範本(課本練習)\Ch20\10\10.CPP"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP64D.tmp" 
+<h3>Output Window</h3>
+Compiling...
+10.CPP
+C:\Documents and Settings\Administrator\桌面\III\C++\Beginning C++教學範本(課本練習)\Ch20\10\10.CPP(20) : error C2976: 'reverse_iterator' : too few template arguments
+        c:\program files\microsoft visual studio\vc98\include\utility(174) : see declaration of 'reverse_iterator'
+C:\Documents and Settings\Administrator\桌面\III\C++\Beginning C++教學範本(課本練習)\Ch20\10\10.CPP(21) : error C2079: 'F2' uses undefined class 'reverse_iterator<class Integer>'
+C:\Documents and Settings\Administrator\桌面\III\C++\Beginning C++教學範本(課本練習)\Ch20\10\10.CPP(21) : error C2079: 'L2' uses undefined class 'reverse_iterator<class Integer>'
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+10.OBJ - 3 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
